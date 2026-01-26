@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.pembukuan_cv_abba_barokah.Controller.ReturPembelianController"
+           stylesheets="@Global.css">
+
+    <VBox spacing="24" maxWidth="900" styleClass="page-container">
+
+        <Label text="Retur Pembelian"
+               style="-fx-font-size: 22; -fx-font-weight: bold;"/>
+
+        <VBox spacing="20" styleClass="card">
+
+            <GridPane hgap="20" vgap="16">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                </columnConstraints>
+
+                <VBox spacing="6">
+                    <Label text="Tanggal Retur"/>
+                    <DatePicker fx:id="tanggalPicker"/>
+                </VBox>
+
+                <VBox spacing="6" GridPane.columnIndex="1">
+                    <Label text="No Faktur Pembelian"/>
+                    <ComboBox fx:id="fakturBox"/>
+                </VBox>
+
+                <VBox spacing="6" GridPane.rowIndex="1">
+                    <Label text="Nama Barang"/>
+                    <ComboBox fx:id="barangBox"/>
+                </VBox>
+
+                <VBox spacing="6" GridPane.rowIndex="1" GridPane.columnIndex="1">
+                    <Label text="Jumlah Retur"/>
+                    <TextField fx:id="jumlahField"/>
+                </VBox>
+
+                <VBox spacing="6" GridPane.rowIndex="2">
+                    <Label text="Harga Satuan"/>
+                    <TextField fx:id="hargaField" editable="false"/>
+                </VBox>
+
+                <VBox spacing="6" GridPane.rowIndex="2" GridPane.columnIndex="1">
+                    <Label text="Total Retur"/>
+                    <TextField fx:id="totalField" editable="false"/>
+                </VBox>
+            </GridPane>
+
+            <VBox spacing="6">
+                <Label text="Alasan Retur"/>
+                <TextArea fx:id="alasanArea" prefRowCount="3"/>
+            </VBox>
+
+            <HBox alignment="CENTER_RIGHT">
+                <Button text="Simpan Retur"
+                        fx:id="btnSimpan"
+                        disable="true"
+                        onAction="#handleSimpan"
+                        styleClass="btn-warning"/>
+            </HBox>
+
+        </VBox>
+    </VBox>
+</StackPane>

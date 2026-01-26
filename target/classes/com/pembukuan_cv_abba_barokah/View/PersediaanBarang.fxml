@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.pembukuan_cv_abba_barokah.Controller.PersediaanBarangController"
+           stylesheets="@Global.css">
+
+    <VBox spacing="24" maxWidth="1000" styleClass="page-container">
+
+        <Label text="Persediaan Barang"
+               style="-fx-font-size: 22; -fx-font-weight: bold;"/>
+
+        <VBox styleClass="card" spacing="16">
+
+            <TableView fx:id="table">
+                <columns>
+                    <TableColumn text="Nama Barang" fx:id="namaCol"/>
+                    <TableColumn text="Kategori" fx:id="kategoriCol"/>
+                    <TableColumn text="Stok Akhir" fx:id="stokCol"/>
+                    <TableColumn text="Nilai Persediaan" fx:id="nilaiCol"/>
+                </columns>
+            </TableView>
+
+            <Separator/>
+
+            <GridPane hgap="16" vgap="12">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                </columnConstraints>
+
+                <Label text="Penyesuaian Stok"/>
+                <TextField fx:id="adjustField" GridPane.columnIndex="1"/>
+
+                <Label text="Keterangan" GridPane.rowIndex="1"/>
+                <TextArea fx:id="ketArea"
+                          prefRowCount="2"
+                          GridPane.rowIndex="1"
+                          GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <HBox alignment="CENTER_RIGHT">
+                <Button text="Simpan Penyesuaian"
+                        fx:id="btnSimpan"
+                        onAction="#handleSimpan"
+                        styleClass="btn-primary"/>
+            </HBox>
+
+        </VBox>
+    </VBox>
+</StackPane>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.pembukuan_cv_abba_barokah.Controller.RekapTotalController"
+           style="-fx-background-color: #f5f6fa;">
+
+    <VBox spacing="24" alignment="CENTER" maxWidth="700">
+        <padding>
+            <Insets top="32" right="32" bottom="32" left="32"/>
+        </padding>
+
+        <!-- TITLE -->
+        <Label text="Rekap / Jumlah Total"
+               style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+        <!-- CARD -->
+        <VBox spacing="18"
+              style="-fx-background-color: white;
+                     -fx-padding: 24;
+                     -fx-background-radius: 14;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 4);">
+
+            <GridPane hgap="20" vgap="14">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="60"/>
+                    <ColumnConstraints percentWidth="40"/>
+                </columnConstraints>
+
+                <!-- ROW 1 -->
+                <Label text="Total HPP"/>
+                <TextField fx:id="totalHppField"
+                           editable="false"
+                           promptText="Rp 0"
+                           GridPane.columnIndex="1"/>
+
+                <!-- ROW 2 -->
+                <Label text="Total Penjualan"
+                       GridPane.rowIndex="1"/>
+                <TextField fx:id="totalPenjualanField"
+                           editable="false"
+                           promptText="Rp 0"
+                           GridPane.rowIndex="1"
+                           GridPane.columnIndex="1"/>
+
+                <!-- ROW 3 -->
+                <Label text="Total Pembayaran Pembeli"
+                       GridPane.rowIndex="2"/>
+                <TextField fx:id="totalPembayaranField"
+                           editable="false"
+                           promptText="Rp 0"
+                           GridPane.rowIndex="2"
+                           GridPane.columnIndex="1"/>
+
+                <!-- ROW 4 -->
+                <Label text="Total Setor Pajak"
+                       GridPane.rowIndex="3"/>
+                <TextField fx:id="totalSetorPajakField"
+                           editable="false"
+                           promptText="Rp 0"
+                           GridPane.rowIndex="3"
+                           GridPane.columnIndex="1"/>
+
+                <!-- ROW 5 -->
+                <Label text="Total Biaya Pemasaran"
+                       GridPane.rowIndex="4"/>
+                <TextField fx:id="totalBiayaPemasaranField"
+                           editable="false"
+                           promptText="Rp 0"
+                           GridPane.rowIndex="4"
+                           GridPane.columnIndex="1"/>
+
+                <!-- ROW 6 -->
+                <Label text="Total Biaya Administrasi"
+                       GridPane.rowIndex="5"/>
+                <TextField fx:id="totalBiayaAdministrasiField"
+                           editable="false"
+                           promptText="Rp 0"
+                           GridPane.rowIndex="5"
+                           GridPane.columnIndex="1"/>
+
+                <!-- ROW 7 -->
+                <Label text="Total Pembelian Inventaris"
+                       GridPane.rowIndex="6"/>
+                <TextField fx:id="totalPembelianInventarisField"
+                           editable="false"
+                           promptText="Rp 0"
+                           GridPane.rowIndex="6"
+                           GridPane.columnIndex="1"/>
+
+                <!-- ROW 8 -->
+                <Label text="Total Retur Penjualan"
+                       GridPane.rowIndex="7"/>
+                <TextField fx:id="totalReturPenjualanField"
+                           editable="false"
+                           promptText="Rp 0"
+                           GridPane.rowIndex="7"
+                           GridPane.columnIndex="1"/>
+
+                <!-- ROW 9 -->
+                <Label text="Total Retur Pembelian"
+                       GridPane.rowIndex="8"/>
+                <TextField fx:id="totalReturPembelianField"
+                           editable="false"
+                           promptText="Rp 0"
+                           GridPane.rowIndex="8"
+                           GridPane.columnIndex="1"/>
+
+                <!-- ROW 10 -->
+                <Label text="Total Persediaan Barang"
+                       GridPane.rowIndex="9"/>
+                <TextField fx:id="totalPersediaanBarangField"
+                           editable="false"
+                           promptText="Rp 0"
+                           GridPane.rowIndex="9"
+                           GridPane.columnIndex="1"/>
+
+                <!-- ROW 11 -->
+                <Label text="Total Utang Usaha"
+                       GridPane.rowIndex="10"/>
+                <TextField fx:id="totalUtangUsahaField"
+                           editable="false"
+                           promptText="Rp 0"
+                           GridPane.rowIndex="10"
+                           GridPane.columnIndex="1"/>
+
+                <!-- ROW 12 -->
+                <Label text="Total Modal"
+                       GridPane.rowIndex="11"/>
+                <TextField fx:id="totalModalField"
+                           editable="false"
+                           promptText="Rp 0"
+                           GridPane.rowIndex="11"
+                           GridPane.columnIndex="1"/>
+            </GridPane>
+        </VBox>
+    </VBox>
+</StackPane>

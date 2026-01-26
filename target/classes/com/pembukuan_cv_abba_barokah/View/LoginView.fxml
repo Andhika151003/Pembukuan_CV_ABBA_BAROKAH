@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.pembukuan_cv_abba_barokah.Controller.LoginController"
+           stylesheets="@Login.css">
+
+    <VBox alignment="CENTER"
+          spacing="24"
+          fillWidth="false">
+
+        <!-- Title -->
+        <HBox alignment="CENTER" spacing="12">
+            <Label text="📠" styleClass="logo-icon"/>
+            <Label text="SiKeu ABBA" styleClass="app-title"/>
+        </HBox>
+
+        <!-- Login Card -->
+        <VBox spacing="16"
+              styleClass="login-card"
+              prefWidth="380"
+              maxWidth="380">
+
+            <Label text="Selamat Datang, Bambang Sugiarto!"
+                   styleClass="welcome-text"/>
+
+            <Label text="Silahkan Login Terlebih Dahulu!"
+                   styleClass="subtitle-text"/>
+
+            <VBox spacing="6">
+                <Label text="Username" styleClass="field-label"/>
+                <TextField fx:id="usernameField"
+                           promptText="Masukkan username"
+                           styleClass="input-field"/>
+            </VBox>
+
+            <VBox spacing="6">
+                <Label text="Password" styleClass="field-label"/>
+                <PasswordField fx:id="passwordField"
+                               promptText="Masukkan password"
+                               styleClass="input-field"/>
+            </VBox>
+
+            <Button text="Submit"
+                    onAction="#handleLogin"
+                    styleClass="submit-button"/>
+
+        </VBox>
+    </VBox>
+
+</StackPane>

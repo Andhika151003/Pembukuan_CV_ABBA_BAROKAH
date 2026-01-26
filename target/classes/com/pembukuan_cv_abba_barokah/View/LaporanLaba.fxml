@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.pembukuan_cv_abba_barokah.Controller.LaporanLabaController"
+           stylesheets="@Global.css">
+
+    <VBox spacing="24" maxWidth="900" styleClass="page-container">
+
+        <Label text="Laporan Laba Rugi Tahunan"
+               style="-fx-font-size: 22; -fx-font-weight: bold;" />
+
+        <Label fx:id="tahunLabel"
+               text="Tahun : -"
+               style="-fx-font-size: 15; -fx-font-weight: bold;" />
+
+        <GridPane hgap="16" vgap="12">
+
+            <Label text="Penjualan"/>
+            <Label fx:id="penjualanLabel" GridPane.columnIndex="1"/>
+
+            <Label text="Retur Penjualan" GridPane.rowIndex="1"/>
+            <Label fx:id="returPenjualanLabel"
+                   GridPane.columnIndex="1"
+                   GridPane.rowIndex="1"/>
+
+            <Label text="HPP" GridPane.rowIndex="2"/>
+            <Label fx:id="hppLabel"
+                   GridPane.columnIndex="1"
+                   GridPane.rowIndex="2"/>
+
+            <Separator GridPane.rowIndex="3" GridPane.columnSpan="2"/>
+
+            <Label text="Laba Kotor"
+                   style="-fx-font-weight: bold; -fx-text-fill: #c62828;"
+                   GridPane.rowIndex="4"/>
+            <Label fx:id="labaKotorLabel"
+                   style="-fx-font-weight: bold; -fx-text-fill: #c62828;"
+                   GridPane.columnIndex="1"
+                   GridPane.rowIndex="4"/>
+
+            <Label text="Biaya Administrasi" GridPane.rowIndex="5"/>
+            <Label fx:id="biayaAdminLabel"
+                   GridPane.columnIndex="1"
+                   GridPane.rowIndex="5"/>
+
+            <Label text="Biaya Operasional" GridPane.rowIndex="6"/>
+            <Label fx:id="biayaOperasionalLabel"
+                   GridPane.columnIndex="1"
+                   GridPane.rowIndex="6"/>
+
+            <Label text="Biaya Pemasaran" GridPane.rowIndex="7"/>
+            <Label fx:id="biayaPemasaranLabel"
+                   GridPane.columnIndex="1"
+                   GridPane.rowIndex="7"/>
+
+            <Separator GridPane.rowIndex="8" GridPane.columnSpan="2"/>
+
+            <Label text="Laba Bersih"
+                   style="-fx-font-weight: bold; -fx-text-fill: #2e7d32;"
+                   GridPane.rowIndex="9"/>
+            <Label fx:id="labaBersihLabel"
+                   style="-fx-font-weight: bold; -fx-text-fill: #2e7d32;"
+                   GridPane.columnIndex="1"
+                   GridPane.rowIndex="9"/>
+        </GridPane>
+
+        <HBox alignment="CENTER_RIGHT">
+            <Button text="Simpan Laporan"
+                    fx:id="btnSimpan"
+                    onAction="#handleSimpan"
+                    styleClass="btn-success"/>
+        </HBox>
+
+    </VBox>
+</StackPane>

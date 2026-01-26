@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.pembukuan_cv_abba_barokah.Controller.BiayaAdministrasiController"
+           style="-fx-background-color: #f5f6fa;">
+
+    <VBox spacing="28" alignment="CENTER" maxWidth="700">
+        <padding>
+            <Insets top="32" right="32" bottom="32" left="32"/>
+        </padding>
+
+        <!-- ================= TITLE ================= -->
+        <Label text="Biaya Administrasi"
+               style="-fx-font-size: 22px;
+                      -fx-font-weight: bold;"/>
+
+        <!-- ================= FORM CARD ================= -->
+        <VBox spacing="20"
+              style="-fx-background-color: white;
+                     -fx-padding: 24;
+                     -fx-background-radius: 14;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 4);">
+
+            <GridPane hgap="20" vgap="16">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="50"/>
+                    <ColumnConstraints percentWidth="50"/>
+                </columnConstraints>
+
+                <!-- FIELD 1 -->
+                <VBox spacing="6" GridPane.rowIndex="0" GridPane.columnIndex="0">
+                    <Label text="Tanggal Biaya"/>
+                    <DatePicker fx:id="tanggalField"/>
+                </VBox>
+
+                <!-- FIELD 2 -->
+                <VBox spacing="6" GridPane.rowIndex="0" GridPane.columnIndex="1">
+                    <Label text="Jenis Biaya"/>
+                    <ComboBox fx:id="jenisBiayaBox"
+                              promptText="Gaji Pegawai / Lain-lain"/>
+                </VBox>
+
+                <!-- FIELD 3 -->
+                <VBox spacing="6" GridPane.rowIndex="1" GridPane.columnIndex="0">
+                    <Label text="Jumlah Biaya"/>
+                    <TextField fx:id="jumlahBiayaField"
+                               promptText="Masukkan nominal"/>
+                </VBox>
+
+                <!-- FIELD 4 -->
+                <VBox spacing="6" GridPane.rowIndex="1" GridPane.columnIndex="1">
+                    <Label text="Keterangan"/>
+                    <TextField fx:id="keteranganField"
+                               promptText="Catatan (opsional)"/>
+                </VBox>
+
+            </GridPane>
+        </VBox>
+
+        <!-- ================= BUTTON ================= -->
+        <HBox alignment="CENTER_RIGHT">
+            <Button fx:id="btnSimpan"
+                    text="Simpan Biaya Administrasi"
+                    disable="true"
+                    style="-fx-background-color: #3498db;
+                           -fx-text-fill: white;
+                           -fx-padding: 10 20;
+                           -fx-background-radius: 8;"/>
+        </HBox>
+
+    </VBox>
+</StackPane>

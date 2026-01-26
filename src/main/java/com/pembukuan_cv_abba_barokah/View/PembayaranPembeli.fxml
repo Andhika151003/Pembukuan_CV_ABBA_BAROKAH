@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.pembukuan_cv_abba_barokah.Controller.PembayaranPembeliController"
+           style="-fx-background-color: #f5f6fa;">
+
+    <VBox spacing="28" alignment="TOP_CENTER" maxWidth="900">
+        <padding>
+            <Insets top="32" right="32" bottom="32" left="32"/>
+        </padding>
+
+        <!-- TITLE -->
+        <Label text="Pembayaran Pembeli"
+               style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+        <!-- HEADER -->
+        <VBox spacing="20"
+              style="-fx-background-color: white;
+                     -fx-padding: 24;
+                     -fx-background-radius: 14;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 4);">
+
+            <GridPane hgap="20" vgap="16">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="50"/>
+                    <ColumnConstraints percentWidth="50"/>
+                </columnConstraints>
+
+                <VBox spacing="6">
+                    <Label text="Tanggal Pembayaran"/>
+                    <DatePicker fx:id="tanggalField" disable="true"/>
+                </VBox>
+
+                <VBox spacing="6" GridPane.columnIndex="1">
+                    <Label text="Nomor Faktur"/>
+                    <ComboBox fx:id="fakturBox" promptText="Pilih Faktur"/>
+                </VBox>
+
+                <VBox spacing="6" GridPane.rowIndex="1">
+                    <Label text="Nama Pembeli"/>
+                    <TextField fx:id="namaPembeliField" editable="false"/>
+                </VBox>
+
+                <VBox spacing="6" GridPane.rowIndex="1" GridPane.columnIndex="1">
+                    <Label text="Metode Pembayaran"/>
+                    <ComboBox fx:id="metodeBox"/>
+                </VBox>
+            </GridPane>
+        </VBox>
+
+        <!-- DETAIL -->
+        <VBox spacing="18"
+              style="-fx-background-color: white;
+                     -fx-padding: 24;
+                     -fx-background-radius: 14;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 4);">
+
+            <Label text="Detail Pembayaran"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+            <GridPane hgap="20" vgap="14">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="50"/>
+                    <ColumnConstraints percentWidth="50"/>
+                </columnConstraints>
+
+                <Label text="Total Faktur"/>
+                <Label fx:id="totalFakturLabel" GridPane.columnIndex="1"/>
+
+                <Label text="Sudah Dibayar" GridPane.rowIndex="1"/>
+                <Label fx:id="sudahBayarLabel"
+                       GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Sisa Piutang" GridPane.rowIndex="2"/>
+                <Label fx:id="sisaLabel"
+                       style="-fx-text-fill: red;"
+                       GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Jumlah Bayar" GridPane.rowIndex="3"/>
+                <TextField fx:id="jumlahBayarField"
+                           promptText="Masukkan nominal"
+                           GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="Status Pembayaran" GridPane.rowIndex="4"/>
+                <Label fx:id="statusLabel"
+                       text="BELUM LUNAS"
+                       style="-fx-font-weight: bold;"
+                       GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <VBox spacing="6">
+                <Label text="Keterangan"/>
+                <TextArea fx:id="keteranganArea" prefRowCount="3"/>
+            </VBox>
+
+            <Label fx:id="errorLabel" style="-fx-text-fill: red;"/>
+        </VBox>
+
+        <HBox alignment="CENTER_RIGHT">
+            <Button fx:id="btnSimpan"
+                    text="Simpan Pembayaran"
+                    disable="true"
+                    style="-fx-background-color: #2ecc71;
+                           -fx-text-fill: white;
+                           -fx-padding: 10 20;
+                           -fx-background-radius: 8;"/>
+        </HBox>
+
+    </VBox>
+</StackPane>

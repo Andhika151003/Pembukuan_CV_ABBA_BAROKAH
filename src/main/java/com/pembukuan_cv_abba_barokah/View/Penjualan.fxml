@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.pembukuan_cv_abba_barokah.Controller.PenjualanController">
+
+    <VBox spacing="24" alignment="TOP_CENTER" maxWidth="900">
+        <padding>
+            <Insets top="24" right="24" bottom="24" left="24"/>
+        </padding>
+
+         <!-- HEADER -->
+        <Label text="Penjualan"
+               style="-fx-font-size: 22; -fx-font-weight: bold; -fx-alignment: CENTER;"/>
+
+        <VBox spacing="16"
+              style="-fx-background-color: white;
+                     -fx-padding: 20;
+                     -fx-background-radius: 12;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 4);">
+
+            <GridPane hgap="16" vgap="14">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                </columnConstraints>
+
+                <!-- ROW 1 -->
+                <VBox spacing="6" GridPane.rowIndex="0" GridPane.columnIndex="0">
+                    <Label text="Nomor Faktur"/>
+                    <ComboBox fx:id="noFakturCombo"
+                              promptText="Pilih Nomor Faktur"/>
+                </VBox>
+
+                <VBox spacing="6" GridPane.rowIndex="0" GridPane.columnIndex="1">
+                    <Label text="Tanggal Transaksi"/>
+                    <TextField fx:id="tanggalField" editable="false"/>
+                </VBox>
+
+                <!-- ROW 2 -->
+                <VBox spacing="6" GridPane.rowIndex="1" GridPane.columnIndex="0">
+                    <Label text="Nama Pembeli"/>
+                    <TextField fx:id="pembeliField"
+                               promptText="Nama customer"/>
+                </VBox>
+
+                <VBox spacing="6" GridPane.rowIndex="1" GridPane.columnIndex="1">
+                    <Label text="Jenis Penjualan"/>
+                    <ComboBox fx:id="jenisPenjualanBox"/>
+                </VBox>
+
+            </GridPane>
+        </VBox>
+
+        <!-- CARD DETAIL BARANG -->
+        <VBox spacing="16"
+         style="-fx-background-color: white;
+             -fx-padding: 20;
+             -fx-background-radius: 12;
+             -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 4);">
+
+        <Label text="Detail Barang"
+           style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+
+       <!-- FORM TAMBAH BARANG -->
+        <HBox spacing="12">
+        <TextField fx:id="barangField"
+                   promptText="Nama Barang"/>
+
+        <TextField fx:id="jumlahField"
+                   promptText="Qty"/>
+
+        <TextField fx:id="hargaField"
+                   promptText="Harga"/>
+
+        <Button text="Tambah"
+                onAction="#handleTambahBarang"/>
+        </HBox>
+
+        <!-- TABLE -->
+        <TableView fx:id="tableBarang"
+               prefHeight="220">
+
+        <columns>
+            <TableColumn fx:id="colBarang" text="Barang"/>
+            <TableColumn fx:id="colJumlah" text="Jumlah"/>
+            <TableColumn fx:id="colHarga" text="Harga"/>
+            <TableColumn fx:id="colSubtotal" text="Subtotal"/>
+        </columns>
+        </TableView>
+
+        <VBox spacing="8" alignment="CENTER_RIGHT">
+        <HBox spacing="12">
+        <Label text="Total Item :" />
+        <Label fx:id="totalItemLabel" text="0"/>
+        </HBox>
+
+        <HBox spacing="12">
+        <Label text="Total Harga :" />
+        <Label fx:id="totalHargaLabel" text="Rp 0"/>
+        </HBox>
+
+        <Separator/>
+
+        <HBox spacing="12">
+        <Label text="Total Bayar :" style="-fx-font-weight: bold"/>
+        <Label fx:id="totalBayarLabel"
+               text="Rp 0"
+               style="-fx-font-weight: bold"/>
+        </HBox>
+        </VBox>
+
+        <Button text="Hapus Barang"
+                onAction="#handleHapusBarang"
+                style="-fx-background-color: #E74C3C; -fx-text-fill: white;"/>
+
+        <Button fx:id="btnSimpan"
+                text="Simpan"
+                disable="true"
+                onAction="#handleSimpan"
+                styleClass="btn-success"/>
+        </VBox>
+    </VBox>
+</StackPane>
