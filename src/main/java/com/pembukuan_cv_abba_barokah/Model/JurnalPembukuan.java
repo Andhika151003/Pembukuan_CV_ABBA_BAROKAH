@@ -21,7 +21,7 @@ public class JurnalPembukuan {
         ADMINISTRASI("Biaya Administrasi"),
         PAJAK("Pajak"),
         PEMBELIAN("Pembelian Barang"),
-        PEREDARAN_BRUTO("Peredaran Bruto"),
+        BIAYA_PEMASARAN("Biaya Pemasaran"),
         LABA_RUGI("Laba Rugi"),
         PEMBAYARAN("Pembayaran");
 

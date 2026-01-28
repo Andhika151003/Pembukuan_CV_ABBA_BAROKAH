@@ -25,7 +25,7 @@ public class Administrasi {
 
     private int id;
     private LocalDate tanggal;
-    private TipeAdministrasi jenisAdministrasi; // Diubah dari String ke Enum
+    private TipeAdministrasi jenisAdministrasi;
     private String deskripsi;
     private BigDecimal jumlah;
     private String keterangan;
