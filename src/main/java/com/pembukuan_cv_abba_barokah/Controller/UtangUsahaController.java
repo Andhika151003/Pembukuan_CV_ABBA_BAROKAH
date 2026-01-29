@@ -1,53 +1,78 @@
 package com.pembukuan_cv_abba_barokah.Controller;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import com.pembukuan_cv_abba_barokah.Model.UtangUsaha;
+import com.pembukuan_cv_abba_barokah.Service.UtangUsahaService;
 
-import java.time.LocalDate;
+import java.util.List;
 
 public class UtangUsahaController {
 
-    @FXML private ComboBox<String> fakturBox;
-    @FXML private TextField tanggalField;
-    @FXML private TextField supplierField;
-    @FXML private TextField totalField;
-    @FXML private TextField sisaField;
-    @FXML private TextField bayarField;
-    @FXML private ComboBox<String> metodeBox;
-    @FXML private Label statusLabel;
-    @FXML private Button btnSimpan;
+    private final UtangUsahaService utangService;
 
-    @FXML
-    private void initialize() {
-        fakturBox.getItems().add("PB-001");
-        metodeBox.getItems().addAll("Tunai", "Transfer");
-
-        tanggalField.setText(LocalDate.now().toString());
-        supplierField.setText("CV Sumber Makmur");
-        totalField.setText("5000000");
-        sisaField.setText("5000000");
-
-        bayarField.textProperty().addListener((obs,o,n) -> validasi());
+    public UtangUsahaController() {
+        this.utangService = new UtangUsahaService();
     }
 
-    private void validasi() {
-        try {
-            double bayar = Double.parseDouble(bayarField.getText());
-            double sisa = Double.parseDouble(sisaField.getText());
+    /* ===================== READ ===================== */
 
-            if (bayar > 0 && bayar <= sisa) {
-                statusLabel.setText(bayar == sisa ? "LUNAS" : "CICILAN");
-                btnSimpan.setDisable(false);
-            }
-        } catch (Exception e) {
-            btnSimpan.setDisable(true);
-        }
+    public List<UtangUsaha> getAllUtang() {
+        return utangService.getAll();
     }
 
-    @FXML
-    private void handleSimpan() {
-        System.out.println("Pembayaran utang disimpan");
-        // Debit Utang Usaha
-        // Kredit Kas
+    public UtangUsaha getUtangById(int id) {
+        if (id <= 0) return null;
+        return utangService.getById(id);
+    }
+
+    /* ===================== CREATE ===================== */
+
+    public boolean tambahUtang(UtangUsaha utang) {
+        if (!isValidUtangBaru(utang)) return false;
+
+        // pastikan sisa utang benar sebelum simpan
+        utang.hitungSisaUtang();
+
+        return utangService.tambahUtang(utang);
+    }
+
+    /* ===================== UPDATE / BAYAR ===================== */
+
+    public boolean bayarUtang(UtangUsaha utangBaru, int idAdministrasi) {
+        if (!isValidUtangUpdate(utangBaru)) return false;
+        if (idAdministrasi <= 0) return false;
+
+        // hitung ulang sisa utang sebelum update
+        utangBaru.hitungSisaUtang();
+
+        return utangService.bayarUtang(utangBaru, idAdministrasi);
+    }
+
+    /* ===================== DELETE ===================== */
+
+    public boolean hapusUtang(int idUtang, int idAdministrasi) {
+        if (idUtang <= 0) return false;
+        if (idAdministrasi <= 0) return false;
+
+        return utangService.hapusUtang(idUtang, idAdministrasi);
+    }
+
+    /* ===================== VALIDATION ===================== */
+
+    private boolean isValidUtangBaru(UtangUsaha u) {
+        if (u == null) return false;
+        if (u.getNo_Utang() == null || u.getNo_Utang().isEmpty()) return false;
+        if (u.getTanggal_Utang() == null) return false;
+        if (u.getTanggal_Jatuh_Tempo() == null) return false;
+        if (u.getJumlah_Utang() == null || u.getJumlah_Utang().signum() <= 0) return false;
+        if (u.getJumlah_Dibayar() == null || u.getJumlah_Dibayar().signum() < 0) return false;
+        if (u.getStatus_Utang() == null) return false;
+
+        return true;
+    }
+
+    private boolean isValidUtangUpdate(UtangUsaha u) {
+        if (!isValidUtangBaru(u)) return false;
+        if (u.getId() <= 0) return false;
+        return true;
     }
 }
