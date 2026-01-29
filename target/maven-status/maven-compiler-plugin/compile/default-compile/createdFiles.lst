@@ -21,6 +21,7 @@ com\pembukuan_cv_abba_barokah\Service\TransaksiService.class
 com\pembukuan_cv_abba_barokah\Model\Pegawai$StatusPegawai.class
 com\pembukuan_cv_abba_barokah\Service\SetorPajakService.class
 com\pembukuan_cv_abba_barokah\Controller\BiayaPemasaranController.class
+com\pembukuan_cv_abba_barokah\Model\PersediaanBarang.class
 com\pembukuan_cv_abba_barokah\Controller\PembayaranController.class
 com\pembukuan_cv_abba_barokah\Model\ReturPenjualan.class
 com\pembukuan_cv_abba_barokah\Controller\CashflowPenjualanController.class
@@ -54,6 +55,7 @@ com\pembukuan_cv_abba_barokah\Controller\PembelianInventarisController.class
 com\pembukuan_cv_abba_barokah\Model\Pegawai.class
 com\pembukuan_cv_abba_barokah\Controller\ReturPembelianController.class
 com\pembukuan_cv_abba_barokah\DAO\BiayaPemasaranDao.class
+com\pembukuan_cv_abba_barokah\DAO\PersediaanBarangDao.class
 com\pembukuan_cv_abba_barokah\DAO\ModalDao.class
 com\pembukuan_cv_abba_barokah\Model\Modal.class
 com\pembukuan_cv_abba_barokah\Service\ReturPembelianService.class
@@ -68,6 +70,7 @@ com\pembukuan_cv_abba_barokah\Service\JurnalPembukuanService.class
 com\pembukuan_cv_abba_barokah\Model\Administrasi.class
 com\pembukuan_cv_abba_barokah\Model\Penjualan.class
 com\pembukuan_cv_abba_barokah\Model\SetorPajak.class
+com\pembukuan_cv_abba_barokah\Service\PersediaanBarangService.class
 com\pembukuan_cv_abba_barokah\Service\UserService.class
 com\pembukuan_cv_abba_barokah\DAO\AdministrasiDao.class
 com\pembukuan_cv_abba_barokah\DAO\PembelianInventarisDao.class
@@ -91,6 +94,7 @@ com\pembukuan_cv_abba_barokah\DAO\UserDao.class
 com\pembukuan_cv_abba_barokah\Controller\SideBarController.class
 com\pembukuan_cv_abba_barokah\Model\ReturPenjualan$JenisPengembalian.class
 com\pembukuan_cv_abba_barokah\Service\NeracaLabaRugiService.class
+com\pembukuan_cv_abba_barokah\Controller\PersediaanBarangController.class
 com\pembukuan_cv_abba_barokah\Service\ModalService.class
 com\pembukuan_cv_abba_barokah\DAO\SetorPajakDao.class
 com\pembukuan_cv_abba_barokah\Service\ReturPenjualanService.class
@@ -101,5 +105,6 @@ com\pembukuan_cv_abba_barokah\Model\PembelianInventaris$MetodePembayaran.class
 com\pembukuan_cv_abba_barokah\Service\NeracaKeuanganService.class
 com\pembukuan_cv_abba_barokah\DAO\NeracaKeuanganDao.class
 com\pembukuan_cv_abba_barokah\Model\User.class
+com\pembukuan_cv_abba_barokah\Model\PersediaanBarang$JenisTransaksi.class
 com\pembukuan_cv_abba_barokah\DAO\PenjualanDao.class
 com\pembukuan_cv_abba_barokah\Model\UtangUsaha$StatusUtang.class

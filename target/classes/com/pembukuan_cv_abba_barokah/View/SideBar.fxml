@@ -46,6 +46,8 @@
                             <Label text="INPUT DATA" styleClass="menu-section"/>
                             <VBox spacing="4">
                                 <Label text="Biaya Administrasi Utama" styleClass="menu-item" onMouseClicked="#openAdministrasi"/>
+                                <Label text="Modal" styleClass="menu-item" onMouseClicked="#openModal"/>
+                                <Label text="Penjualan" styleClass="menu-item" onMouseClicked="#openPenjualan"/>
                             </VBox>
 
                             <!-- <Separator/> -->
