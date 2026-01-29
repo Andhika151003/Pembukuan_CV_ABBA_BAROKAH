@@ -1,57 +1,70 @@
 package com.pembukuan_cv_abba_barokah.Controller;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import com.pembukuan_cv_abba_barokah.Model.ReturPenjualan;
+import com.pembukuan_cv_abba_barokah.Service.ReturPenjualanService;
 
-import java.time.LocalDate;
+import java.util.List;
 
 public class ReturPenjualanController {
 
-    @FXML private DatePicker tanggalPicker;
-    @FXML private ComboBox<String> fakturBox;
-    @FXML private ComboBox<String> barangBox;
-    @FXML private TextField jumlahField;
-    @FXML private TextField hargaField;
-    @FXML private TextField totalField;
-    @FXML private TextArea alasanArea;
-    @FXML private Button btnSimpan;
+    private final ReturPenjualanService returService;
 
-    @FXML
-    private void initialize() {
-        tanggalPicker.setValue(LocalDate.now());
-
-        // dummy data
-        fakturBox.getItems().addAll("INV-001", "INV-002");
-        barangBox.getItems().addAll("Produk A", "Produk B");
-
-        hargaField.setText("150000");
-
-        jumlahField.textProperty().addListener((obs,o,n) -> hitung());
+    public ReturPenjualanController() {
+        this.returService = new ReturPenjualanService();
     }
 
-    private void hitung() {
-        try {
-            int qty = Integer.parseInt(jumlahField.getText());
-            double harga = Double.parseDouble(hargaField.getText());
+    /* ===================== READ ===================== */
 
-            if (qty > 0) {
-                totalField.setText(formatRupiah(qty * harga));
-                btnSimpan.setDisable(false);
-            }
-        } catch (Exception e) {
-            totalField.setText("");
-            btnSimpan.setDisable(true);
+    public List<ReturPenjualan> getAllReturPenjualan() {
+        return returService.getAll();
+    }
+
+    public ReturPenjualan getReturPenjualanById(int id) {
+        if (id <= 0) return null;
+        return returService.getById(id);
+    }
+
+    /* ===================== CREATE ===================== */
+
+    public boolean tambahReturPenjualan(ReturPenjualan retur, int idAdministrasi) {
+        if (!isValidRetur(retur)) return false;
+        return returService.tambahRetur(retur, idAdministrasi);
+    }
+
+    /* ===================== UPDATE ===================== */
+
+    public boolean perbaruiReturPenjualan(ReturPenjualan retur, int idAdministrasi) {
+        if (retur == null || retur.getId() <= 0) return false;
+        if (!isValidRetur(retur)) return false;
+
+        return returService.perbaruiRetur(retur, idAdministrasi);
+    }
+
+    /* ===================== DELETE ===================== */
+
+    public boolean hapusReturPenjualan(int idRetur, int idAdministrasi) {
+        if (idRetur <= 0) return false;
+        return returService.hapusRetur(idRetur, idAdministrasi);
+    }
+
+    /* ===================== VALIDATION ===================== */
+
+    private boolean isValidRetur(ReturPenjualan retur) {
+        if (retur == null) return false;
+        if (retur.getNo_Retur() == null || retur.getNo_Retur().isEmpty()) return false;
+        if (retur.getTanggal_Retur() == null) return false;
+        if (retur.getJumlah_Retur() <= 0) return false;
+        if (retur.getNilai_Retur() == null || retur.getNilai_Retur().signum() <= 0) return false;
+        if (retur.getAlasan_Retur() == null) return false;
+        if (retur.getStatus_Retur() == null) return false;
+        if (retur.getJenis_Pengembalian() == null) return false;
+
+        // Jika pengembalian bukan ganti barang, tanggal pengembalian wajib ada
+        if (retur.getJenis_Pengembalian() != ReturPenjualan.JenisPengembalian.GANTI_BARANG &&
+            retur.getTanggal_Pengembalian() == null) {
+            return false;
         }
-    }
 
-    @FXML
-    private void handleSimpan() {
-        System.out.println("Retur penjualan disimpan");
-        // Debit Retur Penjualan
-        // Kredit Piutang / Kas
-    }
-
-    private String formatRupiah(double value) {
-        return String.format("Rp %, .0f", value).replace(",", ".");
+        return true;
     }
 }

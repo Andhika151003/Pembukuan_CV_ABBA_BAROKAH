@@ -39,19 +39,22 @@ public class LoginController {
 
     private void loadDashboard() {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    LoginController.class.getResource("/com.pembukuan_cv_abba_barokah/View/SideBar.fxml"));
-
+            var url = getClass().getResource(
+                "/com/pembukuan_cv_abba_barokah/View/SideBar.fxml"
+            );
+            System.out.println("FXML URL = " + url);
+    
+            FXMLLoader loader = new FXMLLoader(url);
             Parent root = loader.load();
-
+    
             Stage stage = (Stage) usernameField.getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.setTitle("SiKeu ABBA");
-
+            stage.centerOnScreen();
+    
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }    
 
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);

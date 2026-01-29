@@ -45,43 +45,30 @@
                             <!-- INPUT DATA -->
                             <Label text="INPUT DATA" styleClass="menu-section"/>
                             <VBox spacing="4">
-                                <Label text="Data Transaksi" styleClass="menu-item" onMouseClicked="#openDataTransaksi"/>
-                                <Label text="HPP Barang Jadi" styleClass="menu-item" onMouseClicked="#openHppBarang"/>
-                                <Label text="HPP Produksi" styleClass="menu-item" onMouseClicked="#openHppProduksi"/>
-                                <Label text="Penjualan" styleClass="menu-item" onMouseClicked="#openPenjualan"/>
-                                <Label text="Pembayaran Pembeli" styleClass="menu-item" onMouseClicked="#openPembayaran"/>
-                                <Label text="Setor Pajak" styleClass="menu-item" onMouseClicked="#openSetorPajak"/>
-                                <Label text="Biaya Pemasaran" styleClass="menu-item" onMouseClicked="#openBiayaPemasaran"/>
-                                <Label text="Biaya Administrasi" styleClass="menu-item" onMouseClicked="#openAdministrasi"/>
-                                <Label text="Pembelian Inventaris" styleClass="menu-item" onMouseClicked="#openPembelianInventaris"/>
-                                <Label text="Retur Penjualan" styleClass="menu-item" onMouseClicked="#openReturPenjualan"/>
-                                <Label text="Retur Pembelian" styleClass="menu-item" onMouseClicked="#openReturPembelian"/>
-                                <Label text="Persediaan Barang" styleClass="menu-item" onMouseClicked="#openPersediaanBarang"/>
-                                <Label text="Utang Usaha" styleClass="menu-item" onMouseClicked="#openUtangUsaha"/>
-                                <Label text="Modal" styleClass="menu-item" onMouseClicked="#openModal"/>
+                                <Label text="Biaya Administrasi Utama" styleClass="menu-item" onMouseClicked="#openAdministrasi"/>
                             </VBox>
 
-                            <Separator/>
+                            <!-- <Separator/> -->
 
                             <!-- PERHITUNGAN -->
-                            <Label text="PERHITUNGAN" styleClass="menu-section"/>
+                            <!-- <Label text="PERHITUNGAN" styleClass="menu-section"/>
                             <VBox spacing="4">
                                 <Label text="Rekap/Jumlah Total" styleClass="menu-item" onMouseClicked="#openRekap"/>
                                 <Label text="Laba Kotor" styleClass="menu-item" onMouseClicked="#openLaba"/>
                                 <Label text="PPH 11%" styleClass="menu-item" onMouseClicked="#openPph"/>
                                 <Label text="Pajak Belum Disetor" styleClass="menu-item" onMouseClicked="#openBelumSetorPajak"/>
-                            </VBox>
+                            </VBox> -->
 
-                            <Separator/>
+                            <!-- <Separator/> -->
 
                             <!-- LAPORAN -->
-                            <Label text="LAPORAN / OUTPUT" styleClass="menu-section"/>
+                            <!-- <Label text="LAPORAN / OUTPUT" styleClass="menu-section"/>
                             <VBox spacing="4">
                                 <Label text="Jurnal Pembukuan" styleClass="menu-item" onMouseClicked="#openJurnal"/>
                                 <Label text="Cashflow Penjualan Barang" styleClass="menu-item" onMouseClicked="#openCashflow"/>
                                 <Label text="Laporan Laba" styleClass="menu-item" onMouseClicked="#openLaporanLaba"/>
                                 <Label text="Laporan Neraca Keuangan" styleClass="menu-item" onMouseClicked="#openLaporanNeracaKeuangan"/>
-                            </VBox>
+                            </VBox> -->
 
                             <!-- LOGOUT -->
                             <VBox styleClass="logout-container">
@@ -93,7 +80,6 @@
                                     </graphic>
                                 </Button>
                             </VBox>
-
                         </VBox>
                     </VBox>
                 </content>

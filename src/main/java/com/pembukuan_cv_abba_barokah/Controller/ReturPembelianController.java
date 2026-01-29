@@ -1,56 +1,63 @@
 package com.pembukuan_cv_abba_barokah.Controller;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import com.pembukuan_cv_abba_barokah.Model.ReturPembelian;
+import com.pembukuan_cv_abba_barokah.Service.ReturPembelianService;
 
-import java.time.LocalDate;
+import java.util.List;
 
 public class ReturPembelianController {
 
-    @FXML private DatePicker tanggalPicker;
-    @FXML private ComboBox<String> fakturBox;
-    @FXML private ComboBox<String> barangBox;
-    @FXML private TextField jumlahField;
-    @FXML private TextField hargaField;
-    @FXML private TextField totalField;
-    @FXML private TextArea alasanArea;
-    @FXML private Button btnSimpan;
+    private final ReturPembelianService returService;
 
-    @FXML
-    private void initialize() {
-        tanggalPicker.setValue(LocalDate.now());
-
-        fakturBox.getItems().addAll("PB-001", "PB-002");
-        barangBox.getItems().addAll("Bahan A", "Bahan B");
-
-        hargaField.setText("120000");
-
-        jumlahField.textProperty().addListener((obs,o,n) -> hitung());
+    public ReturPembelianController() {
+        this.returService = new ReturPembelianService();
     }
 
-    private void hitung() {
-        try {
-            int qty = Integer.parseInt(jumlahField.getText());
-            double harga = Double.parseDouble(hargaField.getText());
+    /* ===================== READ ===================== */
 
-            if (qty > 0) {
-                totalField.setText(formatRupiah(qty * harga));
-                btnSimpan.setDisable(false);
-            }
-        } catch (Exception e) {
-            totalField.setText("");
-            btnSimpan.setDisable(true);
-        }
+    public List<ReturPembelian> getAllReturPembelian() {
+        return returService.getAll();
     }
 
-    @FXML
-    private void handleSimpan() {
-        System.out.println("Retur pembelian disimpan");
-        // Debit Utang Usaha / Kas
-        // Kredit Retur Pembelian
+    public ReturPembelian getReturPembelianById(int id) {
+        if (id <= 0) return null;
+        return returService.getById(id);
     }
 
-    private String formatRupiah(double value) {
-        return String.format("Rp %, .0f", value).replace(",", ".");
+    /* ===================== CREATE ===================== */
+
+    public boolean tambahReturPembelian(ReturPembelian retur, int idAdministrasi) {
+        if (!isValidRetur(retur)) return false;
+        return returService.tambahRetur(retur, idAdministrasi);
+    }
+
+    /* ===================== UPDATE ===================== */
+
+    public boolean perbaruiReturPembelian(ReturPembelian retur, int idAdministrasi) {
+        if (retur == null || retur.getId() <= 0) return false;
+        if (!isValidRetur(retur)) return false;
+
+        return returService.perbaruiRetur(retur, idAdministrasi);
+    }
+
+    /* ===================== DELETE ===================== */
+
+    public boolean hapusReturPembelian(int idRetur, int idAdministrasi) {
+        if (idRetur <= 0) return false;
+        return returService.hapusRetur(idRetur, idAdministrasi);
+    }
+
+    /* ===================== VALIDATION ===================== */
+
+    private boolean isValidRetur(ReturPembelian retur) {
+        if (retur == null) return false;
+        if (retur.getNo_Retur_Pembelian() == null || retur.getNo_Retur_Pembelian().isEmpty()) return false;
+        if (retur.getTanggal_Retur() == null) return false;
+        if (retur.getJumlah_Retur() <= 0) return false;
+        if (retur.getNilai_Retur() == null || retur.getNilai_Retur().signum() <= 0) return false;
+        if (retur.getAlasan_Retur() == null) return false;
+        if (retur.getStatus_Retur() == null) return false;
+
+        return true;
     }
 }
