@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.pembukuan_cv_abba_barokah.Controller.HppController"
+      stylesheets="@Global.css"
+      spacing="16"
+      styleClass="content">
+
+    <Label text="Harga Pokok Penjualan"
+           style="-fx-font-size: 22px; -fx-font-weight: bold;" />
+
+    <!-- FORM INPUT -->
+    <GridPane hgap="12" vgap="10">
+        <columnConstraints>
+            <ColumnConstraints prefWidth="140"/>
+            <ColumnConstraints/>
+        </columnConstraints>
+
+        <children>
+            <Label text="Tanggal"/>
+            <DatePicker fx:id="tanggalField" GridPane.columnIndex="1"/>
+
+            <Label text="Jenis Produk" GridPane.rowIndex="1"/>
+            <TextField fx:id="jenisProdukField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="Kategori" GridPane.rowIndex="2"/>
+            <TextField fx:id="kategoriField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <Label text="Nama Item" GridPane.rowIndex="3"/>
+            <TextField fx:id="namaItemField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+            <Label text="Kuantitas" GridPane.rowIndex="4"/>
+            <TextField fx:id="kuantitasField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+            <Label text="Harga Satuan" GridPane.rowIndex="5"/>
+            <TextField fx:id="hargaSatuanField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+            <Label text="Keterangan" GridPane.rowIndex="6"/>
+            <TextField fx:id="keteranganField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+            <Label text="ID Transaksi" GridPane.rowIndex="7"/>
+            <TextField fx:id="idTransaksiField" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+        </children>
+    </GridPane>
+
+    <!-- BUTTON -->
+    <HBox spacing="10">
+        <Button text="Simpan" onAction="#handleSimpan"/>
+        <Button text="Hapus" styleClass="button-danger" onAction="#handleHapus"/>
+    </HBox>
+
+    <!-- TABLE (TANPA ID TRANSAKSI) -->
+    <TableView fx:id="tableHpp" prefHeight="320">
+        <columns>
+            <TableColumn text="Tanggal" fx:id="colTanggal" prefWidth="120"/>
+            <TableColumn text="Jenis Produk" fx:id="colJenisProduk" prefWidth="140"/>
+            <TableColumn text="Kategori" fx:id="colKategori" prefWidth="120"/>
+            <TableColumn text="Nama Item" fx:id="colNamaItem" prefWidth="180"/>
+            <TableColumn text="Kuantitas" fx:id="colKuantitas" prefWidth="90"/>
+            <TableColumn text="Harga Satuan" fx:id="colHargaSatuan" prefWidth="130"/>
+            <TableColumn text="Total Harga" fx:id="colTotalHarga" prefWidth="150"/>
+            <TableColumn text="Keterangan" fx:id="colKeterangan" prefWidth="200"/>
+        </columns>
+    </TableView>
+
+</VBox>

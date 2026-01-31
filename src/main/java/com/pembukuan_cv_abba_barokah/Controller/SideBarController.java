@@ -29,8 +29,8 @@ public class SideBarController {
     // ===== INPUT DATA =====
 
     @FXML
-    private void openModal() {
-        loadContent("/com/pembukuan_cv_abba_barokah/View/Modal.fxml");
+    private void openHpp() {
+        loadContent("/com/pembukuan_cv_abba_barokah/View/Hpp.fxml");
     }
 
     private void loadContent(String fxml) {

@@ -10,12 +10,12 @@
            styleClass="root">
 
     <VBox alignment="CENTER"
-          spacing="16"
-          prefWidth="320"
+          spacing="14"
+          maxWidth="380"
+          maxHeight="360"
           styleClass="login-card">
 
-        <Label text="Register Akun"
-               styleClass="title"/>
+        <Label text="Registrasi Akun" styleClass="title"/>
 
         <TextField fx:id="regUsernameField"
                    promptText="Username"
@@ -29,8 +29,10 @@
                 onAction="#handleRegister"
                 styleClass="login-button"/>
 
-        <Label fx:id="regMessageLabel"
-               styleClass="message"/>
-    </VBox>
+        <Label fx:id="regMessageLabel" styleClass="message"/>
 
+        <Button text="Kembali ke Login"
+                onAction="#goToLogin"
+                styleClass="register-button"/>
+    </VBox>
 </StackPane>

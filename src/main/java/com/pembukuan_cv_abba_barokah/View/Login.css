@@ -1,57 +1,56 @@
 /* ================= ROOT ================= */
 .root {
     -fx-background-color: linear-gradient(
-        to bottom right,
+        to right,
         #4f46e5,
         #06b6d4
     );
-
-    /* memastikan card tepat di tengah */
     -fx-alignment: center;
-    -fx-padding: 40;
-
+    -fx-padding: 20;
     -fx-font-family: "Segoe UI", "Inter", sans-serif;
 }
 
-/* ================= LOGIN CARD ================= */
+/* ================= CARD ================= */
 .login-card {
-    -fx-background-color: #ffffff;   /* background putih */
-    -fx-padding: 40 36;              /* padding dalam card */
-    -fx-spacing: 14;
+    -fx-background-color: #ffffff;
 
-    -fx-background-radius: 20;
-    -fx-border-radius: 20;
+    -fx-padding: 24;
+    -fx-spacing: 12;
 
-    -fx-min-width: 360;
-    -fx-max-width: 360;
+    -fx-background-radius: 18;
 
-    /* shadow lembut */
+    -fx-pref-width: 380;
+    -fx-max-width: 380;
+    -fx-pref-height: USE_COMPUTED_SIZE;
+    -fx-max-height: 360;   /* ⬅ INI KUNCI */
+
     -fx-effect: dropshadow(
         gaussian,
-        rgba(0, 0, 0, 0.20),
-        24,
+        rgba(0, 0, 0, 0.18),
+        18,
         0,
         0,
-        8
+        6
     );
 }
 
 /* ================= TITLE ================= */
 .title {
-    -fx-font-size: 24px;
+    -fx-font-size: 20px;
     -fx-font-weight: bold;
     -fx-text-fill: #1e293b;
 }
 
 .subtitle {
-    -fx-font-size: 13px;
+    -fx-font-size: 12px;
     -fx-text-fill: #64748b;
+    -fx-padding: 0 0 4 0;
 }
 
 /* ================= INPUT ================= */
 .input {
     -fx-pref-width: 100%;
-    -fx-padding: 12 14;
+    -fx-padding: 10 12;
 
     -fx-background-color: #f8fafc;
     -fx-background-radius: 10;
@@ -72,7 +71,7 @@
 /* ================= BUTTON ================= */
 .login-button {
     -fx-pref-width: 100%;
-    -fx-padding: 12;
+    -fx-padding: 10;
 
     -fx-background-radius: 10;
     -fx-background-color: #4f46e5;
@@ -88,8 +87,23 @@
     -fx-background-color: #4338ca;
 }
 
-.login-button:pressed {
-    -fx-background-color: #3730a3;
+/* ================= LINK ================= */
+.register-text {
+    -fx-font-size: 12px;
+    -fx-text-fill: #64748b;
+}
+
+.register-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #4f46e5;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-padding: 2;
+    -fx-cursor: hand;
+}
+
+.register-button:hover {
+    -fx-underline: true;
 }
 
 /* ================= MESSAGE ================= */
@@ -97,10 +111,5 @@
     -fx-font-size: 12px;
 }
 
-.success {
-    -fx-text-fill: #16a34a;
-}
-
-.error {
-    -fx-text-fill: #dc2626;
-}
+.success { -fx-text-fill: #16a34a; }
+.error   { -fx-text-fill: #dc2626; }

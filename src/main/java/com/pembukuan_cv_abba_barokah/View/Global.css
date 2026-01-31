@@ -1,110 +1,62 @@
 /* ================= ROOT ================= */
 .root {
     -fx-font-family: "Segoe UI", "Inter", sans-serif;
-    -fx-background-color: #f5f6fa;
+    -fx-background-color: #f8fafc;
 }
 
-/* ================= PAGE CONTAINER ================= */
-.page-container {
+/* ================= CONTENT ================= */
+.content {
     -fx-padding: 24;
 }
 
-/* ================= HEADER ================= */
+/* ================= LABEL ================= */
 .label {
-    -fx-text-fill: #2f3640;
+    -fx-font-size: 13px;
 }
 
-/* ================= CARD ================= */
-.card {
-    -fx-background-color: white;
-    -fx-padding: 20;
-    -fx-background-radius: 12;
-    -fx-border-radius: 12;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 4);
+/* ================= FORM ================= */
+.text-field, .date-picker {
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-border-color: #c7d2fe;
+}
+
+.text-field:focused, .date-picker:focused {
+    -fx-border-color: #6366f1;
 }
 
 /* ================= BUTTON ================= */
 .button {
-    -fx-background-color: #e0e0e0;
-    -fx-text-fill: #2f3640;
+    -fx-background-color: #6366f1;
+    -fx-text-fill: white;
     -fx-background-radius: 8;
-    -fx-padding: 8 14;
-    -fx-font-size: 13px;
-    -fx-cursor: hand;
+    -fx-padding: 6 18;
+    -fx-font-weight: bold;
 }
 
 .button:hover {
-    -fx-background-color: #d5d5d5;
+    -fx-background-color: #4f46e5;
 }
 
-/* Button Primary */
-.btn-primary {
-    -fx-background-color: #6a00ff;
-    -fx-text-fill: white;
+.button-danger {
+    -fx-background-color: #ef4444;
 }
 
-.btn-primary:hover {
-    -fx-background-color: #5800d6;
-}
-
-/* Button Danger */
-.btn-danger {
-    -fx-background-color: #e84118;
-    -fx-text-fill: white;
-}
-
-.btn-danger:hover {
-    -fx-background-color: #c23616;
-}
-
-/* ================= TAB / NAV BUTTON ================= */
-.button:focused {
-    -fx-border-color: #6a00ff;
-    -fx-border-radius: 8;
-    -fx-border-width: 2;
-}
-
-/* ================= INPUT ================= */
-.text-field,
-.text-area,
-.date-picker {
-    -fx-background-radius: 8;
-    -fx-border-radius: 8;
-    -fx-border-color: #dcdde1;
-    -fx-padding: 6 10;
-}
-
-.text-field:focused,
-.text-area:focused,
-.date-picker:focused {
-    -fx-border-color: #6a00ff;
+.button-danger:hover {
+    -fx-background-color: #dc2626;
 }
 
 /* ================= TABLE ================= */
 .table-view {
     -fx-background-radius: 10;
     -fx-border-radius: 10;
-    -fx-border-color: #e0e0e0;
+    -fx-border-color: #e5e7eb;
 }
 
 .table-view .column-header-background {
-    -fx-background-color: #f1f2f6;
+    -fx-background-color: #f1f5f9;
 }
 
 .table-view .column-header {
     -fx-font-weight: bold;
-    -fx-text-fill: #2f3640;
-}
-
-.table-row-cell:selected {
-    -fx-background-color: #dcd6ff;
-}
-
-/* ================= SCROLLPANE ================= */
-.scroll-pane {
-    -fx-background-color: transparent;
-}
-
-.scroll-pane .viewport {
-    -fx-background-color: transparent;
 }
