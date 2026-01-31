@@ -41,7 +41,6 @@ public class CashflowDao implements BaseDao<Cashflow> {
             pstmt.setString(4, t.getTotalPengeluaran().toString());
             pstmt.setString(5, t.getSaldoAwal().toString());
             pstmt.setString(6, t.getSaldoAkhir().toString());
-            pstmt.setInt(7, t.getIdAdministrasi());
 
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -84,8 +83,7 @@ public class CashflowDao implements BaseDao<Cashflow> {
             pstmt.setString(4, t.getTotalPengeluaran().toString());
             pstmt.setString(5, t.getSaldoAwal().toString());
             pstmt.setString(6, t.getSaldoAkhir().toString());
-            pstmt.setInt(7, t.getIdAdministrasi());
-            pstmt.setInt(8, t.getId());
+            pstmt.setInt(7, t.getId());
 
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -118,8 +116,7 @@ public class CashflowDao implements BaseDao<Cashflow> {
             new BigDecimal(rs.getString("total_pemasukan")),
             new BigDecimal(rs.getString("total_pengeluaran")),
             new BigDecimal(rs.getString("saldo_awal")),
-            new BigDecimal(rs.getString("saldo_akhir")),
-            rs.getInt("id_administrasi")
+            new BigDecimal(rs.getString("saldo_akhir"))
         );
     }
 }

@@ -29,20 +29,23 @@ public class JurnalPembukuanDao implements BaseDao<JurnalPembukuan> {
 
     @Override
     public boolean save(JurnalPembukuan t) {
-        String sql = "INSERT INTO JurnalPembukuan (tanggal, nomor_jurnal, jenis_transaksi, kategori, deskripsi, debit, kredit, saldo, id_administrasi) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO JurnalPembukuan (tanggal, nomor_jurnal, jenis_transaksi, kategori, deskripsi, debit, kredit, saldo, id_transaksi, id_pembayaran, id_pembelian, id_gaji) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, t.getTanggal().toString());
-            pstmt.setString(2, t.getNomorJurnal());
+            pstmt.setInt(2, t.getNomorJurnal());
             pstmt.setString(3, t.getJenisTransaksi().name());
             pstmt.setString(4, t.getKategori().name());       
             pstmt.setString(5, t.getDeskripsi());
             pstmt.setString(6, t.getDebit().toString());
             pstmt.setString(7, t.getKredit().toString());
             pstmt.setString(8, t.getSaldo().toString());
-            pstmt.setInt(9, t.getIdAdministrasi());
+            pstmt.setInt(9, t.getid_Transaksi());
+            pstmt.setInt(10, t.getid_Pembayaran());
+            pstmt.setInt(11, t.getid_Pembelian());
+            pstmt.setInt(12, t.getid_Gaji());
 
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -71,21 +74,24 @@ public class JurnalPembukuanDao implements BaseDao<JurnalPembukuan> {
 
     @Override
     public boolean update(JurnalPembukuan t) {
-        String sql = "UPDATE JurnalPembukuan SET tanggal = ?, nomor_jurnal = ?, jenis_transaksi = ?, kategori = ?, deskripsi = ?, debit = ?, kredit = ?, saldo = ?, id_administrasi = ? WHERE id = ?";
+        String sql = "UPDATE JurnalPembukuan SET tanggal = ?, nomor_jurnal = ?, jenis_transaksi = ?, kategori = ?, deskripsi = ?, debit = ?, kredit = ?, saldo = ?, id_transaksi = ?, id_pembayaran = ?, id_pembelian = ?, id_gaji = ? WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, t.getTanggal().toString());
-            pstmt.setString(2, t.getNomorJurnal());
+            pstmt.setInt(2, t.getNomorJurnal());
             pstmt.setString(3, t.getJenisTransaksi().name());
             pstmt.setString(4, t.getKategori().name());
             pstmt.setString(5, t.getDeskripsi());
             pstmt.setString(6, t.getDebit().toString());
             pstmt.setString(7, t.getKredit().toString());
             pstmt.setString(8, t.getSaldo().toString());
-            pstmt.setInt(9, t.getIdAdministrasi());
-            pstmt.setInt(10, t.getId());
+            pstmt.setInt(9, t.getid_Transaksi());
+            pstmt.setInt(10, t.getid_Pembayaran());
+            pstmt.setInt(11, t.getid_Pembelian());
+            pstmt.setInt(12, t.getid_Gaji());
+            pstmt.setInt(13, t.getId());
 
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -116,19 +122,22 @@ public class JurnalPembukuanDao implements BaseDao<JurnalPembukuan> {
 
         String kategoriStr = rs.getString("kategori");
         JurnalPembukuan.Kategori kategori = (kategoriStr != null) ? 
-                JurnalPembukuan.Kategori.valueOf(kategoriStr) : JurnalPembukuan.Kategori.ADMINISTRASI;
+                JurnalPembukuan.Kategori.valueOf(kategoriStr) : JurnalPembukuan.Kategori.TRANSAKSI;
 
         return new JurnalPembukuan(
                 rs.getInt("id"),
                 LocalDate.parse(rs.getString("tanggal")),
-                rs.getString("nomor_jurnal"),
+                rs.getInt("nomor_jurnal"),
                 jenis,
                 kategori,
                 rs.getString("deskripsi"),
                 new BigDecimal(rs.getString("debit")),
                 new BigDecimal(rs.getString("kredit")),
                 new BigDecimal(rs.getString("saldo")),
-                rs.getInt("id_administrasi")
+                rs.getInt("id_transaksi"),
+                rs.getInt("id_pembayaran"),
+                rs.getInt("id_pembelian"),
+                rs.getInt("id_gaji")
         );
     }
 }

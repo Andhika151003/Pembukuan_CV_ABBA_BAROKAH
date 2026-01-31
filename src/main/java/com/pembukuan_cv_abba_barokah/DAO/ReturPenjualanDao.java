@@ -30,22 +30,25 @@ public class ReturPenjualanDao implements BaseDao<ReturPenjualan> {
 
     @Override
     public boolean save(ReturPenjualan t) {
-        String sql = "INSERT INTO ReturPenjualan (no_retur, tanggal_retur, jumlah_retur, nilai_retur, " +
-                     "alasan_retur, keterangan_retur, status_retur, jenis_pengembalian, " +
-                     "tanggal_pengembalian) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        // Perbaikan: Menambahkan id_penjualan dan id_transaksi ke dalam query INSERT
+        String sql = "INSERT INTO ReturPenjualan (no_retur, tanggal_retur, id_penjualan, id_transaksi, " +
+                     "jumlah_retur, nilai_retur, alasan_retur, keterangan_retur, status_retur, " +
+                     "jenis_pengembalian, tanggal_pengembalian) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
-            pstmt.setString(1, t.getNo_Retur());
+            pstmt.setInt(1, t.getNo_Retur());
             pstmt.setString(2, t.getTanggal_Retur().toString());
-            pstmt.setInt(3, t.getJumlah_Retur());
-            pstmt.setString(4, t.getNilai_Retur().toString());
-            pstmt.setString(5, t.getAlasan_Retur().name());
-            pstmt.setString(6, t.getKeterangan_Retur());
-            pstmt.setString(7, t.getStatus_Retur().name());
-            pstmt.setString(8, t.getJenis_Pengembalian().name());
-            pstmt.setString(9, t.getTanggal_Pengembalian().toString());
+            pstmt.setInt(3, t.getId_Penjualan());
+            pstmt.setInt(4, t.getid_Transaksi());
+            pstmt.setInt(5, t.getJumlah_Retur());
+            pstmt.setString(6, t.getNilai_Retur().toString());
+            pstmt.setString(7, t.getAlasan_Retur().name());
+            pstmt.setString(8, t.getKeterangan_Retur());
+            pstmt.setString(9, t.getStatus_Retur().name());
+            pstmt.setString(10, t.getJenis_Pengembalian().name());
+            pstmt.setString(11, t.getTanggal_Pengembalian().toString());
             
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -76,23 +79,27 @@ public class ReturPenjualanDao implements BaseDao<ReturPenjualan> {
 
     @Override
     public boolean update(ReturPenjualan t) {
-        String sql = "UPDATE ReturPenjualan SET no_retur = ?, tanggal_retur = ?, jumlah_retur = ?, " +
-                     "nilai_retur = ?, alasan_retur = ?, keterangan_retur = ?, status_retur = ?, " +
-                     "jenis_pengembalian = ?, tanggal_pengembalian = ? WHERE id = ?";
+        // Perbaikan: Menambahkan id_penjualan dan id_transaksi ke dalam query UPDATE
+        String sql = "UPDATE ReturPenjualan SET no_retur = ?, tanggal_retur = ?, id_penjualan = ?, " +
+                     "id_transaksi = ?, jumlah_retur = ?, nilai_retur = ?, alasan_retur = ?, " +
+                     "keterangan_retur = ?, status_retur = ?, jenis_pengembalian = ?, " +
+                     "tanggal_pengembalian = ? WHERE id = ?";
         
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
-            pstmt.setString(1, t.getNo_Retur());
+            pstmt.setInt(1, t.getNo_Retur());
             pstmt.setString(2, t.getTanggal_Retur().toString());
-            pstmt.setInt(3, t.getJumlah_Retur());
-            pstmt.setString(4, t.getNilai_Retur().toString());
-            pstmt.setString(5, t.getAlasan_Retur().name());
-            pstmt.setString(6, t.getKeterangan_Retur());
-            pstmt.setString(7, t.getStatus_Retur().name());
-            pstmt.setString(8, t.getJenis_Pengembalian().name());
-            pstmt.setString(9, t.getTanggal_Pengembalian().toString());
-            pstmt.setInt(10, t.getId());
+            pstmt.setInt(3, t.getId_Penjualan());
+            pstmt.setInt(4, t.getid_Transaksi());
+            pstmt.setInt(5, t.getJumlah_Retur());
+            pstmt.setString(6, t.getNilai_Retur().toString());
+            pstmt.setString(7, t.getAlasan_Retur().name());
+            pstmt.setString(8, t.getKeterangan_Retur());
+            pstmt.setString(9, t.getStatus_Retur().name());
+            pstmt.setString(10, t.getJenis_Pengembalian().name());
+            pstmt.setString(11, t.getTanggal_Pengembalian().toString());
+            pstmt.setInt(12, t.getId());
             
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -121,10 +128,13 @@ public class ReturPenjualanDao implements BaseDao<ReturPenjualan> {
         ReturPenjualan.StatusRetur status = ReturPenjualan.StatusRetur.valueOf(rs.getString("status_retur"));
         ReturPenjualan.JenisPengembalian jenis = ReturPenjualan.JenisPengembalian.valueOf(rs.getString("jenis_pengembalian"));
 
+        // Perbaikan: Menyesuaikan parameter constructor dengan urutan dan jumlah field di Model
         return new ReturPenjualan(
             rs.getInt("id"),
-            rs.getString("no_retur"),
+            rs.getInt("no_retur"),
             LocalDate.parse(rs.getString("tanggal_retur")),
+            rs.getInt("id_penjualan"), // Tambahan
+            rs.getInt("id_transaksi"), // Tambahan
             rs.getInt("jumlah_retur"),
             new BigDecimal(rs.getString("nilai_retur")),
             alasan,

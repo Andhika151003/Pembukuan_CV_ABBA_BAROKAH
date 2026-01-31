@@ -41,10 +41,10 @@ public class ReturPenjualan {
     }
 
     private int id;
-    private String no_Retur; // Unique
+    private int no_Retur;
     private LocalDate tanggal_Retur;
-    // private int id_Penjualan;
-    // private int id_Barang; 
+    private int id_Penjualan;
+    private int id_Transaksi;
     private int jumlah_Retur;
     private BigDecimal nilai_Retur;
     private AlasanRetur alasan_Retur;
@@ -54,8 +54,7 @@ public class ReturPenjualan {
     private LocalDate tanggal_Pengembalian;
 
     // Constructor Lengkap (Dengan ID)
-    public ReturPenjualan(int id, String no_Retur, LocalDate tanggal_Retur, //int id_Penjualan, 
-                          //int id_Barang , 
+    public ReturPenjualan(int id, int no_Retur, LocalDate tanggal_Retur, int id_Penjualan, int id_Transaksi, 
                           int jumlah_Retur, BigDecimal nilai_Retur, 
                           AlasanRetur alasan_Retur, String keterangan_Retur, 
                           StatusRetur status_Retur, JenisPengembalian jenis_Pengembalian, 
@@ -63,8 +62,8 @@ public class ReturPenjualan {
         this.id = id;
         this.no_Retur = no_Retur;
         this.tanggal_Retur = tanggal_Retur;
-        // this.id_Penjualan = id_Penjualan;
-        // this.id_Barang = id_Barang;
+        this.id_Penjualan = id_Penjualan;
+        this.id_Transaksi = id_Transaksi;
         this.jumlah_Retur = jumlah_Retur;
         this.nilai_Retur = nilai_Retur;
         this.alasan_Retur = alasan_Retur;
@@ -75,16 +74,15 @@ public class ReturPenjualan {
     }
 
     // Constructor Tanpa ID (Untuk Insert Data Baru)
-    public ReturPenjualan(String no_Retur, LocalDate tanggal_Retur, //int id_Penjualan, 
-                          //int id_Barang, 
+    public ReturPenjualan(int no_Retur, LocalDate tanggal_Retur, int id_Penjualan,int id_Transaksi,  
                           int jumlah_Retur, BigDecimal nilai_Retur, 
                           AlasanRetur alasan_Retur, String keterangan_Retur, 
                           StatusRetur status_Retur, JenisPengembalian jenis_Pengembalian, 
                           LocalDate tanggal_Pengembalian) {
         this.no_Retur = no_Retur;
         this.tanggal_Retur = tanggal_Retur;
-        // this.id_Penjualan = id_Penjualan;
-        // this.id_Barang = id_Barang;
+        this.id_Penjualan = id_Penjualan;
+        this.id_Transaksi = id_Transaksi;
         this.jumlah_Retur = jumlah_Retur;
         this.nilai_Retur = nilai_Retur;
         this.alasan_Retur = alasan_Retur;
@@ -98,17 +96,17 @@ public class ReturPenjualan {
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
-    public String getNo_Retur() { return no_Retur; }
-    public void setNo_Retur(String no_Retur) { this.no_Retur = no_Retur; }
+    public int getNo_Retur() { return no_Retur; }
+    public void setNo_Retur(int no_Retur) { this.no_Retur = no_Retur; }
 
     public LocalDate getTanggal_Retur() { return tanggal_Retur; }
     public void setTanggal_Retur(LocalDate tanggal_Retur) { this.tanggal_Retur = tanggal_Retur; }
 
-    // public int getId_Penjualan() { return id_Penjualan; }
-    // public void setId_Penjualan(int id_Penjualan) { this.id_Penjualan = id_Penjualan; }
+    public int getId_Penjualan() { return id_Penjualan; }
+    public void setId_Penjualan(int id_Penjualan) { this.id_Penjualan = id_Penjualan; }
 
-    // public int getId_Barang() { return id_Barang; }
-    // public void setId_Barang(int id_Barang) { this.id_Barang = id_Barang; }
+    public int getid_Transaksi() { return id_Transaksi; }
+    public void setid_Transaksi(int id_Transaksi) { this.id_Transaksi = id_Transaksi; }
 
     public int getJumlah_Retur() { return jumlah_Retur; }
     public void setJumlah_Retur(int jumlah_Retur) { this.jumlah_Retur = jumlah_Retur; }
@@ -137,7 +135,8 @@ public class ReturPenjualan {
                 "id=" + id +
                 ", no_Retur='" + no_Retur + '\'' +
                 ", tanggal_Retur=" + tanggal_Retur +
-                // ", id_Penjualan=" + id_Penjualan +
+                ", id_Penjualan=" + id_Penjualan +
+                ", id_Transaksi=" + id_Transaksi +
                 ", jumlah_Retur=" + jumlah_Retur +
                 ", nilai_Retur=" + nilai_Retur +
                 ", status_Retur=" + status_Retur +

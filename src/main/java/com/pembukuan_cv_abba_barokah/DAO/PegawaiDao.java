@@ -28,7 +28,7 @@ public class PegawaiDao implements BaseDao<Pegawai> {
 
     @Override
     public boolean save(Pegawai t) {
-        String sql = "INSERT INTO Pegawai (nama, jabatan, status_pegawai, gaji_pokok, tanggal_masuk, status, id_administrasi) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Pegawai (nama, jabatan, status_pegawai, gaji_pokok, tanggal_masuk, status) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.connection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -39,7 +39,6 @@ public class PegawaiDao implements BaseDao<Pegawai> {
             pstmt.setString(4, t.getGaji_Pokok().toString());
             pstmt.setString(5, t.getTanggal_Masuk().toString());
             pstmt.setString(6, t.getStatus().name());         
-            pstmt.setInt(7, t.getIdAdministrasi());
 
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -67,7 +66,7 @@ public class PegawaiDao implements BaseDao<Pegawai> {
 
     @Override
     public boolean update(Pegawai t) {
-        String sql = "UPDATE Pegawai SET nama = ?, jabatan = ?, status_pegawai = ?, gaji_pokok = ?, tanggal_masuk = ?, status = ?, id_administrasi = ? WHERE id = ?";
+        String sql = "UPDATE Pegawai SET nama = ?, jabatan = ?, status_pegawai = ?, gaji_pokok = ?, tanggal_masuk = ?, status = ? WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.connection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -78,8 +77,7 @@ public class PegawaiDao implements BaseDao<Pegawai> {
             pstmt.setString(4, t.getGaji_Pokok().toString());
             pstmt.setString(5, t.getTanggal_Masuk().toString());
             pstmt.setString(6, t.getStatus().name());
-            pstmt.setInt(7, t.getIdAdministrasi());
-            pstmt.setInt(8, t.getId());
+            pstmt.setInt(7, t.getId());
 
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -117,8 +115,7 @@ public class PegawaiDao implements BaseDao<Pegawai> {
                 sp,
                 new BigDecimal(rs.getString("gaji_pokok")),
                 LocalDate.parse(rs.getString("tanggal_masuk")),
-                sa,
-                rs.getInt("id_administrasi")
+                sa
         );
     }
 }

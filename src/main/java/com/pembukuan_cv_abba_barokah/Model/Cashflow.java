@@ -9,13 +9,12 @@ public class Cashflow {
     private BigDecimal totalPemasukan;      
     private BigDecimal totalPengeluaran;   
     private BigDecimal saldoAwal;           
-    private BigDecimal saldoAkhir;          
-    private int idAdministrasi;
+    private BigDecimal saldoAkhir;
 
     // Constructor
     public Cashflow(int id, String bulan, int tahun, BigDecimal totalPemasukan,
                     BigDecimal totalPengeluaran, BigDecimal saldoAwal, 
-                    BigDecimal saldoAkhir, int idAdministrasi) {
+                    BigDecimal saldoAkhir) {
         this.id = id;
         this.bulan = bulan;
         this.tahun = tahun;
@@ -23,20 +22,18 @@ public class Cashflow {
         this.totalPengeluaran = totalPengeluaran;
         this.saldoAwal = saldoAwal;
         this.saldoAkhir = saldoAkhir;
-        this.idAdministrasi = idAdministrasi;
     }
 
     // Constructor (tanpa id)
     public Cashflow(String bulan, int tahun, BigDecimal totalPemasukan,
                     BigDecimal totalPengeluaran, BigDecimal saldoAwal, 
-                    BigDecimal saldoAkhir, int idAdministrasi) {
+                    BigDecimal saldoAkhir) {
         this.bulan = bulan;
         this.tahun = tahun;
         this.totalPemasukan = totalPemasukan;
         this.totalPengeluaran = totalPengeluaran;
         this.saldoAwal = saldoAwal;
         this.saldoAkhir = saldoAkhir;
-        this.idAdministrasi = idAdministrasi;
     }
 
     // Getters and Setters
@@ -96,14 +93,6 @@ public class Cashflow {
         this.saldoAkhir = saldoAkhir;
     }
 
-    public int getIdAdministrasi() {
-        return idAdministrasi;
-    }
-
-    public void setIdAdministrasi(int idAdministrasi) {
-        this.idAdministrasi = idAdministrasi;
-    }
-
     //Method kalkulasi
     public void hitungSaldoAkhir() {
         this.saldoAkhir = this.saldoAwal
@@ -121,7 +110,6 @@ public class Cashflow {
                 ", totalPengeluaran=" + totalPengeluaran +
                 ", saldoAwal=" + saldoAwal +
                 ", saldoAkhir=" + saldoAkhir +
-                ", idAdministrasi=" + idAdministrasi +
                 '}';
     }
 }

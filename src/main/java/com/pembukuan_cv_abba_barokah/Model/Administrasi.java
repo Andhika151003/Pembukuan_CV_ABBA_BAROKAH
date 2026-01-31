@@ -5,33 +5,15 @@ import java.time.LocalDate;
 
 public class Administrasi {
 
-    // Enum untuk dropdown jenis administrasi
-    public enum TipeAdministrasi {
-        PENJUALAN("Penjualan"),
-        HPP("HPP"),
-        GAJI("Gaji Pegawai"),
-        ADMINISTRASI("Biaya Administrasi"),
-        PAJAK("Pajak"),
-        PEMBELIAN("Pembelian Barang"),
-        PEREDARAN_BRUTO("Peredaran Bruto"),
-        LABA_RUGI("Laba Rugi"),
-        PEMBAYARAN("Pembayaran"),
-        TRANSAKSI("Transaksi");
-
-        private final String deskripsi;
-        TipeAdministrasi(String deskripsi) { this.deskripsi = deskripsi; }
-        @Override public String toString() { return deskripsi; }
-    }
-
     private int id;
     private LocalDate tanggal;
-    private TipeAdministrasi jenisAdministrasi;
+    private String jenisAdministrasi;
     private String deskripsi;
     private BigDecimal jumlah;
     private String keterangan;
 
     // Constructor Lengkap
-    public Administrasi(int id, LocalDate tanggal, TipeAdministrasi jenisAdministrasi, String deskripsi, BigDecimal jumlah, String keterangan) {
+    public Administrasi(int id, LocalDate tanggal, String jenisAdministrasi, String deskripsi, BigDecimal jumlah, String keterangan) {
         this.id = id;
         this.tanggal = tanggal;
         this.jenisAdministrasi = jenisAdministrasi;
@@ -41,7 +23,7 @@ public class Administrasi {
     }
 
     // Constructor Tanpa ID
-    public Administrasi(LocalDate tanggal, TipeAdministrasi jenisAdministrasi, String deskripsi, BigDecimal jumlah, String keterangan) {
+    public Administrasi(LocalDate tanggal, String jenisAdministrasi, String deskripsi, BigDecimal jumlah, String keterangan) {
         this.tanggal = tanggal;
         this.jenisAdministrasi = jenisAdministrasi;
         this.deskripsi = deskripsi;
@@ -54,8 +36,8 @@ public class Administrasi {
     public void setId(int id) { this.id = id; }
     public LocalDate getTanggal() { return tanggal; }
     public void setTanggal(LocalDate tanggal) { this.tanggal = tanggal; }
-    public TipeAdministrasi getJenisAdministrasi() { return jenisAdministrasi; }
-    public void setJenisAdministrasi(TipeAdministrasi jenisAdministrasi) { this.jenisAdministrasi = jenisAdministrasi; }
+    public String getJenisAdministrasi() { return jenisAdministrasi; }
+    public void setJenisAdministrasi(String jenisAdministrasi) { this.jenisAdministrasi = jenisAdministrasi; }
     public String getDeskripsi() { return deskripsi; }
     public void setDeskripsi(String deskripsi) { this.deskripsi = deskripsi; }
     public BigDecimal getJumlah() { return jumlah; }

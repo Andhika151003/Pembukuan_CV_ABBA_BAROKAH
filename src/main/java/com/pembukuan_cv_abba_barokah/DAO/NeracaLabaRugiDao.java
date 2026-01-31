@@ -27,7 +27,7 @@ public class NeracaLabaRugiDao implements BaseDao<NeracaLabaRugi> {
 
     @Override
     public boolean save(NeracaLabaRugi t) {
-        String sql = "INSERT INTO NeracaLabaRugi (tahun, total_pendapatan, total_hpp, laba_kotor, total_biaya_operasional, laba_bersih_sebelum_pajak, pajak, laba_bersih, id_administrasi) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO NeracaLabaRugi (tahun, total_pendapatan, total_hpp, laba_kotor, total_biaya_operasional, laba_bersih_sebelum_pajak, pajak, laba_bersih) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.connection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -40,7 +40,6 @@ public class NeracaLabaRugiDao implements BaseDao<NeracaLabaRugi> {
             pstmt.setString(6, t.getLaba_Bersih_Sebelum_Pajak().toString());
             pstmt.setString(7, t.getPajak().toString());
             pstmt.setString(8, t.getLaba_Bersih().toString());
-            pstmt.setInt(9, t.getIdAdministrasi());
 
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -69,7 +68,7 @@ public class NeracaLabaRugiDao implements BaseDao<NeracaLabaRugi> {
 
     @Override
     public boolean update(NeracaLabaRugi t) {
-        String sql = "UPDATE NeracaLabaRugi SET tahun = ?, total_pendapatan = ?, total_hpp = ?, laba_kotor = ?, total_biaya_operasional = ?, laba_bersih_sebelum_pajak = ?, pajak = ?, laba_bersih = ?, id_administrasi = ? WHERE id = ?";
+        String sql = "UPDATE NeracaLabaRugi SET tahun = ?, total_pendapatan = ?, total_hpp = ?, laba_kotor = ?, total_biaya_operasional = ?, laba_bersih_sebelum_pajak = ?, pajak = ?, laba_bersih = ? WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.connection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -82,8 +81,7 @@ public class NeracaLabaRugiDao implements BaseDao<NeracaLabaRugi> {
             pstmt.setString(6, t.getLaba_Bersih_Sebelum_Pajak().toString());
             pstmt.setString(7, t.getPajak().toString());
             pstmt.setString(8, t.getLaba_Bersih().toString());
-            pstmt.setInt(9, t.getIdAdministrasi());
-            pstmt.setInt(10, t.getId());
+            pstmt.setInt(9, t.getId());
 
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -117,8 +115,7 @@ public class NeracaLabaRugiDao implements BaseDao<NeracaLabaRugi> {
                 new BigDecimal(rs.getString("total_biaya_operasional")),
                 new BigDecimal(rs.getString("laba_bersih_sebelum_pajak")),
                 new BigDecimal(rs.getString("pajak")),
-                new BigDecimal(rs.getString("laba_bersih")),
-                rs.getInt("id_administrasi")
+                new BigDecimal(rs.getString("laba_bersih"))
         );
     }
 }

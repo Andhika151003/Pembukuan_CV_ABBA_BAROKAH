@@ -35,7 +35,7 @@ public class AdministrasiDao implements BaseDao<Administrasi> {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             pstmt.setString(1, t.getTanggal().toString());
-            pstmt.setString(2, t.getJenisAdministrasi().name()); // Simpan nama Enum
+            pstmt.setString(2, t.getJenisAdministrasi());
             pstmt.setString(3, t.getDeskripsi());
             pstmt.setString(4, t.getJumlah().toString());
             pstmt.setString(5, t.getKeterangan());
@@ -73,7 +73,7 @@ public class AdministrasiDao implements BaseDao<Administrasi> {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             pstmt.setString(1, t.getTanggal().toString());
-            pstmt.setString(2, t.getJenisAdministrasi().name());
+            pstmt.setString(2, t.getJenisAdministrasi());
             pstmt.setString(3, t.getDeskripsi());
             pstmt.setString(4, t.getJumlah().toString());
             pstmt.setString(5, t.getKeterangan());
@@ -101,14 +101,11 @@ public class AdministrasiDao implements BaseDao<Administrasi> {
     }
 
     private Administrasi mapResultSetToAdministrasi(ResultSet rs) throws SQLException {
-        String tipeStr = rs.getString("jenis_administrasi");
-        Administrasi.TipeAdministrasi tipe = (tipeStr != null) ? 
-                Administrasi.TipeAdministrasi.valueOf(tipeStr) : Administrasi.TipeAdministrasi.ADMINISTRASI;
 
         return new Administrasi(
             rs.getInt("id"),
             LocalDate.parse(rs.getString("tanggal")),
-            tipe,
+            rs.getString("jenis_administrasi"),
             rs.getString("deskripsi"),
             new BigDecimal(rs.getString("jumlah")),
             rs.getString("keterangan")

@@ -29,7 +29,7 @@ public class HargaPokokPenjualanDao implements BaseDao<HargaPokokPenjualan> {
 
     @Override
     public boolean save(HargaPokokPenjualan t) {
-        String sql = "INSERT INTO HargaPokokPenjualan (tanggal, jenis_produk, kategori, nama_item, kuantitas, harga_satuan, total_harga, keterangan, id_administrasi) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO HargaPokokPenjualan (tanggal, jenis_produk, kategori, nama_item, kuantitas, harga_satuan, total_harga, keterangan, id_Transaksi) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -41,7 +41,7 @@ public class HargaPokokPenjualanDao implements BaseDao<HargaPokokPenjualan> {
             pstmt.setString(6, t.getHargaSatuan().toString());
             pstmt.setString(7, t.getTotalHarga().toString());
             pstmt.setString(8, t.getKeterangan());
-            pstmt.setInt(9, t.getIdAdministrasi());
+            pstmt.setInt(9, t.getId_Transaksi());
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -68,7 +68,7 @@ public class HargaPokokPenjualanDao implements BaseDao<HargaPokokPenjualan> {
 
     @Override
     public boolean update(HargaPokokPenjualan t) {
-        String sql = "UPDATE HargaPokokPenjualan SET tanggal = ?, jenis_produk = ?, kategori = ?, nama_item = ?, kuantitas = ?, harga_satuan = ?, total_harga = ?, keterangan = ?, id_administrasi = ? WHERE id = ?";
+        String sql = "UPDATE HargaPokokPenjualan SET tanggal = ?, jenis_produk = ?, kategori = ?, nama_item = ?, kuantitas = ?, harga_satuan = ?, total_harga = ?, keterangan = ?, id_Transaksi = ? WHERE id = ?";
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, t.getTanggal().toString());
@@ -79,7 +79,7 @@ public class HargaPokokPenjualanDao implements BaseDao<HargaPokokPenjualan> {
             pstmt.setString(6, t.getHargaSatuan().toString());
             pstmt.setString(7, t.getTotalHarga().toString());
             pstmt.setString(8, t.getKeterangan());
-            pstmt.setInt(9, t.getIdAdministrasi());
+            pstmt.setInt(9, t.getId_Transaksi());
             pstmt.setInt(10, t.getId());
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -112,7 +112,7 @@ public class HargaPokokPenjualanDao implements BaseDao<HargaPokokPenjualan> {
                 new BigDecimal(rs.getString("harga_satuan")),
                 new BigDecimal(rs.getString("total_harga")),
                 rs.getString("keterangan"),
-                rs.getInt("id_administrasi")
+                rs.getInt("id_Transaksi")
         );
     }
 }

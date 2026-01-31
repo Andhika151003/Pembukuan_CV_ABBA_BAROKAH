@@ -7,11 +7,9 @@ import java.util.List;
 
 public class PembelianInventarisService {
     private final PembelianInventarisDao inventarisDao;
-    private final AdministrasiService administrasiService;
 
     public PembelianInventarisService() {
         this.inventarisDao = new PembelianInventarisDao();
-        this.administrasiService = new AdministrasiService();
     }
 
     public List<PembelianInventaris> getAll() {
@@ -22,69 +20,29 @@ public class PembelianInventarisService {
         return inventarisDao.getById(id);
     }
 
-    /**
-     * Menyimpan data pembelian baru.
-     * Jika status LUNAS, saldo administrasi akan otomatis berkurang.
-     */
     public boolean tambahPembelian(PembelianInventaris beli) {
-        // Hitung total harga otomatis: jumlah * hargaSatuan
-        BigDecimal total = beli.getHargaSatuan().multiply(new BigDecimal(beli.getJumlah()));
+        // Hitung total harga otomatis: (jumlah * hargaSatuan) + ongkosKirim
+        BigDecimal subTotal = beli.getHargaSatuan().multiply(new BigDecimal(beli.getJumlah()));
+        BigDecimal total = subTotal.add(beli.getOngkosKirim());
         beli.setTotalHarga(total);
 
-        boolean isSaved = inventarisDao.save(beli);
-
-        if (isSaved) {
-            // Logika: Jika metode pembayaran bukan KREDIT, maka potong saldo Administrasi
-            if (beli.getMetodePembayaran() != PembelianInventaris.MetodePembayaran.KREDIT) {
-                return administrasiService.kurangSaldo(beli.getIdAdministrasi(), beli.getTotalHarga());
-            }
-            return true;
-        }
-        return false;
+        return inventarisDao.save(beli);
     }
 
-    /**
-     * Memperbarui data pembelian inventaris.
-     */
     public boolean perbaruiPembelian(PembelianInventaris beliBaru) {
+        // ngecek apakah data lama ada
         PembelianInventaris beliLama = inventarisDao.getById(beliBaru.getId());
         if (beliLama == null) return false;
 
         // Hitung ulang total harga
-        BigDecimal totalBaru = beliBaru.getHargaSatuan().multiply(new BigDecimal(beliBaru.getJumlah()));
+        BigDecimal subTotal = beliBaru.getHargaSatuan().multiply(new BigDecimal(beliBaru.getJumlah()));
+        BigDecimal totalBaru = subTotal.add(beliBaru.getOngkosKirim());
         beliBaru.setTotalHarga(totalBaru);
 
-        boolean isUpdated = inventarisDao.update(beliBaru);
-
-        if (isUpdated) {
-            // Sesuaikan saldo: Kembalikan nominal lama, kurangi dengan nominal baru
-            if (beliLama.getMetodePembayaran() != PembelianInventaris.MetodePembayaran.KREDIT) {
-                administrasiService.tambahSaldo(beliLama.getIdAdministrasi(), beliLama.getTotalHarga());
-            }
-            if (beliBaru.getMetodePembayaran() != PembelianInventaris.MetodePembayaran.KREDIT) {
-                administrasiService.kurangSaldo(beliBaru.getIdAdministrasi(), beliBaru.getTotalHarga());
-            }
-            return true;
-        }
-        return false;
+        return inventarisDao.update(beliBaru);
     }
 
-    /**
-     * Menghapus data pembelian. Saldo akan dikembalikan jika sebelumnya sudah terbayar.
-     */
     public boolean hapusPembelian(int id) {
-        PembelianInventaris beli = inventarisDao.getById(id);
-        if (beli == null) return false;
-
-        boolean isDeleted = inventarisDao.delete(id);
-
-        if (isDeleted) {
-            // Jika transaksi dihapus, kembalikan uang ke saldo administrasi (jika bukan kredit)
-            if (beli.getMetodePembayaran() != PembelianInventaris.MetodePembayaran.KREDIT) {
-                return administrasiService.tambahSaldo(beli.getIdAdministrasi(), beli.getTotalHarga());
-            }
-            return true;
-        }
-        return false;
+        return inventarisDao.delete(id);
     }
 }

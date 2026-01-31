@@ -28,7 +28,7 @@ public class Penjualan {
     }
 
     private int id;
-    private String no_Penjualan; // Unique
+    private int no_Penjualan; // Unique
     private LocalDate tanggal_Penjualan;
     private String nama_Customer;
     private String alamat_Customer;
@@ -38,7 +38,7 @@ public class Penjualan {
     private String keterangan;
 
     // Constructor Lengkap (Dengan ID)
-    public Penjualan(int id, String no_Penjualan, LocalDate tanggal_Penjualan, String nama_Customer, 
+    public Penjualan(int id, int no_Penjualan, LocalDate tanggal_Penjualan, String nama_Customer, 
                      String alamat_Customer, BigDecimal total_Penjualan, 
                      MetodePembayaran metode_Pembayaran, StatusPembayaran status_Pembayaran, 
                      String keterangan) {
@@ -54,7 +54,7 @@ public class Penjualan {
     }
 
     // Constructor Tanpa ID (Untuk Insert Data Baru)
-    public Penjualan(String no_Penjualan, LocalDate tanggal_Penjualan, String nama_Customer, 
+    public Penjualan(int no_Penjualan, LocalDate tanggal_Penjualan, String nama_Customer, 
                      String alamat_Customer, BigDecimal total_Penjualan, 
                      MetodePembayaran metode_Pembayaran, StatusPembayaran status_Pembayaran, 
                      String keterangan) {
@@ -72,8 +72,8 @@ public class Penjualan {
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
-    public String getNo_Penjualan() { return no_Penjualan; }
-    public void setNo_Penjualan(String no_Penjualan) { this.no_Penjualan = no_Penjualan; }
+    public int getNo_Penjualan() { return no_Penjualan; }
+    public void setNo_Penjualan(int no_Penjualan) { this.no_Penjualan = no_Penjualan; }
 
     public LocalDate getTanggal_Penjualan() { return tanggal_Penjualan; }
     public void setTanggal_Penjualan(LocalDate tanggal_Penjualan) { this.tanggal_Penjualan = tanggal_Penjualan; }

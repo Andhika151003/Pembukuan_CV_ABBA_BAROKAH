@@ -30,12 +30,11 @@ public class GajiPegawai {
     private BigDecimal total_gaji;
     private LocalDate tanggal_pembayaran;
     private Status status_pembayaran;
-    private int idAdministrasi;
 
     // Constructor Lengkap
     public GajiPegawai(int id, int id_pegawai, String periode, BigDecimal gaji_pokok, BigDecimal tunjangan,
                        BigDecimal potongan, BigDecimal total_gaji, LocalDate tanggal_pembayaran, 
-                       Status status_pembayaran, int idAdministrasi) {
+                       Status status_pembayaran) {
         this.id = id;
         this.id_pegawai = id_pegawai;
         this.periode = periode;
@@ -45,13 +44,12 @@ public class GajiPegawai {
         this.total_gaji = total_gaji;
         this.tanggal_pembayaran = tanggal_pembayaran;
         this.status_pembayaran = status_pembayaran;
-        this.idAdministrasi = idAdministrasi;
     }
 
     // Constructor Tanpa ID
     public GajiPegawai(int id_pegawai, String periode, BigDecimal gaji_pokok, BigDecimal tunjangan,
                        BigDecimal potongan, BigDecimal total_gaji, LocalDate tanggal_pembayaran, 
-                       Status status_pembayaran, int idAdministrasi) {
+                       Status status_pembayaran) {
         this.id_pegawai = id_pegawai;
         this.periode = periode;
         this.gaji_pokok = gaji_pokok;
@@ -60,7 +58,6 @@ public class GajiPegawai {
         this.total_gaji = total_gaji;
         this.tanggal_pembayaran = tanggal_pembayaran;
         this.status_pembayaran = status_pembayaran;
-        this.idAdministrasi = idAdministrasi;
     }
 
     // Getters and Setters
@@ -82,9 +79,6 @@ public class GajiPegawai {
     public void setTanggal_pembayaran(LocalDate tanggal_pembayaran) { this.tanggal_pembayaran = tanggal_pembayaran; }
     public Status getStatus_pembayaran() { return status_pembayaran; }
     public void setStatus_pembayaran(Status status_pembayaran) { this.status_pembayaran = status_pembayaran; }
-    
-    public int getIdAdministrasi() { return idAdministrasi; }
-    public void setIdAdministrasi(int idAdministrasi) { this.idAdministrasi = idAdministrasi; }
 
     @Override
     public String toString() {
@@ -98,7 +92,6 @@ public class GajiPegawai {
                 ", total_gaji=" + total_gaji +
                 ", tanggal_pembayaran=" + tanggal_pembayaran +
                 ", status_pembayaran=" + status_pembayaran +
-                ", idAdministrasi=" + idAdministrasi +
                 '}';
     }
 }

@@ -30,11 +30,10 @@ public class Pegawai {
     private BigDecimal gaji_Pokok;
     private LocalDate tanggal_Masuk;
     private StatusAktif status;
-    private int idAdministrasi;
 
     // Constructor Lengkap
     public Pegawai(int id, String nama, String jabatan, StatusPegawai status_Pegawai, 
-                   BigDecimal gaji_Pokok, LocalDate tanggal_Masuk, StatusAktif status, int idAdministrasi) {
+                   BigDecimal gaji_Pokok, LocalDate tanggal_Masuk, StatusAktif status) {
         this.id = id;
         this.nama = nama;
         this.jabatan = jabatan;
@@ -42,19 +41,17 @@ public class Pegawai {
         this.gaji_Pokok = gaji_Pokok;
         this.tanggal_Masuk = tanggal_Masuk;
         this.status = status;
-        this.idAdministrasi = idAdministrasi;
     }
 
     // Constructor Tanpa ID
     public Pegawai(String nama, String jabatan, StatusPegawai status_Pegawai, 
-                   BigDecimal gaji_Pokok, LocalDate tanggal_Masuk, StatusAktif status, int idAdministrasi) {
+                   BigDecimal gaji_Pokok, LocalDate tanggal_Masuk, StatusAktif status) {
         this.nama = nama;
         this.jabatan = jabatan;
         this.status_Pegawai = status_Pegawai;
         this.gaji_Pokok = gaji_Pokok;
         this.tanggal_Masuk = tanggal_Masuk;
         this.status = status;
-        this.idAdministrasi = idAdministrasi;
     }
     
     // Getters and Setters
@@ -72,8 +69,6 @@ public class Pegawai {
     public void setTanggal_Masuk(LocalDate tanggal_Masuk) { this.tanggal_Masuk = tanggal_Masuk; }
     public StatusAktif getStatus() { return status; }
     public void setStatus(StatusAktif status) { this.status = status; }
-    public int getIdAdministrasi() { return idAdministrasi; }
-    public void setIdAdministrasi(int idAdministrasi) { this.idAdministrasi = idAdministrasi; }
 
     @Override
     public String toString() {

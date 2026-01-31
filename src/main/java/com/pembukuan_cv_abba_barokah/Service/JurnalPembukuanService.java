@@ -3,7 +3,6 @@ package com.pembukuan_cv_abba_barokah.Service;
 import com.pembukuan_cv_abba_barokah.DAO.JurnalPembukuanDao;
 import com.pembukuan_cv_abba_barokah.Model.JurnalPembukuan;
 import java.math.BigDecimal;
-// import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,6 +16,20 @@ public class JurnalPembukuanService {
     public List<JurnalPembukuan> getAllJurnal() {
         return jurnalDao.getAll();
     }
+
+    public boolean tambahJurnal(JurnalPembukuan jurnal) {
+        return jurnalDao.save(jurnal);
+    }
+
+    public boolean updateJurnal(JurnalPembukuan jurnal) {
+        return jurnalDao.update(jurnal);
+    }
+
+    public boolean hapusJurnal(int id) {
+        return jurnalDao.delete(id);
+    }
+
+    // --- Fungsi Filter & Logika Bisnis ---
 
     public List<JurnalPembukuan> getJurnalByKategori(JurnalPembukuan.Kategori kategori) {
         return jurnalDao.getAll().stream()
@@ -41,9 +54,5 @@ public class JurnalPembukuanService {
         return list.stream()
                 .map(JurnalPembukuan::getKredit)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    public boolean hapusJurnal(int id) {
-        return jurnalDao.delete(id);
     }
 }

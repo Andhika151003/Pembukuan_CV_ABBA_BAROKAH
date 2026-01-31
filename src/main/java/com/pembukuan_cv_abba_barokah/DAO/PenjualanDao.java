@@ -38,7 +38,7 @@ public class PenjualanDao implements BaseDao<Penjualan> {
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
-            pstmt.setString(1, t.getNo_Penjualan());
+            pstmt.setInt(1, t.getNo_Penjualan());
             pstmt.setString(2, t.getTanggal_Penjualan().toString());
             pstmt.setString(3, t.getNama_Customer());
             pstmt.setString(4, t.getAlamat_Customer());
@@ -83,7 +83,7 @@ public class PenjualanDao implements BaseDao<Penjualan> {
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
-            pstmt.setString(1, t.getNo_Penjualan());
+            pstmt.setInt(1, t.getNo_Penjualan());
             pstmt.setString(2, t.getTanggal_Penjualan().toString());
             pstmt.setString(3, t.getNama_Customer());
             pstmt.setString(4, t.getAlamat_Customer());
@@ -118,7 +118,7 @@ public class PenjualanDao implements BaseDao<Penjualan> {
     private Penjualan mapResultSetToPenjualan(ResultSet rs) throws SQLException {
         return new Penjualan(
             rs.getInt("id"),
-            rs.getString("no_penjualan"),
+            rs.getInt("no_penjualan"),
             LocalDate.parse(rs.getString("tanggal_penjualan")),
             rs.getString("nama_customer"),
             rs.getString("alamat_customer"),

@@ -28,31 +28,26 @@ public class BiayaPemasaran {
     private int jumlah;
     private ExpenseCategory category;
     private MarketingExpenseType marketingType;
-    private int idAdministrasi;
 
     // Constructor Lengkap
     public BiayaPemasaran(int id, LocalDate tanggal, String deskripsi, int jumlah, 
-                          ExpenseCategory category, MarketingExpenseType marketingType, 
-                          int idAdministrasi) {
+                          ExpenseCategory category, MarketingExpenseType marketingType) {
         this.id = id;
         this.tanggal = tanggal;
         this.deskripsi = deskripsi;
         this.jumlah = jumlah;
         this.category = category;
         this.marketingType = marketingType;
-        this.idAdministrasi = idAdministrasi;
     }
 
     // Constructor Tanpa ID (untuk penambahan data baru)
     public BiayaPemasaran(LocalDate tanggal, String deskripsi, int jumlah, 
-                          ExpenseCategory category, MarketingExpenseType marketingType, 
-                          int idAdministrasi) {
+                          ExpenseCategory category, MarketingExpenseType marketingType) {
         this.tanggal = tanggal;
         this.deskripsi = deskripsi;
         this.jumlah = jumlah;
         this.category = category;
         this.marketingType = marketingType;
-        this.idAdministrasi = idAdministrasi;
     }
 
     // Getters and Setters
@@ -74,9 +69,6 @@ public class BiayaPemasaran {
     public MarketingExpenseType getMarketingType() { return marketingType; }
     public void setMarketingType(MarketingExpenseType marketingType) { this.marketingType = marketingType; }
 
-    public int getIdAdministrasi() { return idAdministrasi; }
-    public void setIdAdministrasi(int idAdministrasi) { this.idAdministrasi = idAdministrasi; }
-
     @Override
     public String toString() {
         return "BiayaPemasaran{" +
@@ -86,7 +78,6 @@ public class BiayaPemasaran {
                 ", jumlah=" + jumlah +
                 ", category=" + category +
                 ", marketingType=" + marketingType +
-                ", idAdministrasi=" + idAdministrasi +
                 '}';
     }
 }

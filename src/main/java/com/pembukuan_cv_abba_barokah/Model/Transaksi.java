@@ -31,13 +31,13 @@ public class Transaksi {
     private Status status_Pembayaran;
     private LocalDate tanggal_Pembayaran;
     private String keterangan;
-    private int idAdministrasi;
+    private int id_Penjualan;
 
     // Constructor Lengkap
     public Transaksi(int id, LocalDate tanggal_transaksi, String nomor_Faktur, String nama_Barang, 
                      int kuantitas, BigDecimal harga_Jual, BigDecimal total_Penjualan, 
                      Status status_Pembayaran, LocalDate tanggal_Pembayaran, String keterangan, 
-                     int idAdministrasi) {
+                     int id_Penjualan) {
         this.id = id;
         this.tanggal_transaksi = tanggal_transaksi;
         this.nomor_Faktur = nomor_Faktur;
@@ -48,14 +48,14 @@ public class Transaksi {
         this.status_Pembayaran = status_Pembayaran;
         this.tanggal_Pembayaran = tanggal_Pembayaran;
         this.keterangan = keterangan;
-        this.idAdministrasi = idAdministrasi;
+        this.id_Penjualan = id_Penjualan;
     }
 
     // Constructor Tanpa ID
     public Transaksi(LocalDate tanggal_transaksi, String nomor_Faktur, String nama_Barang, 
                      int kuantitas, BigDecimal harga_Jual, BigDecimal total_Penjualan, 
                      Status status_Pembayaran, LocalDate tanggal_Pembayaran, String keterangan, 
-                     int idAdministrasi) {
+                     int id_Penjualan) {
         this.tanggal_transaksi = tanggal_transaksi;
         this.nomor_Faktur = nomor_Faktur;
         this.nama_Barang = nama_Barang;
@@ -65,7 +65,7 @@ public class Transaksi {
         this.status_Pembayaran = status_Pembayaran;
         this.tanggal_Pembayaran = tanggal_Pembayaran;
         this.keterangan = keterangan;
-        this.idAdministrasi = idAdministrasi;
+        this.id_Penjualan = id_Penjualan;
     }
 
     // Getters and Setters
@@ -89,8 +89,8 @@ public class Transaksi {
     public void setTanggal_Pembayaran(LocalDate tanggal_Pembayaran) { this.tanggal_Pembayaran = tanggal_Pembayaran; }
     public String getKeterangan() { return keterangan; }
     public void setKeterangan(String keterangan) { this.keterangan = keterangan; }
-    public int getIdAdministrasi() { return idAdministrasi; }
-    public void setIdAdministrasi(int idAdministrasi) { this.idAdministrasi = idAdministrasi; }
+    public int getid_Penjualan() { return id_Penjualan; }
+    public void setid_Penjualan(int id_Penjualan) { this.id_Penjualan = id_Penjualan; }
 
     @Override
     public String toString() {
@@ -105,7 +105,7 @@ public class Transaksi {
                 ", status_Pembayaran=" + status_Pembayaran +
                 ", tanggal_Pembayaran=" + tanggal_Pembayaran +
                 ", keterangan='" + keterangan + '\'' +
-                ", idAdministrasi=" + idAdministrasi +
+                ", id_Penjualan=" + id_Penjualan +
                 '}';
     }
 }

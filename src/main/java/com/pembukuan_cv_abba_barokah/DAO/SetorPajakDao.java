@@ -29,7 +29,7 @@ public class SetorPajakDao implements BaseDao<SetorPajak> {
 
     @Override
     public boolean save(SetorPajak t) {
-        String sql = "INSERT INTO SetorPajak (tanggal_setor, jenis_pajak, jumlah_pajak, periode, bukti_setor, id_administrasi) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO SetorPajak (tanggal_setor, jenis_pajak, jumlah_pajak, periode, bukti_setor) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.connection();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -39,7 +39,6 @@ public class SetorPajakDao implements BaseDao<SetorPajak> {
             pstmt.setString(3, t.getJumlah_Pajak().toString());
             pstmt.setString(4, t.getPeriode());
             pstmt.setString(5, t.getBukti_Setor());
-            pstmt.setInt(6, t.getIdAdministrasi());
 
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -69,7 +68,7 @@ public class SetorPajakDao implements BaseDao<SetorPajak> {
 
     @Override
     public boolean update(SetorPajak t) {
-        String sql = "UPDATE SetorPajak SET tanggal_setor = ?, jenis_pajak = ?, jumlah_pajak = ?, periode = ?, bukti_setor = ?, id_administrasi = ? WHERE id = ?";
+        String sql = "UPDATE SetorPajak SET tanggal_setor = ?, jenis_pajak = ?, jumlah_pajak = ?, periode = ?, bukti_setor = ? WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.connection();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -79,8 +78,7 @@ public class SetorPajakDao implements BaseDao<SetorPajak> {
             pstmt.setString(3, t.getJumlah_Pajak().toString());
             pstmt.setString(4, t.getPeriode());
             pstmt.setString(5, t.getBukti_Setor());
-            pstmt.setInt(6, t.getIdAdministrasi());
-            pstmt.setInt(7, t.getId());
+            pstmt.setInt(6, t.getId());
 
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -110,8 +108,7 @@ public class SetorPajakDao implements BaseDao<SetorPajak> {
                 rs.getString("jenis_pajak"),
                 new BigDecimal(rs.getString("jumlah_pajak")),
                 rs.getString("periode"),
-                rs.getString("bukti_setor"),
-                rs.getInt("id_administrasi")
+                rs.getString("bukti_setor")
         );
     }
 }

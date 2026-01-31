@@ -13,12 +13,12 @@ public class HargaPokokPenjualan {
     private BigDecimal hargaSatuan;
     private BigDecimal totalHarga;
     private String keterangan;
-    private int idAdministrasi;
+    private int id_Transaksi;
 
     // Constructor Lengkap
     public HargaPokokPenjualan(int id, LocalDate tanggal, String jenisProduk, String kategori, 
                                String namaItem, int kuantitas, BigDecimal hargaSatuan, 
-                               BigDecimal totalHarga, String keterangan, int idAdministrasi) {
+                               BigDecimal totalHarga, String keterangan, int id_Transaksi) {
         this.id = id;
         this.tanggal = tanggal;
         this.jenisProduk = jenisProduk;
@@ -28,13 +28,13 @@ public class HargaPokokPenjualan {
         this.hargaSatuan = hargaSatuan;
         this.totalHarga = totalHarga;
         this.keterangan = keterangan;
-        this.idAdministrasi = idAdministrasi;
+        this.id_Transaksi = id_Transaksi;
     }
 
     // Constructor Tanpa ID
     public HargaPokokPenjualan(LocalDate tanggal, String jenisProduk, String kategori, 
                                String namaItem, int kuantitas, BigDecimal hargaSatuan, 
-                               BigDecimal totalHarga, String keterangan, int idAdministrasi) {
+                               BigDecimal totalHarga, String keterangan, int id_Transaksi) {
         this.tanggal = tanggal;
         this.jenisProduk = jenisProduk;
         this.kategori = kategori;
@@ -43,7 +43,7 @@ public class HargaPokokPenjualan {
         this.hargaSatuan = hargaSatuan;
         this.totalHarga = totalHarga;
         this.keterangan = keterangan;
-        this.idAdministrasi = idAdministrasi;
+        this.id_Transaksi = id_Transaksi;
     }
 
     // Getters and Setters
@@ -65,8 +65,8 @@ public class HargaPokokPenjualan {
     public void setTotalHarga(BigDecimal totalHarga) { this.totalHarga = totalHarga; }
     public String getKeterangan() { return keterangan; }
     public void setKeterangan(String keterangan) { this.keterangan = keterangan; }
-    public int getIdAdministrasi() { return idAdministrasi; }
-    public void setIdAdministrasi(int idAdministrasi) { this.idAdministrasi = idAdministrasi; }
+    public int getId_Transaksi() { return id_Transaksi; }
+    public void setId_Transaksi(int id_Transaksi) { this.id_Transaksi = id_Transaksi; }
 
     @Override
     public String toString() {
@@ -80,7 +80,7 @@ public class HargaPokokPenjualan {
                 ", hargaSatuan=" + hargaSatuan +
                 ", totalHarga=" + totalHarga +
                 ", keterangan='" + keterangan + '\'' +
-                ", idAdministrasi=" + idAdministrasi +
+                ", id_Transaksi=" + id_Transaksi+
                 '}';
     }
 }

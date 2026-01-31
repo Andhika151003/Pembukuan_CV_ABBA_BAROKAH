@@ -29,7 +29,7 @@ public class TransaksiDao implements BaseDao<Transaksi> {
 
     @Override
     public boolean save(Transaksi t) {
-        String sql = "INSERT INTO Transaksi (tanggal_transaksi, nomor_Faktur, nama_Barang, kuantitas, harga_Jual, total_Penjualan, status_Pembayaran, tanggal_Pembayaran, keterangan, id_administrasi) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Transaksi (tanggal_transaksi, nomor_Faktur, nama_Barang, kuantitas, harga_Jual, total_Penjualan, status_Pembayaran, tanggal_Pembayaran, keterangan, id_Penjualan) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.connection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -43,7 +43,7 @@ public class TransaksiDao implements BaseDao<Transaksi> {
             pstmt.setString(7, t.getStatus_Pembayaran().name());
             pstmt.setString(8, t.getTanggal_Pembayaran() != null ? t.getTanggal_Pembayaran().toString() : null);
             pstmt.setString(9, t.getKeterangan());
-            pstmt.setInt(10, t.getIdAdministrasi());
+            pstmt.setInt(10, t.getid_Penjualan());
 
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -71,7 +71,7 @@ public class TransaksiDao implements BaseDao<Transaksi> {
 
     @Override
     public boolean update(Transaksi t) {
-        String sql = "UPDATE Transaksi SET tanggal_transaksi = ?, nomor_Faktur = ?, nama_Barang = ?, kuantitas = ?, harga_Jual = ?, total_Penjualan = ?, status_Pembayaran = ?, tanggal_Pembayaran = ?, keterangan = ?, id_administrasi = ? WHERE id = ?";
+        String sql = "UPDATE Transaksi SET tanggal_transaksi = ?, nomor_Faktur = ?, nama_Barang = ?, kuantitas = ?, harga_Jual = ?, total_Penjualan = ?, status_Pembayaran = ?, tanggal_Pembayaran = ?, keterangan = ?, id_Penjualan = ? WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.connection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -85,7 +85,7 @@ public class TransaksiDao implements BaseDao<Transaksi> {
             pstmt.setString(7, t.getStatus_Pembayaran().name());
             pstmt.setString(8, t.getTanggal_Pembayaran() != null ? t.getTanggal_Pembayaran().toString() : null);
             pstmt.setString(9, t.getKeterangan());
-            pstmt.setInt(10, t.getIdAdministrasi());
+            pstmt.setInt(10, t.getid_Penjualan());
             pstmt.setInt(11, t.getId());
 
             return pstmt.executeUpdate() > 0;
@@ -123,7 +123,7 @@ public class TransaksiDao implements BaseDao<Transaksi> {
                 status,
                 rs.getString("tanggal_Pembayaran") != null ? LocalDate.parse(rs.getString("tanggal_Pembayaran")) : null,
                 rs.getString("keterangan"),
-                rs.getInt("id_administrasi")
+                rs.getInt("id_Penjualan")
         );
     }
 }

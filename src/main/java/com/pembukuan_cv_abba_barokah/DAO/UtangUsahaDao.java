@@ -13,7 +13,7 @@ public class UtangUsahaDao implements BaseDao<UtangUsaha> {
     @Override
     public List<UtangUsaha> getAll() {
         List<UtangUsaha> list = new ArrayList<>();
-        String sql = "SELECT * FROM utang_usaha";
+        String sql = "SELECT * FROM UtangUsaha";
 
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -30,22 +30,21 @@ public class UtangUsahaDao implements BaseDao<UtangUsaha> {
 
     @Override
     public boolean save(UtangUsaha t) {
-        // supplier_id dihilangkan sesuai instruksi
-        String sql = "INSERT INTO utang_usaha (no_utang, tanggal_utang, tanggal_jatuh_tempo, " +
-                     "jumlah_utang, jumlah_dibayar, sisa_utang, status_utang, referensi_pembelian, " +
+        String sql = "INSERT INTO UtangUsaha (no_utang, tanggal_utang, tanggal_jatuh_tempo, " +
+                     "id_pembelian, jumlah_utang, jumlah_dibayar, sisa_utang, status_utang, " +
                      "keterangan) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
-            pstmt.setString(1, t.getNo_Utang());
+            pstmt.setInt(1, t.getNo_Utang());
             pstmt.setString(2, t.getTanggal_Utang().toString());
             pstmt.setString(3, t.getTanggal_Jatuh_Tempo().toString());
-            pstmt.setString(4, t.getJumlah_Utang().toString());
-            pstmt.setString(5, t.getJumlah_Dibayar().toString());
-            pstmt.setString(6, t.getSisa_Utang().toString());
-            pstmt.setString(7, t.getStatus_Utang().name());
-            pstmt.setString(8, t.getReferensi_Pembelian());
+            pstmt.setInt(4, t.getid_Pembelian());
+            pstmt.setString(5, t.getJumlah_Utang().toString());
+            pstmt.setString(6, t.getJumlah_Dibayar().toString());
+            pstmt.setString(7, t.getSisa_Utang().toString());
+            pstmt.setString(8, t.getStatus_Utang().name());
             pstmt.setString(9, t.getKeterangan());
             
             return pstmt.executeUpdate() > 0;
@@ -57,7 +56,7 @@ public class UtangUsahaDao implements BaseDao<UtangUsaha> {
 
     @Override
     public UtangUsaha getById(int id) {
-        String sql = "SELECT * FROM utang_usaha WHERE id = ?";
+        String sql = "SELECT * FROM UtangUsaha WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -77,21 +76,21 @@ public class UtangUsahaDao implements BaseDao<UtangUsaha> {
 
     @Override
     public boolean update(UtangUsaha t) {
-        String sql = "UPDATE utang_usaha SET no_utang = ?, tanggal_utang = ?, tanggal_jatuh_tempo = ?, " +
-                     "jumlah_utang = ?, jumlah_dibayar = ?, sisa_utang = ?, " +
-                     "status_utang = ?, referensi_pembelian = ?, keterangan = ? WHERE id = ?";
+        String sql = "UPDATE UtangUsaha SET no_utang = ?, tanggal_utang = ?, tanggal_jatuh_tempo = ?, " +
+                     "id_pembelian = ?, jumlah_utang = ?, jumlah_dibayar = ?, sisa_utang = ?, " +
+                     "status_utang = ?, keterangan = ? WHERE id = ?";
         
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
-            pstmt.setString(1, t.getNo_Utang());
+            pstmt.setInt(1, t.getNo_Utang());
             pstmt.setString(2, t.getTanggal_Utang().toString());
             pstmt.setString(3, t.getTanggal_Jatuh_Tempo().toString());
-            pstmt.setString(4, t.getJumlah_Utang().toString());
-            pstmt.setString(5, t.getJumlah_Dibayar().toString());
-            pstmt.setString(6, t.getSisa_Utang().toString());
-            pstmt.setString(7, t.getStatus_Utang().name());
-            pstmt.setString(8, t.getReferensi_Pembelian());
+            pstmt.setInt(4, t.getid_Pembelian());
+            pstmt.setString(5, t.getJumlah_Utang().toString());
+            pstmt.setString(6, t.getJumlah_Dibayar().toString());
+            pstmt.setString(7, t.getSisa_Utang().toString());
+            pstmt.setString(8, t.getStatus_Utang().name());
             pstmt.setString(9, t.getKeterangan());
             pstmt.setInt(10, t.getId());
             
@@ -104,7 +103,7 @@ public class UtangUsahaDao implements BaseDao<UtangUsaha> {
 
     @Override
     public boolean delete(int id) {
-        String sql = "DELETE FROM utang_usaha WHERE id = ?";
+        String sql = "DELETE FROM UtangUsaha WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -122,14 +121,14 @@ public class UtangUsahaDao implements BaseDao<UtangUsaha> {
 
         return new UtangUsaha(
             rs.getInt("id"),
-            rs.getString("no_utang"),
+            rs.getInt("no_utang"),
             LocalDate.parse(rs.getString("tanggal_utang")),
             LocalDate.parse(rs.getString("tanggal_jatuh_tempo")),
+            rs.getInt("id_pembelian"),
             new BigDecimal(rs.getString("jumlah_utang")),
             new BigDecimal(rs.getString("jumlah_dibayar")),
             new BigDecimal(rs.getString("sisa_utang")),
             status,
-            rs.getString("referensi_pembelian"),
             rs.getString("keterangan")
         );
     }

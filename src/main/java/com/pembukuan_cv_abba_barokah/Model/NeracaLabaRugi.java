@@ -12,13 +12,12 @@ public class NeracaLabaRugi {
     private BigDecimal laba_Bersih_Sebelum_Pajak;
     private BigDecimal pajak;
     private BigDecimal laba_Bersih;
-    private int idAdministrasi;
 
     // Constructor Lengkap
     public NeracaLabaRugi(int id, int tahun, BigDecimal total_Pendapatan, BigDecimal total_HPP,
                           BigDecimal laba_Kotor, BigDecimal total_Biaya_Operasional,
                           BigDecimal laba_Bersih_Sebelum_Pajak, BigDecimal pajak, 
-                          BigDecimal laba_Bersih, int idAdministrasi) {
+                          BigDecimal laba_Bersih) {
         this.id = id;
         this.tahun = tahun;
         this.total_Pendapatan = total_Pendapatan;
@@ -28,14 +27,13 @@ public class NeracaLabaRugi {
         this.laba_Bersih_Sebelum_Pajak = laba_Bersih_Sebelum_Pajak;
         this.pajak = pajak;
         this.laba_Bersih = laba_Bersih;
-        this.idAdministrasi = idAdministrasi;
     }
 
     // Constructor Tanpa ID
     public NeracaLabaRugi(int tahun, BigDecimal total_Pendapatan, BigDecimal total_HPP,
                           BigDecimal laba_Kotor, BigDecimal total_Biaya_Operasional,
                           BigDecimal laba_Bersih_Sebelum_Pajak, BigDecimal pajak, 
-                          BigDecimal laba_Bersih, int idAdministrasi) {
+                          BigDecimal laba_Bersih) {
         this.tahun = tahun;
         this.total_Pendapatan = total_Pendapatan;
         this.total_HPP = total_HPP;
@@ -44,7 +42,6 @@ public class NeracaLabaRugi {
         this.laba_Bersih_Sebelum_Pajak = laba_Bersih_Sebelum_Pajak;
         this.pajak = pajak;
         this.laba_Bersih = laba_Bersih;
-        this.idAdministrasi = idAdministrasi;
     }
 
     // Getters and Setters
@@ -66,8 +63,6 @@ public class NeracaLabaRugi {
     public void setPajak(BigDecimal pajak) { this.pajak = pajak; }
     public BigDecimal getLaba_Bersih() { return laba_Bersih; }
     public void setLaba_Bersih(BigDecimal laba_Bersih) { this.laba_Bersih = laba_Bersih; }
-    public int getIdAdministrasi() { return idAdministrasi; }
-    public void setIdAdministrasi(int idAdministrasi) { this.idAdministrasi = idAdministrasi; }
 
     @Override
     public String toString() {
@@ -81,7 +76,6 @@ public class NeracaLabaRugi {
                 ", laba_Bersih_Sebelum_Pajak=" + laba_Bersih_Sebelum_Pajak +
                 ", pajak=" + pajak +
                 ", laba_Bersih=" + laba_Bersih +
-                ", idAdministrasi=" + idAdministrasi +
                 '}';
     }
 }

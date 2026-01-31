@@ -51,14 +51,13 @@ public class PembelianInventaris {
     private MetodePembayaran metodePembayaran;
     private StatusPembelian status;
     private String keterangan;
-    private int idAdministrasi; // Menghubungkan ke tabel Administrasi
 
     // Constructor Lengkap (Dengan ID)
     public PembelianInventaris(int id, int noPembelian, LocalDate tanggalPembelian, 
                                JenisInventaris jenisInventaris, String namaBarang, int jumlah, 
                                String satuan, BigDecimal hargaSatuan, BigDecimal ongkosKirim, 
                                BigDecimal totalHarga, MetodePembayaran metodePembayaran, 
-                               StatusPembelian status, String keterangan, int idAdministrasi) {
+                               StatusPembelian status, String keterangan) {
         this.id = id;
         this.noPembelian = noPembelian;
         this.tanggalPembelian = tanggalPembelian;
@@ -72,7 +71,6 @@ public class PembelianInventaris {
         this.metodePembayaran = metodePembayaran;
         this.status = status;
         this.keterangan = keterangan;
-        this.idAdministrasi = idAdministrasi;
     }
 
     // Constructor Tanpa ID (Untuk Input Baru)
@@ -80,7 +78,7 @@ public class PembelianInventaris {
                                JenisInventaris jenisInventaris, String namaBarang, int jumlah, 
                                String satuan, BigDecimal hargaSatuan, BigDecimal ongkosKirim, 
                                BigDecimal totalHarga, MetodePembayaran metodePembayaran, 
-                               StatusPembelian status, String keterangan, int idAdministrasi) {
+                               StatusPembelian status, String keterangan) {
         this.noPembelian = noPembelian;
         this.tanggalPembelian = tanggalPembelian;
         this.jenisInventaris = jenisInventaris;
@@ -93,7 +91,6 @@ public class PembelianInventaris {
         this.metodePembayaran = metodePembayaran;
         this.status = status;
         this.keterangan = keterangan;
-        this.idAdministrasi = idAdministrasi;
     }
 
     // Getters and Setters (Diperbaiki ke camelCase untuk menghindari error Service)
@@ -136,9 +133,6 @@ public class PembelianInventaris {
     public String getKeterangan() { return keterangan; }
     public void setKeterangan(String keterangan) { this.keterangan = keterangan; }
 
-    public int getIdAdministrasi() { return idAdministrasi; }
-    public void setIdAdministrasi(int idAdministrasi) { this.idAdministrasi = idAdministrasi; }
-
     @Override
     public String toString() {
         return "PembelianInventaris{" +
@@ -146,7 +140,6 @@ public class PembelianInventaris {
                 ", noPembelian=" + noPembelian +
                 ", totalHarga=" + totalHarga +
                 ", metodePembayaran=" + metodePembayaran +
-                ", idAdministrasi=" + idAdministrasi +
                 '}';
     }
 }

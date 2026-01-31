@@ -5,18 +5,15 @@ import com.pembukuan_cv_abba_barokah.DAO.JurnalPembukuanDao;
 import com.pembukuan_cv_abba_barokah.Model.GajiPegawai;
 import com.pembukuan_cv_abba_barokah.Model.JurnalPembukuan;
 import java.math.BigDecimal;
-// import java.time.LocalDate;
 import java.util.List;
 
 public class GajiPegawaiService {
     private final GajiPegawaiDao gajiDao;
     private final JurnalPembukuanDao jurnalDao;
-    private final AdministrasiService adminService;
 
     public GajiPegawaiService() {
         this.gajiDao = new GajiPegawaiDao();
         this.jurnalDao = new JurnalPembukuanDao();
-        this.adminService = new AdministrasiService();
     }
 
     public List<GajiPegawai> getAll() {
@@ -24,32 +21,34 @@ public class GajiPegawaiService {
     }
 
     public boolean bayarGaji(GajiPegawai gaji) {
-        // 1. Pastikan total gaji sudah benar (Pokok + Tunjangan - Potongan)
-        BigDecimal total = gaji.getGaji_pokok()
-                           .add(gaji.getTunjangan())
-                           .subtract(gaji.getPotongan());
+        BigDecimal pokok = (gaji.getGaji_pokok() != null) ? gaji.getGaji_pokok() : BigDecimal.ZERO;
+        BigDecimal tunjangan = (gaji.getTunjangan() != null) ? gaji.getTunjangan() : BigDecimal.ZERO;
+        BigDecimal potongan = (gaji.getPotongan() != null) ? gaji.getPotongan() : BigDecimal.ZERO;
+        
+        BigDecimal total = pokok.add(tunjangan).subtract(potongan);
         gaji.setTotal_gaji(total);
 
-        // 2. Simpan detail gaji ke database
         boolean isGajiSaved = gajiDao.save(gaji);
 
         if (isGajiSaved && gaji.getStatus_pembayaran() == GajiPegawai.Status.LUNAS) {
-            // 3. Update otomatis Saldo di tabel Administrasi (Uang Keluar)
-            adminService.kurangSaldo(gaji.getIdAdministrasi(), gaji.getTotal_gaji());
+            int nomorJurnalInt = (int) (System.currentTimeMillis() % 1000000000); 
 
-            // 4. Buat pencatatan otomatis di Jurnal Pembukuan
             JurnalPembukuan jurnal = new JurnalPembukuan(
-                0, 
-                gaji.getTanggal_pembayaran(), 
-                "GJ-" + System.currentTimeMillis(),
-                JurnalPembukuan.JenisTransaksi.PENGELUARAN,
-                JurnalPembukuan.Kategori.GAJI,
-                "Bayar Gaji: Periode " + gaji.getPeriode(),
-                BigDecimal.ZERO,      // Debit
-                gaji.getTotal_gaji(), // Kredit (Uang Keluar)
-                BigDecimal.ZERO,      // Saldo
-                gaji.getIdAdministrasi()
+                0,                                      // 1. id
+                gaji.getTanggal_pembayaran(),           // 2. tanggal
+                nomorJurnalInt,                         // 3. nomorJurnal
+                JurnalPembukuan.JenisTransaksi.PENGELUARAN, // 4. jenisTransaksi
+                JurnalPembukuan.Kategori.GAJI,          // 5. kategori
+                "Bayar Gaji: Periode " + gaji.getPeriode(), // 6. deskripsi
+                BigDecimal.ZERO,                        // 7. debit
+                gaji.getTotal_gaji(),                   // 8. kredit
+                BigDecimal.ZERO,                        // 9. saldo
+                0,                                      // 10. id_Transaksi
+                0,                                      // 11. id_Pembayaran
+                0,                                      // 12. id_Pembelian
+                gaji.getId()                            // 13. id_Gaji
             );
+            
             jurnalDao.save(jurnal);
         }
 

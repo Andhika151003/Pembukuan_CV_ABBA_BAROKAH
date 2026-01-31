@@ -10,27 +10,24 @@ public class SetorPajak {
     private BigDecimal jumlah_Pajak;
     private String periode;
     private String bukti_Setor;
-    private int idAdministrasi;
 
     // Constructor Lengkap
-    public SetorPajak(int id, LocalDate tanggal_Setor, String jenis_Pajak, BigDecimal jumlah_Pajak, String periode, String bukti_Setor, int idAdministrasi) {
+    public SetorPajak(int id, LocalDate tanggal_Setor, String jenis_Pajak, BigDecimal jumlah_Pajak, String periode, String bukti_Setor) {
         this.id = id;
         this.tanggal_Setor = tanggal_Setor;
         this.jenis_Pajak = jenis_Pajak;
         this.jumlah_Pajak = jumlah_Pajak;
         this.periode = periode;
         this.bukti_Setor = bukti_Setor;
-        this.idAdministrasi = idAdministrasi;
     }
 
     // Constructor Tanpa ID
-    public SetorPajak(LocalDate tanggal_Setor, String jenis_Pajak, BigDecimal jumlah_Pajak, String periode, String bukti_Setor, int idAdministrasi) {
+    public SetorPajak(LocalDate tanggal_Setor, String jenis_Pajak, BigDecimal jumlah_Pajak, String periode, String bukti_Setor) {
         this.tanggal_Setor = tanggal_Setor;
         this.jenis_Pajak = jenis_Pajak;
         this.jumlah_Pajak = jumlah_Pajak;
         this.periode = periode;
         this.bukti_Setor = bukti_Setor;
-        this.idAdministrasi = idAdministrasi;
     }
 
     // Getters and Setters
@@ -46,8 +43,6 @@ public class SetorPajak {
     public void setPeriode(String periode) { this.periode = periode; }
     public String getBukti_Setor() { return bukti_Setor; }
     public void setBukti_Setor(String bukti_Setor) { this.bukti_Setor = bukti_Setor; }
-    public int getIdAdministrasi() { return idAdministrasi; }
-    public void setIdAdministrasi(int idAdministrasi) { this.idAdministrasi = idAdministrasi; }
 
     @Override
     public String toString() {
@@ -58,7 +53,6 @@ public class SetorPajak {
                 ", jumlah_Pajak=" + jumlah_Pajak +
                 ", periode='" + periode + '\'' +
                 ", bukti_Setor='" + bukti_Setor + '\'' +
-                ", idAdministrasi=" + idAdministrasi +
                 '}';
     }
 }

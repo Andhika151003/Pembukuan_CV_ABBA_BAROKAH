@@ -28,7 +28,7 @@ public class BiayaPemasaranDao implements BaseDao<BiayaPemasaran> {
 
     @Override
     public boolean save(BiayaPemasaran t) {
-        String sql = "INSERT INTO BiayaPemasaran (tanggal, deskripsi, jumlah, kategori, marketing_type, id_administrasi) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO BiayaPemasaran (tanggal, deskripsi, jumlah, kategori, marketing_type) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -38,7 +38,6 @@ public class BiayaPemasaranDao implements BaseDao<BiayaPemasaran> {
             pstmt.setInt(3, t.getJumlah());
             pstmt.setString(4, t.getCategory().name());
             pstmt.setString(5, t.getMarketingType().name());
-            pstmt.setInt(6, t.getIdAdministrasi());
 
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -67,7 +66,7 @@ public class BiayaPemasaranDao implements BaseDao<BiayaPemasaran> {
 
     @Override
     public boolean update(BiayaPemasaran t) {
-        String sql = "UPDATE BiayaPemasaran SET tanggal = ?, deskripsi = ?, jumlah = ?, kategori = ?, marketing_type = ?, id_administrasi = ? WHERE id = ?";
+        String sql = "UPDATE BiayaPemasaran SET tanggal = ?, deskripsi = ?, jumlah = ?, kategori = ?, marketing_type = ? WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -77,8 +76,7 @@ public class BiayaPemasaranDao implements BaseDao<BiayaPemasaran> {
             pstmt.setInt(3, t.getJumlah());
             pstmt.setString(4, t.getCategory().name());
             pstmt.setString(5, t.getMarketingType().name());
-            pstmt.setInt(6, t.getIdAdministrasi());
-            pstmt.setInt(7, t.getId());
+            pstmt.setInt(6, t.getId());
 
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -108,8 +106,7 @@ public class BiayaPemasaranDao implements BaseDao<BiayaPemasaran> {
                 rs.getString("deskripsi"),
                 rs.getInt("jumlah"),
                 BiayaPemasaran.ExpenseCategory.valueOf(rs.getString("kategori")),
-                BiayaPemasaran.MarketingExpenseType.valueOf(rs.getString("marketing_type")),
-                rs.getInt("id_administrasi")
+                BiayaPemasaran.MarketingExpenseType.valueOf(rs.getString("marketing_type"))
         );
     }
 }

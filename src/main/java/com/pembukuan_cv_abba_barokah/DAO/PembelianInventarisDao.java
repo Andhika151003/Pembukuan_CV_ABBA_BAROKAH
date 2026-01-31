@@ -33,8 +33,8 @@ public class PembelianInventarisDao implements BaseDao<PembelianInventaris> {
         // SQL dengan 13 kolom termasuk id_administrasi
         String sql = "INSERT INTO pembelian_inventaris (no_pembelian, tanggal_pembelian, " +
                      "jenis_inventaris, nama_barang, jumlah, satuan, harga_satuan, ongkos_kirim, " +
-                     "total_harga, metode_pembayaran, status, keterangan, id_administrasi) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                     "total_harga, metode_pembayaran, status, keterangan) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -51,7 +51,6 @@ public class PembelianInventarisDao implements BaseDao<PembelianInventaris> {
             pstmt.setString(10, t.getMetodePembayaran().name());
             pstmt.setString(11, t.getStatus().name());
             pstmt.setString(12, t.getKeterangan());
-            pstmt.setInt(13, t.getIdAdministrasi());
             
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -85,7 +84,7 @@ public class PembelianInventarisDao implements BaseDao<PembelianInventaris> {
         String sql = "UPDATE pembelian_inventaris SET no_pembelian = ?, tanggal_pembelian = ?, " +
                      "jenis_inventaris = ?, nama_barang = ?, jumlah = ?, satuan = ?, harga_satuan = ?, " +
                      "ongkos_kirim = ?, total_harga = ?, metode_pembayaran = ?, status = ?, " +
-                     "keterangan = ?, id_administrasi = ? WHERE id = ?";
+                     "keterangan = ? WHERE id = ?";
         
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -102,8 +101,7 @@ public class PembelianInventarisDao implements BaseDao<PembelianInventaris> {
             pstmt.setString(10, t.getMetodePembayaran().name());
             pstmt.setString(11, t.getStatus().name());
             pstmt.setString(12, t.getKeterangan());
-            pstmt.setInt(13, t.getIdAdministrasi());
-            pstmt.setInt(14, t.getId());
+            pstmt.setInt(13, t.getId());
             
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -141,8 +139,7 @@ public class PembelianInventarisDao implements BaseDao<PembelianInventaris> {
             new BigDecimal(rs.getString("total_harga")),
             PembelianInventaris.MetodePembayaran.valueOf(rs.getString("metode_pembayaran")),
             PembelianInventaris.StatusPembelian.valueOf(rs.getString("status")),
-            rs.getString("keterangan"),
-            rs.getInt("id_administrasi")
+            rs.getString("keterangan")
         );
     }
 }

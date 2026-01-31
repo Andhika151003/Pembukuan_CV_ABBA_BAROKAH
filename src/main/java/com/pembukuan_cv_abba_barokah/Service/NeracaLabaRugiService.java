@@ -16,32 +16,24 @@ public class NeracaLabaRugiService {
         this.jurnalDao = new JurnalPembukuanDao();
     }
 
-    public NeracaLabaRugi hitungLabaRugiTahunan(int tahun, int idAdmin) {
+    public NeracaLabaRugi hitungLabaRugiTahunan(int tahun) {
         List<JurnalPembukuan> jurnals = jurnalDao.getAll();
         
         BigDecimal pendapatan = BigDecimal.ZERO;
-        BigDecimal hpp = BigDecimal.ZERO;
+        BigDecimal hpp = BigDecimal.ZERO; 
         BigDecimal biayaOperasional = BigDecimal.ZERO;
         BigDecimal pajakTotal = BigDecimal.ZERO;
 
         for (JurnalPembukuan j : jurnals) {
-            // Filter hanya berdasarkan Tahun
             if (j.getTanggal().getYear() == tahun) {
                 switch (j.getKategori()) {
-                    case PENJUALAN:
                     case PEMBAYARAN:
                         pendapatan = pendapatan.add(j.getDebit());
                         break;
-                    case HPP:
-                        hpp = hpp.add(j.getKredit());
-                        break;
                     case GAJI:
-                    case ADMINISTRASI:
                     case PEMBELIAN:
+                    case TRANSAKSI:
                         biayaOperasional = biayaOperasional.add(j.getKredit());
-                        break;
-                    case PAJAK:
-                        pajakTotal = pajakTotal.add(j.getKredit());
                         break;
                     default:
                         break;
@@ -52,17 +44,15 @@ public class NeracaLabaRugiService {
         BigDecimal labaKotor = pendapatan.subtract(hpp);
         BigDecimal labaSebelumPajak = labaKotor.subtract(biayaOperasional);
         BigDecimal labaBersih = labaSebelumPajak.subtract(pajakTotal);
-
         return new NeracaLabaRugi(
-            tahun,
-            pendapatan,
-            hpp,
-            labaKotor,
-            biayaOperasional,
-            labaSebelumPajak,
-            pajakTotal,
-            labaBersih,
-            idAdmin
+            tahun,              // 1 (int)
+            pendapatan,         // 2 (BigDecimal)
+            hpp,                // 3 (BigDecimal)
+            labaKotor,          // 4 (BigDecimal)
+            biayaOperasional,   // 5 (BigDecimal)
+            labaSebelumPajak,   // 6 (BigDecimal)
+            pajakTotal,         // 7 (BigDecimal)
+            labaBersih          // 8 (BigDecimal)
         );
     }
 

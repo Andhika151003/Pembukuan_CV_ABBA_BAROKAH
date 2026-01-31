@@ -29,7 +29,7 @@ public class GajiPegawaiDao implements BaseDao<GajiPegawai> {
 
     @Override
     public boolean save(GajiPegawai t) {
-        String sql = "INSERT INTO GajiPegawai (id_pegawai, periode, gaji_pokok, tunjangan, potongan, total_gaji, tanggal_pembayaran, status_pembayaran, id_administrasi) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO GajiPegawai (id_pegawai, periode, gaji_pokok, tunjangan, potongan, total_gaji, tanggal_pembayaran, status_pembayaran) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -41,7 +41,6 @@ public class GajiPegawaiDao implements BaseDao<GajiPegawai> {
             pstmt.setString(6, t.getTotal_gaji().toString());
             pstmt.setString(7, t.getTanggal_pembayaran().toString());
             pstmt.setString(8, t.getStatus_pembayaran().name());
-            pstmt.setInt(9, t.getIdAdministrasi());
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -68,7 +67,7 @@ public class GajiPegawaiDao implements BaseDao<GajiPegawai> {
 
     @Override
     public boolean update(GajiPegawai t) {
-        String sql = "UPDATE GajiPegawai SET id_pegawai = ?, periode = ?, gaji_pokok = ?, tunjangan = ?, potongan = ?, total_gaji = ?, tanggal_pembayaran = ?, status_pembayaran = ?, id_administrasi = ? WHERE id = ?";
+        String sql = "UPDATE GajiPegawai SET id_pegawai = ?, periode = ?, gaji_pokok = ?, tunjangan = ?, potongan = ?, total_gaji = ?, tanggal_pembayaran = ?, status_pembayaran = ? WHERE id = ?";
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, t.getId_pegawai());
@@ -79,8 +78,7 @@ public class GajiPegawaiDao implements BaseDao<GajiPegawai> {
             pstmt.setString(6, t.getTotal_gaji().toString());
             pstmt.setString(7, t.getTanggal_pembayaran().toString());
             pstmt.setString(8, t.getStatus_pembayaran().name());
-            pstmt.setInt(9, t.getIdAdministrasi());
-            pstmt.setInt(10, t.getId());
+            pstmt.setInt(9, t.getId());
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -114,8 +112,7 @@ public class GajiPegawaiDao implements BaseDao<GajiPegawai> {
                 new BigDecimal(rs.getString("potongan")),
                 new BigDecimal(rs.getString("total_gaji")),
                 LocalDate.parse(rs.getString("tanggal_pembayaran")),
-                status,
-                rs.getInt("id_administrasi")
+                status
         );
     }
 }
