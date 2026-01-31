@@ -9,7 +9,7 @@
            stylesheets="@Global.css">
 
     <VBox spacing="20"
-          maxWidth="1000"
+          maxWidth="1400"
           VBox.vgrow="ALWAYS"
           styleClass="page-container">
 
