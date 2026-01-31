@@ -3,6 +3,8 @@ package com.pembukuan_cv_abba_barokah.Controller;
 import com.pembukuan_cv_abba_barokah.Model.ReturPembelian;
 import com.pembukuan_cv_abba_barokah.Service.ReturPembelianService;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 public class ReturPembelianController {
@@ -13,51 +15,75 @@ public class ReturPembelianController {
         this.returService = new ReturPembelianService();
     }
 
-    /* ===================== READ ===================== */
+    // ===================== READ =====================
 
-    public List<ReturPembelian> getAllReturPembelian() {
+    public List<ReturPembelian> tampilkanSemuaRetur() {
         return returService.getAll();
     }
 
-    public ReturPembelian getReturPembelianById(int id) {
-        if (id <= 0) return null;
+    public ReturPembelian tampilkanReturById(int id) {
         return returService.getById(id);
     }
 
-    /* ===================== CREATE ===================== */
+    // ===================== CREATE =====================
 
-    public boolean tambahReturPembelian(ReturPembelian retur, int idAdministrasi) {
-        if (!isValidRetur(retur)) return false;
+    public boolean tambahReturPembelian(
+            int noRetur,
+            LocalDate tanggalRetur,
+            int idPembelian,
+            int jumlahRetur,
+            BigDecimal nilaiRetur,
+            ReturPembelian.AlasanRetur alasanRetur,
+            String keterangan,
+            ReturPembelian.StatusRetur statusRetur,
+            int idAdministrasi
+    ) {
+        ReturPembelian retur = new ReturPembelian(
+                noRetur,
+                tanggalRetur,
+                idPembelian,
+                jumlahRetur,
+                nilaiRetur,
+                alasanRetur,
+                keterangan,
+                statusRetur
+        );
+
         return returService.tambahRetur(retur, idAdministrasi);
     }
 
-    /* ===================== UPDATE ===================== */
+    // ===================== UPDATE =====================
 
-    public boolean perbaruiReturPembelian(ReturPembelian retur, int idAdministrasi) {
-        if (retur == null || retur.getId() <= 0) return false;
-        if (!isValidRetur(retur)) return false;
+    public boolean perbaruiReturPembelian(
+            int id,
+            int noRetur,
+            LocalDate tanggalRetur,
+            int idPembelian,
+            int jumlahRetur,
+            BigDecimal nilaiRetur,
+            ReturPembelian.AlasanRetur alasanRetur,
+            String keterangan,
+            ReturPembelian.StatusRetur statusRetur,
+            int idAdministrasi
+    ) {
+        ReturPembelian retur = new ReturPembelian(
+                id,
+                noRetur,
+                tanggalRetur,
+                idPembelian,
+                jumlahRetur,
+                nilaiRetur,
+                alasanRetur,
+                keterangan,
+                statusRetur
+        );
 
         return returService.perbaruiRetur(retur, idAdministrasi);
     }
 
-    /* ===================== DELETE ===================== */
+    // ===================== DELETE =====================
 
-    public boolean hapusReturPembelian(int idRetur, int idAdministrasi) {
-        if (idRetur <= 0) return false;
-        return returService.hapusRetur(idRetur, idAdministrasi);
-    }
-
-    /* ===================== VALIDATION ===================== */
-
-    private boolean isValidRetur(ReturPembelian retur) {
-        if (retur == null) return false;
-        if (retur.getNo_Retur_Pembelian() == null || retur.getNo_Retur_Pembelian().isEmpty()) return false;
-        if (retur.getTanggal_Retur() == null) return false;
-        if (retur.getJumlah_Retur() <= 0) return false;
-        if (retur.getNilai_Retur() == null || retur.getNilai_Retur().signum() <= 0) return false;
-        if (retur.getAlasan_Retur() == null) return false;
-        if (retur.getStatus_Retur() == null) return false;
-
-        return true;
+    public boolean hapusReturPembelian(int id, int idAdministrasi) {
+        return returService.hapusRetur(id, idAdministrasi);
     }
 }

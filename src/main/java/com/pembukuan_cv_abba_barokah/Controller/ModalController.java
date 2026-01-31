@@ -2,103 +2,54 @@ package com.pembukuan_cv_abba_barokah.Controller;
 
 import com.pembukuan_cv_abba_barokah.Model.Modal;
 import com.pembukuan_cv_abba_barokah.Service.ModalService;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 public class ModalController {
 
-    @FXML private TableView<Modal> tableModal;
-    @FXML private TableColumn<Modal, String> colTanggal;
-    @FXML private TableColumn<Modal, Modal.JenisModal> colJenis;
-    @FXML private TableColumn<Modal, BigDecimal> colJumlah;
-    @FXML private TableColumn<Modal, String> colPemilik;
-    @FXML private TableColumn<Modal, BigDecimal> colSaldo;
+    private final ModalService modalService;
 
-    @FXML private DatePicker dpTanggal;
-    @FXML private ComboBox<Modal.JenisModal> cbJenisModal;
-    @FXML private TextField tfJumlah;
-    @FXML private TextField tfNamaPemilik;
-    @FXML private TextField tfKeterangan;
-
-    private final ModalService service = new ModalService();
-    private final ObservableList<Modal> data = FXCollections.observableArrayList();
-
-    @FXML
-    public void initialize() {
-        colTanggal.setCellValueFactory(d ->
-                new javafx.beans.property.SimpleStringProperty(
-                        d.getValue().getTanggal().toString()
-                )
-        );
-        colJenis.setCellValueFactory(d ->
-                new javafx.beans.property.SimpleObjectProperty<>(
-                        d.getValue().getJenis_Modal()
-                )
-        );
-        colJumlah.setCellValueFactory(d ->
-                new javafx.beans.property.SimpleObjectProperty<>(
-                        d.getValue().getJumlah()
-                )
-        );
-        colPemilik.setCellValueFactory(d ->
-                new javafx.beans.property.SimpleStringProperty(
-                        d.getValue().getNama_Pemilik()
-                )
-        );
-        colSaldo.setCellValueFactory(d ->
-                new javafx.beans.property.SimpleObjectProperty<>(
-                        d.getValue().getSaldo_Modal()
-                )
-        );
-
-        cbJenisModal.setItems(
-                FXCollections.observableArrayList(Modal.JenisModal.values())
-        );
-
-        loadData();
+    public ModalController() {
+        this.modalService = new ModalService();
     }
 
-    private void loadData() {
-        data.setAll(service.getAll());
-        tableModal.setItems(data);
+    // ===================== READ =====================
+
+    public List<Modal> tampilkanSemuaModal() {
+        return modalService.getAll();
     }
 
-    @FXML
-    private void handleTambahModal() {
+    public Modal tampilkanModalById(int id) {
+        return modalService.getById(id);
+    }
+
+    // ===================== CREATE =====================
+
+    public boolean tambahModal(
+            LocalDate tanggal,
+            Modal.JenisModal jenisModal,
+            BigDecimal jumlah,
+            String namaPemilik,
+            String keterangan
+    ) {
+        // saldo_modal akan dihitung di Service
         Modal modal = new Modal(
-                dpTanggal.getValue() != null ? dpTanggal.getValue() : LocalDate.now(),
-                cbJenisModal.getValue(),
-                new BigDecimal(tfJumlah.getText()),
-                tfNamaPemilik.getText(),
-                tfKeterangan.getText(),
-                BigDecimal.ZERO // saldo dihitung di Service
+                tanggal,
+                jenisModal,
+                jumlah,
+                namaPemilik,
+                keterangan,
+                BigDecimal.ZERO
         );
 
-        if (service.tambahModal(modal)) {
-            loadData();
-            clearForm();
-        }
+        return modalService.tambahModal(modal);
     }
 
-    @FXML
-    private void handleHapus() {
-        Modal selected = tableModal.getSelectionModel().getSelectedItem();
-        if (selected != null) {
-            service.hapusModal(selected.getId());
-            loadData();
-        }
-    }
+    // ===================== DELETE =====================
 
-    private void clearForm() {
-        dpTanggal.setValue(null);
-        cbJenisModal.setValue(null);
-        tfJumlah.clear();
-        tfNamaPemilik.clear();
-        tfKeterangan.clear();
+    public boolean hapusModal(int id) {
+        return modalService.hapusModal(id);
     }
 }

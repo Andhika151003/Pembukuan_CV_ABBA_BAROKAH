@@ -9,31 +9,23 @@ import java.util.List;
 
 public class PersediaanBarangController {
 
-    private final PersediaanBarangService persediaanBarangService;
+    private final PersediaanBarangService persediaanService;
 
     public PersediaanBarangController() {
-        this.persediaanBarangService = new PersediaanBarangService();
+        this.persediaanService = new PersediaanBarangService();
     }
 
-    /*
-     * =========================
-     * READ
-     * =========================
-     */
+    // ===================== READ =====================
 
-    public List<PersediaanBarang> getAllPersediaan() {
-        return persediaanBarangService.getAll();
+    public List<PersediaanBarang> tampilkanSemuaPersediaan() {
+        return persediaanService.getAll();
     }
 
-    public PersediaanBarang getPersediaanById(int id) {
-        return persediaanBarangService.getById(id);
+    public PersediaanBarang tampilkanPersediaanById(int id) {
+        return persediaanService.getById(id);
     }
 
-    /*
-     * =========================
-     * CREATE
-     * =========================
-     */
+    // ===================== CREATE =====================
 
     public boolean tambahPersediaan(
             LocalDate tanggal,
@@ -43,13 +35,9 @@ public class PersediaanBarangController {
             int jumlahMasuk,
             int jumlahKeluar,
             BigDecimal hargaSatuan,
-            String keterangan) {
-
-        // Validasi dasar
-        if (tanggal == null || namaBarang == null || hargaSatuan == null) {
-            return false;
-        }
-
+            String keterangan
+    ) {
+        // saldo_Akhir diisi dummy → akan dihitung ulang oleh Service
         PersediaanBarang persediaan = new PersediaanBarang(
                 tanggal,
                 namaBarang,
@@ -57,18 +45,15 @@ public class PersediaanBarangController {
                 jenisTransaksi,
                 jumlahMasuk,
                 jumlahKeluar,
-                BigDecimal.ZERO, // saldo akhir dihitung di Service
+                BigDecimal.ZERO,   // saldo akhir dihitung service
                 hargaSatuan,
-                keterangan);
+                keterangan
+        );
 
-        return persediaanBarangService.tambahPersediaan(persediaan);
+        return persediaanService.tambahPersediaan(persediaan);
     }
 
-    /*
-     * =========================
-     * UPDATE
-     * =========================
-     */
+    // ===================== UPDATE =====================
 
     public boolean perbaruiPersediaan(
             int id,
@@ -80,8 +65,8 @@ public class PersediaanBarangController {
             int jumlahKeluar,
             BigDecimal saldoAkhir,
             BigDecimal hargaSatuan,
-            String keterangan) {
-
+            String keterangan
+    ) {
         PersediaanBarang persediaan = new PersediaanBarang(
                 id,
                 tanggal,
@@ -92,18 +77,15 @@ public class PersediaanBarangController {
                 jumlahKeluar,
                 saldoAkhir,
                 hargaSatuan,
-                keterangan);
+                keterangan
+        );
 
-        return persediaanBarangService.perbaruiPersediaan(persediaan);
+        return persediaanService.perbaruiPersediaan(persediaan);
     }
 
-    /*
-     * =========================
-     * DELETE
-     * =========================
-     */
+    // ===================== DELETE =====================
 
     public boolean hapusPersediaan(int id) {
-        return persediaanBarangService.hapusPersediaan(id);
+        return persediaanService.hapusPersediaan(id);
     }
 }

@@ -3,6 +3,8 @@ package com.pembukuan_cv_abba_barokah.Controller;
 import com.pembukuan_cv_abba_barokah.Model.Transaksi;
 import com.pembukuan_cv_abba_barokah.Service.TransaksiService;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 public class TransaksiController {
@@ -13,58 +15,79 @@ public class TransaksiController {
         this.transaksiService = new TransaksiService();
     }
 
-    /* ===================== READ ===================== */
+    // ===================== READ =====================
 
-    public List<Transaksi> getAllTransaksi() {
+    public List<Transaksi> tampilkanSemuaTransaksi() {
         return transaksiService.getAllTransaksi();
     }
 
-    public Transaksi getTransaksiById(int id) {
-        if (id <= 0) return null;
+    public Transaksi tampilkanTransaksiById(int id) {
         return transaksiService.getTransaksiById(id);
     }
 
-    /* ===================== CREATE ===================== */
+    // ===================== CREATE =====================
 
-    public boolean simpanTransaksi(Transaksi transaksi) {
-        if (!isValidTransaksi(transaksi)) return false;
+    public boolean tambahTransaksi(
+            LocalDate tanggalTransaksi,
+            String nomorFaktur,
+            String namaBarang,
+            int kuantitas,
+            BigDecimal hargaJual,
+            Transaksi.Status statusPembayaran,
+            LocalDate tanggalPembayaran,
+            String keterangan,
+            int idPenjualan
+    ) {
+        Transaksi transaksi = new Transaksi(
+                tanggalTransaksi,
+                nomorFaktur,
+                namaBarang,
+                kuantitas,
+                hargaJual,
+                BigDecimal.ZERO,        // total dihitung di Service
+                statusPembayaran,
+                tanggalPembayaran,
+                keterangan,
+                idPenjualan
+        );
+
         return transaksiService.simpanTransaksi(transaksi);
     }
 
-    /* ===================== UPDATE ===================== */
+    // ===================== UPDATE =====================
 
-    public boolean updateTransaksi(Transaksi transaksi) {
-        if (transaksi == null || transaksi.getId() <= 0) return false;
-        if (!isValidTransaksi(transaksi)) return false;
+    public boolean perbaruiTransaksi(
+            int id,
+            LocalDate tanggalTransaksi,
+            String nomorFaktur,
+            String namaBarang,
+            int kuantitas,
+            BigDecimal hargaJual,
+            Transaksi.Status statusPembayaran,
+            LocalDate tanggalPembayaran,
+            String keterangan,
+            int idPenjualan
+    ) {
+        Transaksi transaksi = new Transaksi(
+                id,
+                tanggalTransaksi,
+                nomorFaktur,
+                namaBarang,
+                kuantitas,
+                hargaJual,
+                BigDecimal.ZERO,        // dihitung ulang di Service
+                statusPembayaran,
+                tanggalPembayaran,
+                keterangan,
+                idPenjualan
+        );
 
         return transaksiService.updateTransaksi(transaksi);
     }
 
-    /* ===================== DELETE ===================== */
+    // ===================== DELETE =====================
 
     public boolean hapusTransaksi(int id) {
-        if (id <= 0) return false;
         return transaksiService.hapusTransaksi(id);
-    }
-
-    /* ===================== VALIDATION ===================== */
-
-    private boolean isValidTransaksi(Transaksi t) {
-        if (t == null) return false;
-        if (t.getTanggal_transaksi() == null) return false;
-        if (t.getNomor_Faktur() == null || t.getNomor_Faktur().isEmpty()) return false;
-        if (t.getNama_Barang() == null || t.getNama_Barang().isEmpty()) return false;
-        if (t.getKuantitas() <= 0) return false;
-        if (t.getHarga_Jual() == null || t.getHarga_Jual().signum() <= 0) return false;
-        if (t.getStatus_Pembayaran() == null) return false;
-        if (t.getIdAdministrasi() <= 0) return false;
-
-        // Jika status LUNAS, tanggal pembayaran wajib ada
-        if (t.getStatus_Pembayaran() == Transaksi.Status.LUNAS &&
-            t.getTanggal_Pembayaran() == null) {
-            return false;
-        }
-
-        return true;
     }
 }

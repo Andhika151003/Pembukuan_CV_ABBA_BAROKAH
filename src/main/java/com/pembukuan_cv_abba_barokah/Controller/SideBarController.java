@@ -29,18 +29,8 @@ public class SideBarController {
     // ===== INPUT DATA =====
 
     @FXML
-    private void openAdministrasi() {
-        loadContent("/com/pembukuan_cv_abba_barokah/View/BiayaAdministrasiMain.fxml");
-    }
-
-    @FXML
     private void openModal() {
         loadContent("/com/pembukuan_cv_abba_barokah/View/Modal.fxml");
-    }
-
-    @FXML
-    private void openPenjualan() {
-        loadContent("/com/pembukuan_cv_abba_barokah/View/Penjualan.fxml");
     }
 
     private void loadContent(String fxml) {

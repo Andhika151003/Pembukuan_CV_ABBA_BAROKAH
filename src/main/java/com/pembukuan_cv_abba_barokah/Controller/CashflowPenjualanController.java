@@ -10,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.List;
@@ -21,11 +20,11 @@ public class CashflowPenjualanController {
     @FXML private Label bulanTahunLabel;
     @FXML private TableView<Cashflow> table;
 
-    @FXML private TableColumn<Cashflow, String> tanggalCol;
-    @FXML private TableColumn<Cashflow, String> fakturCol;
-    @FXML private TableColumn<Cashflow, String> nominalCol;
-    @FXML private TableColumn<Cashflow, String> bayarCol;
-    @FXML private TableColumn<Cashflow, String> pphCol;
+    @FXML private TableColumn<Cashflow, String> bulanCol;
+    @FXML private TableColumn<Cashflow, String> pemasukanCol;
+    @FXML private TableColumn<Cashflow, String> pengeluaranCol;
+    @FXML private TableColumn<Cashflow, String> saldoAwalCol;
+    @FXML private TableColumn<Cashflow, String> saldoAkhirCol;
 
     private final ObservableList<Cashflow> data =
             FXCollections.observableArrayList();
@@ -42,38 +41,39 @@ public class CashflowPenjualanController {
                 .getDisplayName(TextStyle.FULL, new Locale("id", "ID"));
 
         bulanTahunLabel.setText(
-                "Bulan : " + capitalize(bulan) + " " + now.getYear()
+                "Cashflow Bulan " + capitalize(bulan) + " " + now.getYear()
         );
 
-        // ===== SINKRONISASI KOLOM =====
-        tanggalCol.setCellValueFactory(c ->
+        // ===== SINKRONISASI KOLOM DENGAN MODEL =====
+        bulanCol.setCellValueFactory(c ->
                 new SimpleStringProperty(
                         c.getValue().getBulan() + " " + c.getValue().getTahun()
                 )
         );
 
-        fakturCol.setCellValueFactory(c ->
-                new SimpleStringProperty("CF-" + c.getValue().getId())
-        );
-
-        nominalCol.setCellValueFactory(c ->
+        pemasukanCol.setCellValueFactory(c ->
                 new SimpleStringProperty(
                         c.getValue().getTotalPemasukan().toString()
                 )
         );
 
-        bayarCol.setCellValueFactory(c ->
+        pengeluaranCol.setCellValueFactory(c ->
+                new SimpleStringProperty(
+                        c.getValue().getTotalPengeluaran().toString()
+                )
+        );
+
+        saldoAwalCol.setCellValueFactory(c ->
+                new SimpleStringProperty(
+                        c.getValue().getSaldoAwal().toString()
+                )
+        );
+
+        saldoAkhirCol.setCellValueFactory(c ->
                 new SimpleStringProperty(
                         c.getValue().getSaldoAkhir().toString()
                 )
         );
-
-        pphCol.setCellValueFactory(c -> {
-            BigDecimal pph = c.getValue()
-                    .getTotalPemasukan()
-                    .multiply(BigDecimal.valueOf(0.11));
-            return new SimpleStringProperty(pph.toString());
-        });
 
         // ===== LOAD DATA =====
         loadCashflowFromDatabase();

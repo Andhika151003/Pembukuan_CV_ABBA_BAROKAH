@@ -2,112 +2,86 @@ package com.pembukuan_cv_abba_barokah.Controller;
 
 import com.pembukuan_cv_abba_barokah.Model.Pembayaran;
 import com.pembukuan_cv_abba_barokah.Service.PembayaranService;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 public class PembayaranController {
 
-    @FXML private TableView<Pembayaran> tablePembayaran;
-    @FXML private TableColumn<Pembayaran, Integer> colIdTransaksi;
-    @FXML private TableColumn<Pembayaran, String> colTanggal;
-    @FXML private TableColumn<Pembayaran, BigDecimal> colJumlah;
-    @FXML private TableColumn<Pembayaran, String> colMetode;
+    private final PembayaranService pembayaranService;
 
-    @FXML private TextField tfIdTransaksi;
-    @FXML private DatePicker dpTanggal;
-    @FXML private TextField tfJumlah;
-    @FXML private TextField tfMetode;
-    @FXML private TextField tfKeterangan;
-    @FXML private TextField tfIdAdministrasi;
-
-    private final PembayaranService service = new PembayaranService();
-    private final ObservableList<Pembayaran> data = FXCollections.observableArrayList();
-
-    @FXML
-    public void initialize() {
-        colIdTransaksi.setCellValueFactory(d ->
-                new javafx.beans.property.SimpleIntegerProperty(
-                        d.getValue().getId_Transaksi()
-                ).asObject()
-        );
-        colTanggal.setCellValueFactory(d ->
-                new javafx.beans.property.SimpleStringProperty(
-                        d.getValue().getTanggal_Pembayaran().toString()
-                )
-        );
-        colJumlah.setCellValueFactory(d ->
-                new javafx.beans.property.SimpleObjectProperty<>(
-                        d.getValue().getJumlah_Pembayaran()
-                )
-        );
-        colMetode.setCellValueFactory(d ->
-                new javafx.beans.property.SimpleStringProperty(
-                        d.getValue().getMetode_Pembayaran()
-                )
-        );
-
-        loadData();
+    public PembayaranController() {
+        this.pembayaranService = new PembayaranService();
     }
 
-    private void loadData() {
-        data.setAll(service.getAllPembayaran());
-        tablePembayaran.setItems(data);
+    // ===================== READ =====================
+
+    public List<Pembayaran> tampilkanSemuaPembayaran() {
+        return pembayaranService.getAllPembayaran();
     }
 
-    @FXML
-    private void handleSimpan() {
+    public Pembayaran tampilkanPembayaranById(int id) {
+        return pembayaranService.getPembayaranById(id);
+    }
+
+    // ===================== CREATE =====================
+
+    public boolean tambahPembayaran(
+            int idTransaksi,
+            int idPenjualan,
+            int idPembelian,
+            int idUtang,
+            LocalDate tanggalPembayaran,
+            BigDecimal jumlahPembayaran,
+            String metodePembayaran,
+            String keterangan
+    ) {
         Pembayaran pembayaran = new Pembayaran(
-                Integer.parseInt(tfIdTransaksi.getText()),
-                dpTanggal.getValue() != null ? dpTanggal.getValue() : LocalDate.now(),
-                new BigDecimal(tfJumlah.getText()),
-                tfMetode.getText(),
-                tfKeterangan.getText(),
-                Integer.parseInt(tfIdAdministrasi.getText())
+                idTransaksi,
+                idPenjualan,
+                idPembelian,
+                idUtang,
+                tanggalPembayaran,
+                jumlahPembayaran,
+                metodePembayaran,
+                keterangan
         );
 
-        if (service.simpanPembayaran(pembayaran)) {
-            loadData();
-            clearForm();
-        }
+        return pembayaranService.simpanPembayaran(pembayaran);
     }
 
-    @FXML
-    private void handleUpdate() {
-        Pembayaran selected = tablePembayaran.getSelectionModel().getSelectedItem();
-        if (selected != null) {
-            selected.setId_Transaksi(Integer.parseInt(tfIdTransaksi.getText()));
-            selected.setTanggal_Pembayaran(dpTanggal.getValue());
-            selected.setJumlah_Pembayaran(new BigDecimal(tfJumlah.getText()));
-            selected.setMetode_Pembayaran(tfMetode.getText());
-            selected.setKeterangan(tfKeterangan.getText());
-            selected.setIdAdministrasi(Integer.parseInt(tfIdAdministrasi.getText()));
+    // ===================== UPDATE =====================
 
-            service.updatePembayaran(selected);
-            loadData();
-            clearForm();
-        }
+    public boolean perbaruiPembayaran(
+            int id,
+            int idTransaksi,
+            int idPenjualan,
+            int idPembelian,
+            int idUtang,
+            LocalDate tanggalPembayaran,
+            BigDecimal jumlahPembayaran,
+            String metodePembayaran,
+            String keterangan
+    ) {
+        Pembayaran pembayaran = new Pembayaran(
+                id,
+                idTransaksi,
+                idPenjualan,
+                idPembelian,
+                idUtang,
+                tanggalPembayaran,
+                jumlahPembayaran,
+                metodePembayaran,
+                keterangan
+        );
+
+        return pembayaranService.updatePembayaran(pembayaran);
     }
 
-    @FXML
-    private void handleHapus() {
-        Pembayaran selected = tablePembayaran.getSelectionModel().getSelectedItem();
-        if (selected != null) {
-            service.hapusPembayaran(selected.getId());
-            loadData();
-        }
-    }
+    // ===================== DELETE =====================
 
-    private void clearForm() {
-        tfIdTransaksi.clear();
-        tfJumlah.clear();
-        tfMetode.clear();
-        tfKeterangan.clear();
-        tfIdAdministrasi.clear();
-        dpTanggal.setValue(null);
+    public boolean hapusPembayaran(int id) {
+        return pembayaranService.hapusPembayaran(id);
     }
 }

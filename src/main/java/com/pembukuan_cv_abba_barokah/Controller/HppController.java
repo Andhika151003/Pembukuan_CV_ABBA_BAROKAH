@@ -2,132 +2,88 @@ package com.pembukuan_cv_abba_barokah.Controller;
 
 import com.pembukuan_cv_abba_barokah.Model.HargaPokokPenjualan;
 import com.pembukuan_cv_abba_barokah.Service.HppService;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 public class HppController {
 
-    @FXML private DatePicker dpTanggal;
-    @FXML private TextField txtJenisProduk;
-    @FXML private TextField txtKategori;
-    @FXML private TextField txtNamaItem;
-    @FXML private TextField txtKuantitas;
-    @FXML private TextField txtHargaSatuan;
-    @FXML private TextField txtKeterangan;
-    @FXML private TextField txtIdAdministrasi;
+    private final HppService hppService;
 
-    @FXML private TableView<HargaPokokPenjualan> tableHpp;
-    @FXML private TableColumn<HargaPokokPenjualan, Integer> colId;
-    @FXML private TableColumn<HargaPokokPenjualan, LocalDate> colTanggal;
-    @FXML private TableColumn<HargaPokokPenjualan, String> colJenisProduk;
-    @FXML private TableColumn<HargaPokokPenjualan, String> colKategori;
-    @FXML private TableColumn<HargaPokokPenjualan, String> colNamaItem;
-    @FXML private TableColumn<HargaPokokPenjualan, Integer> colKuantitas;
-    @FXML private TableColumn<HargaPokokPenjualan, BigDecimal> colHargaSatuan;
-    @FXML private TableColumn<HargaPokokPenjualan, BigDecimal> colTotalHarga;
-
-    private final HppService hppService = new HppService();
-    private final ObservableList<HargaPokokPenjualan> data = FXCollections.observableArrayList();
-
-    @FXML
-    public void initialize() {
-        colId.setCellValueFactory(c -> new javafx.beans.property.SimpleIntegerProperty(c.getValue().getId()).asObject());
-        colTanggal.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(c.getValue().getTanggal()));
-        colJenisProduk.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getJenisProduk()));
-        colKategori.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getKategori()));
-        colNamaItem.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getNamaItem()));
-        colKuantitas.setCellValueFactory(c -> new javafx.beans.property.SimpleIntegerProperty(c.getValue().getKuantitas()).asObject());
-        colHargaSatuan.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(c.getValue().getHargaSatuan()));
-        colTotalHarga.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(c.getValue().getTotalHarga()));
-
-        loadData();
-
-        tableHpp.getSelectionModel().selectedItemProperty().addListener(
-                (obs, oldVal, newVal) -> {
-                    if (newVal != null) fillForm(newVal);
-                }
-        );
+    public HppController() {
+        this.hppService = new HppService();
     }
 
-    private void loadData() {
-        data.setAll(hppService.getAllHpp());
-        tableHpp.setItems(data);
+    // ===================== READ =====================
+
+    public List<HargaPokokPenjualan> tampilkanSemuaHpp() {
+        return hppService.getAllHpp();
     }
 
-    @FXML
-    private void handleSimpan() {
+    public HargaPokokPenjualan tampilkanHppById(int id) {
+        return hppService.getHppById(id);
+    }
+
+    // ===================== CREATE =====================
+
+    public boolean tambahHpp(
+            LocalDate tanggal,
+            String jenisProduk,
+            String kategori,
+            String namaItem,
+            int kuantitas,
+            BigDecimal hargaSatuan,
+            String keterangan,
+            int idTransaksi
+    ) {
         HargaPokokPenjualan hpp = new HargaPokokPenjualan(
-                dpTanggal.getValue(),
-                txtJenisProduk.getText(),
-                txtKategori.getText(),
-                txtNamaItem.getText(),
-                Integer.parseInt(txtKuantitas.getText()),
-                new BigDecimal(txtHargaSatuan.getText()),
-                BigDecimal.ZERO,
-                txtKeterangan.getText(),
-                Integer.parseInt(txtIdAdministrasi.getText())
+                tanggal,
+                jenisProduk,
+                kategori,
+                namaItem,
+                kuantitas,
+                hargaSatuan,
+                BigDecimal.ZERO,   // total dihitung di Service
+                keterangan,
+                idTransaksi
         );
 
-        if (hppService.simpanHpp(hpp)) {
-            loadData();
-            handleReset();
-        }
+        return hppService.simpanHpp(hpp);
     }
 
-    @FXML
-    private void handleUpdate() {
-        HargaPokokPenjualan selected = tableHpp.getSelectionModel().getSelectedItem();
-        if (selected == null) return;
+    // ===================== UPDATE =====================
 
-        selected.setTanggal(dpTanggal.getValue());
-        selected.setJenisProduk(txtJenisProduk.getText());
-        selected.setKategori(txtKategori.getText());
-        selected.setNamaItem(txtNamaItem.getText());
-        selected.setKuantitas(Integer.parseInt(txtKuantitas.getText()));
-        selected.setHargaSatuan(new BigDecimal(txtHargaSatuan.getText()));
-        selected.setKeterangan(txtKeterangan.getText());
-        selected.setIdAdministrasi(Integer.parseInt(txtIdAdministrasi.getText()));
+    public boolean perbaruiHpp(
+            int id,
+            LocalDate tanggal,
+            String jenisProduk,
+            String kategori,
+            String namaItem,
+            int kuantitas,
+            BigDecimal hargaSatuan,
+            String keterangan,
+            int idTransaksi
+    ) {
+        HargaPokokPenjualan hpp = new HargaPokokPenjualan(
+                id,
+                tanggal,
+                jenisProduk,
+                kategori,
+                namaItem,
+                kuantitas,
+                hargaSatuan,
+                BigDecimal.ZERO,   // akan dihitung ulang di Service
+                keterangan,
+                idTransaksi
+        );
 
-        hppService.updateHpp(selected);
-        loadData();
+        return hppService.updateHpp(hpp);
     }
 
-    @FXML
-    private void handleHapus() {
-        HargaPokokPenjualan selected = tableHpp.getSelectionModel().getSelectedItem();
-        if (selected != null) {
-            hppService.hapusHpp(selected.getId());
-            loadData();
-            handleReset();
-        }
-    }
+    // ===================== DELETE =====================
 
-    @FXML
-    private void handleReset() {
-        dpTanggal.setValue(null);
-        txtJenisProduk.clear();
-        txtKategori.clear();
-        txtNamaItem.clear();
-        txtKuantitas.clear();
-        txtHargaSatuan.clear();
-        txtKeterangan.clear();
-        txtIdAdministrasi.clear();
-        tableHpp.getSelectionModel().clearSelection();
-    }
-
-    private void fillForm(HargaPokokPenjualan hpp) {
-        dpTanggal.setValue(hpp.getTanggal());
-        txtJenisProduk.setText(hpp.getJenisProduk());
-        txtKategori.setText(hpp.getKategori());
-        txtNamaItem.setText(hpp.getNamaItem());
-        txtKuantitas.setText(String.valueOf(hpp.getKuantitas()));
-        txtHargaSatuan.setText(hpp.getHargaSatuan().toString());
-        txtKeterangan.setText(hpp.getKeterangan());
-        txtIdAdministrasi.setText(String.valueOf(hpp.getIdAdministrasi()));
+    public boolean hapusHpp(int id) {
+        return hppService.hapusHpp(id);
     }
 }

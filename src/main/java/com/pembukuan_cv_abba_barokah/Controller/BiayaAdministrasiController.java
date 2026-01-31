@@ -2,98 +2,82 @@ package com.pembukuan_cv_abba_barokah.Controller;
 
 import com.pembukuan_cv_abba_barokah.Model.Administrasi;
 import com.pembukuan_cv_abba_barokah.Service.AdministrasiService;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
 
 public class BiayaAdministrasiController {
 
-    // ================= FIELD (FXML) =================
-    @FXML private DatePicker tanggalField;
-    @FXML private ComboBox<Administrasi.TipeAdministrasi> jenisBiayaBox;
-    @FXML private TextField jumlahBiayaField;
-    @FXML private TextField keteranganField;
-    @FXML private Button btnSimpan;
+    private final AdministrasiService administrasiService;
 
-    private AdministrasiService administrasiService;
-
-    // ================= INIT =================
-    @FXML
-    private void initialize() {
-        administrasiService = new AdministrasiService();
-
-        // Isi ComboBox dari Enum Model
-        jenisBiayaBox.getItems().setAll(Administrasi.TipeAdministrasi.values());
-
-        // Validasi awal
-        validateForm();
-
-        // Listener validasi realtime
-        tanggalField.valueProperty().addListener((obs, o, n) -> validateForm());
-        jenisBiayaBox.valueProperty().addListener((obs, o, n) -> validateForm());
-        jumlahBiayaField.textProperty().addListener((obs, o, n) -> validateForm());
+    public BiayaAdministrasiController() {
+        this.administrasiService = new AdministrasiService();
     }
 
-    // ================= VALIDASI =================
-    private void validateForm() {
-        boolean valid =
-                tanggalField.getValue() != null &&
-                jenisBiayaBox.getValue() != null &&
-                !jumlahBiayaField.getText().isBlank();
+    // ===================== READ =====================
 
-        btnSimpan.setDisable(!valid);
+    public List<Administrasi> tampilkanSemuaData() {
+        return administrasiService.getAll();
     }
 
-    // ================= SIMPAN =================
-    @FXML
-    private void handleSimpan() {
-        try {
-            BigDecimal jumlah = new BigDecimal(jumlahBiayaField.getText());
-
-            Administrasi administrasi = new Administrasi(
-                    tanggalField.getValue(),
-                    jenisBiayaBox.getValue(),
-                    jenisBiayaBox.getValue().toString(), // deskripsi
-                    jumlah,
-                    keteranganField.getText()
-            );
-
-            boolean sukses = administrasiService.simpanBaru(administrasi);
-
-            if (sukses) {
-                showAlert(Alert.AlertType.INFORMATION,
-                        "Sukses",
-                        "Data biaya administrasi berhasil disimpan.");
-                resetForm();
-            } else {
-                showAlert(Alert.AlertType.ERROR,
-                        "Gagal",
-                        "Data biaya administrasi gagal disimpan.");
-            }
-
-        } catch (NumberFormatException e) {
-            showAlert(Alert.AlertType.WARNING,
-                    "Input Tidak Valid",
-                    "Jumlah biaya harus berupa angka.");
-        }
+    public Administrasi tampilkanById(int id) {
+        return administrasiService.getById(id);
     }
 
-    // ================= RESET =================
-    private void resetForm() {
-        tanggalField.setValue(null);
-        jenisBiayaBox.setValue(null);
-        jumlahBiayaField.clear();
-        keteranganField.clear();
-        btnSimpan.setDisable(true);
+    // ===================== CREATE =====================
+
+    public boolean tambahAdministrasi(
+            LocalDate tanggal,
+            String jenisAdministrasi,
+            String deskripsi,
+            BigDecimal jumlah,
+            String keterangan
+    ) {
+        Administrasi admin = new Administrasi(
+                tanggal,
+                jenisAdministrasi,
+                deskripsi,
+                jumlah,
+                keterangan
+        );
+        return administrasiService.simpanBaru(admin);
     }
 
-    // ================= ALERT =================
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+    // ===================== UPDATE =====================
+
+    public boolean updateAdministrasi(
+            int id,
+            LocalDate tanggal,
+            String jenisAdministrasi,
+            String deskripsi,
+            BigDecimal jumlah,
+            String keterangan
+    ) {
+        Administrasi admin = new Administrasi(
+                id,
+                tanggal,
+                jenisAdministrasi,
+                deskripsi,
+                jumlah,
+                keterangan
+        );
+        return administrasiService.perbaruiData(admin);
+    }
+
+    // ===================== SALDO =====================
+
+    public boolean tambahSaldo(int id, BigDecimal nilaiTambah) {
+        return administrasiService.tambahSaldo(id, nilaiTambah);
+    }
+
+    public boolean kurangSaldo(int id, BigDecimal nilaiKurang) {
+        return administrasiService.kurangSaldo(id, nilaiKurang);
+    }
+
+    // ===================== DELETE =====================
+
+    public boolean hapusData(int id) {
+        return administrasiService.hapusAdministrasi(id);
     }
 }
