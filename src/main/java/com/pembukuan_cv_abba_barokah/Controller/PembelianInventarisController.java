@@ -2,100 +2,159 @@ package com.pembukuan_cv_abba_barokah.Controller;
 
 import com.pembukuan_cv_abba_barokah.Model.PembelianInventaris;
 import com.pembukuan_cv_abba_barokah.Service.PembelianInventarisService;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 public class PembelianInventarisController {
 
-    private final PembelianInventarisService inventarisService;
+    // ===================== FORM =====================
+    @FXML private TextField txtNoPembelian;
+    @FXML private DatePicker dpTanggalPembelian;
+    @FXML private ComboBox<PembelianInventaris.JenisInventaris> cbJenisInventaris;
+    @FXML private TextField txtNamaBarang;
+    @FXML private TextField txtJumlah;
+    @FXML private TextField txtSatuan;
+    @FXML private TextField txtHargaSatuan;
+    @FXML private TextField txtOngkosKirim;
+    @FXML private ComboBox<PembelianInventaris.MetodePembayaran> cbMetodePembayaran;
+    @FXML private ComboBox<PembelianInventaris.StatusPembelian> cbStatus;
+    @FXML private TextField txtKeterangan;
 
-    public PembelianInventarisController() {
-        this.inventarisService = new PembelianInventarisService();
+    // ===================== TABLE =====================
+    @FXML private TableView<PembelianInventaris> tableInventaris;
+    @FXML private TableColumn<PembelianInventaris, Integer> colNo;
+    @FXML private TableColumn<PembelianInventaris, LocalDate> colTanggal;
+    @FXML private TableColumn<PembelianInventaris, String> colNama;
+    @FXML private TableColumn<PembelianInventaris, Integer> colJumlah;
+    @FXML private TableColumn<PembelianInventaris, String> colSatuan;
+    @FXML private TableColumn<PembelianInventaris, BigDecimal> colTotal;
+    @FXML private TableColumn<PembelianInventaris, String> colStatus;
+
+    private final PembelianInventarisService service = new PembelianInventarisService();
+    private final ObservableList<PembelianInventaris> data = FXCollections.observableArrayList();
+
+    private PembelianInventaris selected;
+
+    // ===================== INIT =====================
+    @FXML
+    public void initialize() {
+        cbJenisInventaris.setItems(FXCollections.observableArrayList(PembelianInventaris.JenisInventaris.values()));
+        cbMetodePembayaran.setItems(FXCollections.observableArrayList(PembelianInventaris.MetodePembayaran.values()));
+        cbStatus.setItems(FXCollections.observableArrayList(PembelianInventaris.StatusPembelian.values()));
+
+        colNo.setCellValueFactory(c -> new javafx.beans.property.SimpleIntegerProperty(c.getValue().getNoPembelian()).asObject());
+        colTanggal.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(c.getValue().getTanggalPembelian()));
+        colNama.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getNamaBarang()));
+        colJumlah.setCellValueFactory(c -> new javafx.beans.property.SimpleIntegerProperty(c.getValue().getJumlah()).asObject());
+        colSatuan.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getSatuan()));
+        colTotal.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(c.getValue().getTotalHarga()));
+        colStatus.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getStatus().toString()));
+
+        loadData();
+
+        tableInventaris.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                selected = newVal;
+                fillForm(newVal);
+            }
+        });
     }
 
-    // ===================== READ =====================
-
-    public List<PembelianInventaris> tampilkanSemuaPembelian() {
-        return inventarisService.getAll();
+    // ===================== LOAD =====================
+    private void loadData() {
+        data.setAll(service.getAll());
+        tableInventaris.setItems(data);
     }
 
-    public PembelianInventaris tampilkanPembelianById(int id) {
-        return inventarisService.getById(id);
+    // ===================== FORM =====================
+    private void fillForm(PembelianInventaris p) {
+        txtNoPembelian.setText(String.valueOf(p.getNoPembelian()));
+        dpTanggalPembelian.setValue(p.getTanggalPembelian());
+        cbJenisInventaris.setValue(p.getJenisInventaris());
+        txtNamaBarang.setText(p.getNamaBarang());
+        txtJumlah.setText(String.valueOf(p.getJumlah()));
+        txtSatuan.setText(p.getSatuan());
+        txtHargaSatuan.setText(p.getHargaSatuan().toString());
+        txtOngkosKirim.setText(p.getOngkosKirim().toString());
+        cbMetodePembayaran.setValue(p.getMetodePembayaran());
+        cbStatus.setValue(p.getStatus());
+        txtKeterangan.setText(p.getKeterangan());
     }
 
-    // ===================== CREATE =====================
+    private void clearForm() {
+        txtNoPembelian.clear();
+        dpTanggalPembelian.setValue(null);
+        cbJenisInventaris.setValue(null);
+        txtNamaBarang.clear();
+        txtJumlah.clear();
+        txtSatuan.clear();
+        txtHargaSatuan.clear();
+        txtOngkosKirim.clear();
+        cbMetodePembayaran.setValue(null);
+        cbStatus.setValue(null);
+        txtKeterangan.clear();
+        selected = null;
+    }
 
-    public boolean tambahPembelianInventaris(
-            int noPembelian,
-            LocalDate tanggalPembelian,
-            PembelianInventaris.JenisInventaris jenisInventaris,
-            String namaBarang,
-            int jumlah,
-            String satuan,
-            BigDecimal hargaSatuan,
-            BigDecimal ongkosKirim,
-            PembelianInventaris.MetodePembayaran metodePembayaran,
-            PembelianInventaris.StatusPembelian status,
-            String keterangan
-    ) {
-        PembelianInventaris pembelian = new PembelianInventaris(
-                noPembelian,
-                tanggalPembelian,
-                jenisInventaris,
-                namaBarang,
-                jumlah,
-                satuan,
-                hargaSatuan,
-                ongkosKirim,
-                BigDecimal.ZERO, // totalHarga dihitung di Service
-                metodePembayaran,
-                status,
-                keterangan
+    // ===================== ACTION =====================
+    @FXML
+    private void handleSimpan() {
+        PembelianInventaris p = new PembelianInventaris(
+                Integer.parseInt(txtNoPembelian.getText()),
+                dpTanggalPembelian.getValue(),
+                cbJenisInventaris.getValue(),
+                txtNamaBarang.getText(),
+                Integer.parseInt(txtJumlah.getText()),
+                txtSatuan.getText(),
+                new BigDecimal(txtHargaSatuan.getText()),
+                new BigDecimal(txtOngkosKirim.getText()),
+                BigDecimal.ZERO,
+                cbMetodePembayaran.getValue(),
+                cbStatus.getValue(),
+                txtKeterangan.getText()
         );
 
-        return inventarisService.tambahPembelian(pembelian);
+        service.tambahPembelian(p);
+        loadData();
+        clearForm();
     }
 
-    // ===================== UPDATE =====================
+    @FXML
+    private void handleUpdate() {
+        if (selected == null) return;
 
-    public boolean perbaruiPembelianInventaris(
-            int id,
-            int noPembelian,
-            LocalDate tanggalPembelian,
-            PembelianInventaris.JenisInventaris jenisInventaris,
-            String namaBarang,
-            int jumlah,
-            String satuan,
-            BigDecimal hargaSatuan,
-            BigDecimal ongkosKirim,
-            PembelianInventaris.MetodePembayaran metodePembayaran,
-            PembelianInventaris.StatusPembelian status,
-            String keterangan
-    ) {
-        PembelianInventaris pembelian = new PembelianInventaris(
-                id,
-                noPembelian,
-                tanggalPembelian,
-                jenisInventaris,
-                namaBarang,
-                jumlah,
-                satuan,
-                hargaSatuan,
-                ongkosKirim,
-                BigDecimal.ZERO, // dihitung ulang di Service
-                metodePembayaran,
-                status,
-                keterangan
+        PembelianInventaris p = new PembelianInventaris(
+                selected.getId(),
+                Integer.parseInt(txtNoPembelian.getText()),
+                dpTanggalPembelian.getValue(),
+                cbJenisInventaris.getValue(),
+                txtNamaBarang.getText(),
+                Integer.parseInt(txtJumlah.getText()),
+                txtSatuan.getText(),
+                new BigDecimal(txtHargaSatuan.getText()),
+                new BigDecimal(txtOngkosKirim.getText()),
+                BigDecimal.ZERO,
+                cbMetodePembayaran.getValue(),
+                cbStatus.getValue(),
+                txtKeterangan.getText()
         );
 
-        return inventarisService.perbaruiPembelian(pembelian);
+        service.perbaruiPembelian(p);
+        loadData();
+        clearForm();
     }
 
-    // ===================== DELETE =====================
+    @FXML
+    private void handleHapus() {
+        if (selected == null) return;
 
-    public boolean hapusPembelianInventaris(int id) {
-        return inventarisService.hapusPembelian(id);
+        service.hapusPembelian(selected.getId());
+        loadData();
+        clearForm();
     }
 }

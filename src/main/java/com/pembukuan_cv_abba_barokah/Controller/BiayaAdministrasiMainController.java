@@ -22,11 +22,6 @@ public class BiayaAdministrasiMainController {
     }
 
     @FXML
-    private void openPegawai() {
-        loadContent("/com/pembukuan_cv_abba_barokah/View/Pegawai.fxml");
-    }
-
-    @FXML
     private void openGajiPegawai() {
         loadContent("/com/pembukuan_cv_abba_barokah/View/GajiPegawai.fxml");
     }

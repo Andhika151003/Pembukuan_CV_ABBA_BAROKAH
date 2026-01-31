@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.pembukuan_cv_abba_barokah.Controller.BiayaAdministrasiController"
+      spacing="24"
+      style="-fx-padding: 16;">
+
+    <!-- ===================== TITLE ===================== -->
+    <HBox alignment="CENTER">
+        <Label text="Form Biaya Administrasi"
+               style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+    </HBox>
+
+    <!-- ===================== FORM (CENTERED) ===================== -->
+    <StackPane>
+        <VBox maxWidth="520" styleClass="card">
+
+            <GridPane styleClass="form-grid">
+                <columnConstraints>
+                    <ColumnConstraints prefWidth="160"/>
+                    <ColumnConstraints/>
+                </columnConstraints>
+
+                <children>
+                    <Label text="Tanggal"/>
+                    <DatePicker fx:id="dpTanggal"
+                                GridPane.columnIndex="1"/>
+
+                    <Label text="Jenis Administrasi" GridPane.rowIndex="1"/>
+                    <TextField fx:id="txtJenisAdministrasi"
+                               GridPane.rowIndex="1"
+                               GridPane.columnIndex="1"/>
+
+                    <Label text="Deskripsi" GridPane.rowIndex="2"/>
+                    <TextField fx:id="txtDeskripsi"
+                               GridPane.rowIndex="2"
+                               GridPane.columnIndex="1"/>
+
+                    <Label text="Jumlah" GridPane.rowIndex="3"/>
+                    <TextField fx:id="txtJumlah"
+                               GridPane.rowIndex="3"
+                               GridPane.columnIndex="1"/>
+
+                    <Label text="Keterangan" GridPane.rowIndex="4"/>
+                    <TextField fx:id="txtKeterangan"
+                               GridPane.rowIndex="4"
+                               GridPane.columnIndex="1"/>
+                </children>
+            </GridPane>
+
+            <!-- ===================== BUTTON ===================== -->
+            <HBox spacing="12"
+                  alignment="CENTER_RIGHT"
+                  style="-fx-padding: 18 0 0 0;">
+                <Button text="Simpan"
+                        onAction="#handleSimpan"/>
+                <Button text="Update"
+                        onAction="#handleUpdate"/>
+                <Button text="Hapus"
+                        styleClass="button-danger"
+                        onAction="#handleHapus"/>
+            </HBox>
+
+        </VBox>
+    </StackPane>
+
+    <!-- ===================== TABLE ===================== -->
+    <TableView fx:id="tableAdministrasi" prefHeight="360">
+        <columns>
+            <TableColumn fx:id="colTanggal"
+                         text="Tanggal"
+                         prefWidth="120"/>
+            <TableColumn fx:id="colJenis"
+                         text="Jenis Administrasi"
+                         prefWidth="180"/>
+            <TableColumn fx:id="colDeskripsi"
+                         text="Deskripsi"
+                         prefWidth="240"/>
+            <TableColumn fx:id="colJumlah"
+                         text="Jumlah"
+                         prefWidth="140"/>
+            <TableColumn fx:id="colKeterangan"
+                         text="Keterangan"
+                         prefWidth="220"/>
+        </columns>
+    </TableView>
+
+</VBox>

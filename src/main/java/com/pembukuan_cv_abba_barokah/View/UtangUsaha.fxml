@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.pembukuan_cv_abba_barokah.Controller.UtangUsahaController"
+      stylesheets="@Global.css"
+      spacing="24"
+      alignment="TOP_CENTER"
+      style="-fx-padding: 24;">
+
+    <!-- ===================== TITLE ===================== -->
+    <Label text="Form Utang Usaha"
+           style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
+    <!-- ===================== FORM CARD ===================== -->
+    <VBox maxWidth="560"
+          styleClass="card"
+          alignment="CENTER">
+
+        <GridPane styleClass="form-grid">
+            <columnConstraints>
+                <ColumnConstraints prefWidth="180"/>
+                <ColumnConstraints/>
+            </columnConstraints>
+
+            <children>
+                <Label text="No Utang"/>
+                <TextField fx:id="txtNoUtang" GridPane.columnIndex="1"/>
+
+                <Label text="Tanggal Utang" GridPane.rowIndex="1"/>
+                <DatePicker fx:id="dpTanggalUtang"
+                            GridPane.rowIndex="1"
+                            GridPane.columnIndex="1"/>
+
+                <Label text="Jatuh Tempo" GridPane.rowIndex="2"/>
+                <DatePicker fx:id="dpJatuhTempo"
+                            GridPane.rowIndex="2"
+                            GridPane.columnIndex="1"/>
+
+                <Label text="ID Pembelian" GridPane.rowIndex="3"/>
+                <TextField fx:id="txtIdPembelian"
+                           GridPane.rowIndex="3"
+                           GridPane.columnIndex="1"/>
+
+                <Label text="Jumlah Utang" GridPane.rowIndex="4"/>
+                <TextField fx:id="txtJumlahUtang"
+                           GridPane.rowIndex="4"
+                           GridPane.columnIndex="1"/>
+
+                <Label text="Jumlah Dibayar" GridPane.rowIndex="5"/>
+                <TextField fx:id="txtJumlahDibayar"
+                           GridPane.rowIndex="5"
+                           GridPane.columnIndex="1"/>
+
+                <Label text="Status Utang" GridPane.rowIndex="6"/>
+                <ComboBox fx:id="cbStatusUtang"
+                          GridPane.rowIndex="6"
+                          GridPane.columnIndex="1"/>
+
+                <Label text="Keterangan" GridPane.rowIndex="7"/>
+                <TextField fx:id="txtKeterangan"
+                           GridPane.rowIndex="7"
+                           GridPane.columnIndex="1"/>
+            </children>
+        </GridPane>
+
+        <!-- ===================== BUTTON ===================== -->
+        <HBox spacing="12"
+              alignment="CENTER_RIGHT"
+              style="-fx-padding: 18 0 0 0;">
+            <Button text="Simpan" onAction="#handleSimpan"/>
+            <Button text="Update" onAction="#handleUpdate"/>
+            <Button text="Hapus"
+                    styleClass="button-danger"
+                    onAction="#handleHapus"/>
+        </HBox>
+    </VBox>
+
+    <!-- ===================== TABLE ===================== -->
+    <TableView fx:id="tableUtang"
+               prefHeight="360"
+               maxWidth="1100">
+
+        <columns>
+            <TableColumn fx:id="colNoUtang" text="No Utang" prefWidth="120"/>
+            <TableColumn fx:id="colTanggal" text="Tanggal" prefWidth="140"/>
+            <TableColumn fx:id="colJatuhTempo" text="Jatuh Tempo" prefWidth="160"/>
+            <TableColumn fx:id="colSisa" text="Sisa Utang" prefWidth="160"/>
+            <TableColumn fx:id="colStatus" text="Status" prefWidth="160"/>
+        </columns>
+    </TableView>
+
+</VBox>

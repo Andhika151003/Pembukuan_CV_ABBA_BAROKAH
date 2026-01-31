@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.pembukuan_cv_abba_barokah.Controller.ReturPenjualanController"
+      stylesheets="@Global.css"
+      spacing="24"
+      alignment="TOP_CENTER"
+      style="-fx-padding: 24;">
+
+    <!-- ===================== TITLE ===================== -->
+    <Label text="Form Retur Penjualan"
+           style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
+    <!-- ===================== FORM CARD ===================== -->
+    <StackPane>
+        <VBox maxWidth="600" styleClass="card">
+
+            <GridPane styleClass="form-grid" hgap="12" vgap="12">
+                <columnConstraints>
+                    <ColumnConstraints prefWidth="180"/>
+                    <ColumnConstraints/>
+                </columnConstraints>
+
+                <children>
+                    <Label text="No Retur"/>
+                    <TextField fx:id="txtNoRetur" GridPane.columnIndex="1"/>
+
+                    <Label text="Tanggal Retur" GridPane.rowIndex="1"/>
+                    <DatePicker fx:id="dpTanggalRetur"
+                                GridPane.rowIndex="1"
+                                GridPane.columnIndex="1"/>
+
+                    <Label text="ID Penjualan" GridPane.rowIndex="2"/>
+                    <TextField fx:id="txtIdPenjualan"
+                               GridPane.rowIndex="2"
+                               GridPane.columnIndex="1"/>
+
+                    <Label text="ID Transaksi" GridPane.rowIndex="3"/>
+                    <TextField fx:id="txtIdTransaksi"
+                               GridPane.rowIndex="3"
+                               GridPane.columnIndex="1"/>
+
+                    <Label text="Jumlah Retur" GridPane.rowIndex="4"/>
+                    <TextField fx:id="txtJumlahRetur"
+                               GridPane.rowIndex="4"
+                               GridPane.columnIndex="1"/>
+
+                    <Label text="Nilai Retur" GridPane.rowIndex="5"/>
+                    <TextField fx:id="txtNilaiRetur"
+                               GridPane.rowIndex="5"
+                               GridPane.columnIndex="1"/>
+
+                    <Label text="Alasan Retur" GridPane.rowIndex="6"/>
+                    <ComboBox fx:id="cbAlasanRetur"
+                              GridPane.rowIndex="6"
+                              GridPane.columnIndex="1"/>
+
+                    <Label text="Status Retur" GridPane.rowIndex="7"/>
+                    <ComboBox fx:id="cbStatusRetur"
+                              GridPane.rowIndex="7"
+                              GridPane.columnIndex="1"/>
+
+                    <Label text="Jenis Pengembalian" GridPane.rowIndex="8"/>
+                    <ComboBox fx:id="cbJenisPengembalian"
+                              GridPane.rowIndex="8"
+                              GridPane.columnIndex="1"/>
+
+                    <Label text="Tanggal Pengembalian" GridPane.rowIndex="9"/>
+                    <DatePicker fx:id="dpTanggalPengembalian"
+                                GridPane.rowIndex="9"
+                                GridPane.columnIndex="1"/>
+
+                    <Label text="Keterangan" GridPane.rowIndex="10"/>
+                    <TextField fx:id="txtKeterangan"
+                               GridPane.rowIndex="10"
+                               GridPane.columnIndex="1"/>
+                </children>
+            </GridPane>
+
+            <!-- ===================== BUTTON ===================== -->
+            <HBox spacing="12"
+                  alignment="CENTER_RIGHT"
+                  style="-fx-padding: 18 0 0 0;">
+                <Button text="Simpan" onAction="#handleSimpan"/>
+                <Button text="Update" onAction="#handleUpdate"/>
+                <Button text="Hapus" styleClass="button-danger" onAction="#handleHapus"/>
+            </HBox>
+
+        </VBox>
+    </StackPane>
+
+    <!-- ===================== TABLE ===================== -->
+    <TableView fx:id="tableRetur" prefHeight="360" maxWidth="1100">
+        <columns>
+            <TableColumn fx:id="colNoRetur" text="No Retur" prefWidth="120"/>
+            <TableColumn fx:id="colTanggal" text="Tanggal Retur" prefWidth="140"/>
+            <TableColumn fx:id="colJumlah" text="Jumlah" prefWidth="100"/>
+            <TableColumn fx:id="colNilai" text="Nilai Retur" prefWidth="160"/>
+            <TableColumn fx:id="colStatus" text="Status" prefWidth="140"/>
+        </columns>
+    </TableView>
+
+</VBox>

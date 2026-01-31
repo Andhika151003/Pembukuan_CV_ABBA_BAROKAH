@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.pembukuan_cv_abba_barokah.Controller.SetorPajakController"
+      stylesheets="@Global.css"
+      spacing="24"
+      styleClass="content">
+
+    <!-- ===================== TITLE ===================== -->
+    <HBox alignment="CENTER">
+        <Label text="Setor Pajak"
+               style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+    </HBox>
+
+    <!-- ===================== FORM ===================== -->
+    <StackPane>
+        <VBox maxWidth="520" styleClass="card">
+
+            <GridPane styleClass="form-grid">
+                <columnConstraints>
+                    <ColumnConstraints prefWidth="160"/>
+                    <ColumnConstraints/>
+                </columnConstraints>
+
+                <children>
+                    <Label text="Tanggal Setor"/>
+                    <DatePicker fx:id="dpTanggal"
+                                GridPane.columnIndex="1"/>
+
+                    <Label text="Jenis Pajak" GridPane.rowIndex="1"/>
+                    <TextField fx:id="txtJenisPajak"
+                               GridPane.rowIndex="1"
+                               GridPane.columnIndex="1"/>
+
+                    <Label text="Jumlah Pajak" GridPane.rowIndex="2"/>
+                    <TextField fx:id="txtJumlah"
+                               GridPane.rowIndex="2"
+                               GridPane.columnIndex="1"/>
+
+                    <Label text="Periode" GridPane.rowIndex="3"/>
+                    <TextField fx:id="txtPeriode"
+                               GridPane.rowIndex="3"
+                               GridPane.columnIndex="1"/>
+
+                    <Label text="Bukti Setor" GridPane.rowIndex="4"/>
+                    <TextField fx:id="txtBuktiSetor"
+                               GridPane.rowIndex="4"
+                               GridPane.columnIndex="1"/>
+                </children>
+            </GridPane>
+
+            <!-- ===================== BUTTON ===================== -->
+            <HBox spacing="12"
+                  alignment="CENTER_RIGHT"
+                  style="-fx-padding: 18 0 0 0;">
+                <Button text="Simpan"
+                        onAction="#handleSimpan"/>
+                <Button text="Update"
+                        onAction="#handleUpdate"/>
+                <Button text="Hapus"
+                        styleClass="button-danger"
+                        onAction="#handleHapus"/>
+            </HBox>
+
+        </VBox>
+    </StackPane>
+
+    <!-- ===================== TABLE ===================== -->
+    <TableView fx:id="tableSetorPajak" prefHeight="360">
+        <columns>
+            <TableColumn fx:id="colTanggal"
+                         text="Tanggal"
+                         prefWidth="120"/>
+            <TableColumn fx:id="colJenis"
+                         text="Jenis Pajak"
+                         prefWidth="160"/>
+            <TableColumn fx:id="colJumlah"
+                         text="Jumlah"
+                         prefWidth="160"/>
+            <TableColumn fx:id="colPeriode"
+                         text="Periode"
+                         prefWidth="140"/>
+            <TableColumn fx:id="colBukti"
+                         text="Bukti Setor"
+                         prefWidth="220"/>
+        </columns>
+    </TableView>
+
+</VBox>

@@ -2,90 +2,139 @@ package com.pembukuan_cv_abba_barokah.Controller;
 
 import com.pembukuan_cv_abba_barokah.Model.PersediaanBarang;
 import com.pembukuan_cv_abba_barokah.Service.PersediaanBarangService;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 public class PersediaanBarangController {
 
-    private final PersediaanBarangService persediaanService;
+    @FXML private DatePicker dpTanggal;
+    @FXML private TextField txtNamaBarang;
+    @FXML private TextField txtSatuan;
+    @FXML private ComboBox<PersediaanBarang.JenisTransaksi> cbJenisTransaksi;
+    @FXML private TextField txtJumlahMasuk;
+    @FXML private TextField txtJumlahKeluar;
+    @FXML private TextField txtHargaSatuan;
+    @FXML private TextField txtKeterangan;
 
-    public PersediaanBarangController() {
-        this.persediaanService = new PersediaanBarangService();
-    }
+    @FXML private TableView<PersediaanBarang> tablePersediaan;
+    @FXML private TableColumn<PersediaanBarang, LocalDate> colTanggal;
+    @FXML private TableColumn<PersediaanBarang, String> colNama;
+    @FXML private TableColumn<PersediaanBarang, String> colJenis;
+    @FXML private TableColumn<PersediaanBarang, Integer> colMasuk;
+    @FXML private TableColumn<PersediaanBarang, Integer> colKeluar;
+    @FXML private TableColumn<PersediaanBarang, BigDecimal> colSaldo;
 
-    // ===================== READ =====================
+    private final PersediaanBarangService service = new PersediaanBarangService();
+    private final ObservableList<PersediaanBarang> data = FXCollections.observableArrayList();
 
-    public List<PersediaanBarang> tampilkanSemuaPersediaan() {
-        return persediaanService.getAll();
-    }
-
-    public PersediaanBarang tampilkanPersediaanById(int id) {
-        return persediaanService.getById(id);
-    }
-
-    // ===================== CREATE =====================
-
-    public boolean tambahPersediaan(
-            LocalDate tanggal,
-            String namaBarang,
-            String satuan,
-            PersediaanBarang.JenisTransaksi jenisTransaksi,
-            int jumlahMasuk,
-            int jumlahKeluar,
-            BigDecimal hargaSatuan,
-            String keterangan
-    ) {
-        // saldo_Akhir diisi dummy → akan dihitung ulang oleh Service
-        PersediaanBarang persediaan = new PersediaanBarang(
-                tanggal,
-                namaBarang,
-                satuan,
-                jenisTransaksi,
-                jumlahMasuk,
-                jumlahKeluar,
-                BigDecimal.ZERO,   // saldo akhir dihitung service
-                hargaSatuan,
-                keterangan
+    @FXML
+    public void initialize() {
+        cbJenisTransaksi.setItems(
+                FXCollections.observableArrayList(PersediaanBarang.JenisTransaksi.values())
         );
 
-        return persediaanService.tambahPersediaan(persediaan);
+        colTanggal.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(c.getValue().getTanggal()));
+        colNama.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getNama_Barang()));
+        colJenis.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(
+                c.getValue().getJenis_Transaksi().toString()
+        ));
+        colMasuk.setCellValueFactory(c -> new javafx.beans.property.SimpleIntegerProperty(
+                c.getValue().getJumlah_Masuk()).asObject()
+        );
+        colKeluar.setCellValueFactory(c -> new javafx.beans.property.SimpleIntegerProperty(
+                c.getValue().getJumlah_Keluar()).asObject()
+        );
+        colSaldo.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(
+                c.getValue().getSaldo_Akhir()
+        ));
+
+        loadData();
+
+        tablePersediaan.getSelectionModel().selectedItemProperty().addListener(
+                (obs, oldVal, newVal) -> fillForm(newVal)
+        );
     }
 
-    // ===================== UPDATE =====================
+    private void loadData() {
+        data.setAll(service.getAll());
+        tablePersediaan.setItems(data);
+    }
 
-    public boolean perbaruiPersediaan(
-            int id,
-            LocalDate tanggal,
-            String namaBarang,
-            String satuan,
-            PersediaanBarang.JenisTransaksi jenisTransaksi,
-            int jumlahMasuk,
-            int jumlahKeluar,
-            BigDecimal saldoAkhir,
-            BigDecimal hargaSatuan,
-            String keterangan
-    ) {
-        PersediaanBarang persediaan = new PersediaanBarang(
-                id,
-                tanggal,
-                namaBarang,
-                satuan,
-                jenisTransaksi,
-                jumlahMasuk,
-                jumlahKeluar,
-                saldoAkhir,
-                hargaSatuan,
-                keterangan
+    private void fillForm(PersediaanBarang p) {
+        if (p == null) return;
+
+        dpTanggal.setValue(p.getTanggal());
+        txtNamaBarang.setText(p.getNama_Barang());
+        txtSatuan.setText(p.getSatuan());
+        cbJenisTransaksi.setValue(p.getJenis_Transaksi());
+        txtJumlahMasuk.setText(String.valueOf(p.getJumlah_Masuk()));
+        txtJumlahKeluar.setText(String.valueOf(p.getJumlah_Keluar()));
+        txtHargaSatuan.setText(p.getHarga_Satuan().toString());
+        txtKeterangan.setText(p.getKeterangan());
+    }
+
+    @FXML
+    private void handleSimpan() {
+        PersediaanBarang p = new PersediaanBarang(
+                dpTanggal.getValue(),
+                txtNamaBarang.getText(),
+                txtSatuan.getText(),
+                cbJenisTransaksi.getValue(),
+                Integer.parseInt(txtJumlahMasuk.getText()),
+                Integer.parseInt(txtJumlahKeluar.getText()),
+                BigDecimal.ZERO, // saldo dihitung SERVICE
+                new BigDecimal(txtHargaSatuan.getText()),
+                txtKeterangan.getText()
         );
 
-        return persediaanService.perbaruiPersediaan(persediaan);
+        service.tambahPersediaan(p);
+        clearForm();
+        loadData();
     }
 
-    // ===================== DELETE =====================
+    @FXML
+    private void handleUpdate() {
+        PersediaanBarang selected = tablePersediaan.getSelectionModel().getSelectedItem();
+        if (selected == null) return;
 
-    public boolean hapusPersediaan(int id) {
-        return persediaanService.hapusPersediaan(id);
+        selected.setTanggal(dpTanggal.getValue());
+        selected.setNama_Barang(txtNamaBarang.getText());
+        selected.setSatuan(txtSatuan.getText());
+        selected.setJenis_Transaksi(cbJenisTransaksi.getValue());
+        selected.setJumlah_Masuk(Integer.parseInt(txtJumlahMasuk.getText()));
+        selected.setJumlah_Keluar(Integer.parseInt(txtJumlahKeluar.getText()));
+        selected.setHarga_Satuan(new BigDecimal(txtHargaSatuan.getText()));
+        selected.setKeterangan(txtKeterangan.getText());
+
+        service.perbaruiPersediaan(selected);
+        clearForm();
+        loadData();
+    }
+
+    @FXML
+    private void handleHapus() {
+        PersediaanBarang selected = tablePersediaan.getSelectionModel().getSelectedItem();
+        if (selected == null) return;
+
+        service.hapusPersediaan(selected.getId());
+        clearForm();
+        loadData();
+    }
+
+    private void clearForm() {
+        dpTanggal.setValue(null);
+        txtNamaBarang.clear();
+        txtSatuan.clear();
+        cbJenisTransaksi.setValue(null);
+        txtJumlahMasuk.clear();
+        txtJumlahKeluar.clear();
+        txtHargaSatuan.clear();
+        txtKeterangan.clear();
+        tablePersediaan.getSelectionModel().clearSelection();
     }
 }

@@ -38,6 +38,56 @@ public class SideBarController {
         loadContent("/com/pembukuan_cv_abba_barokah/View/Penjualan.fxml");
     }
 
+    @FXML
+    private void openPembayaran() {
+        loadContent("/com/pembukuan_cv_abba_barokah/View/Pembayaran.fxml");
+    }
+
+    @FXML
+    private void openSetorPajak() {
+        loadContent("/com/pembukuan_cv_abba_barokah/View/SetorPajak.fxml");
+    }
+
+    @FXML
+    private void openPemasaran() {
+        loadContent("/com/pembukuan_cv_abba_barokah/View/BiayaPemasaran.fxml");
+    }
+
+    @FXML
+    private void openAdministrasi() {
+        loadContent("/com/pembukuan_cv_abba_barokah/View/BiayaAdministrasiMain.fxml");
+    }
+
+    @FXML
+    private void openInventaris() {
+        loadContent("/com/pembukuan_cv_abba_barokah/View/PembelianInventaris.fxml");
+    }
+
+    @FXML
+    private void openReturPenjualan() {
+        loadContent("/com/pembukuan_cv_abba_barokah/View/ReturPenjualan.fxml");
+    }
+
+    @FXML
+    private void openReturPembelian() {
+        loadContent("/com/pembukuan_cv_abba_barokah/View/ReturPembelian.fxml");
+    }
+
+    @FXML
+    private void openPersediaan() {
+        loadContent("/com/pembukuan_cv_abba_barokah/View/PersediaanBarang.fxml");
+    }
+
+    @FXML
+    private void openUtang() {
+        loadContent("/com/pembukuan_cv_abba_barokah/View/UtangUsaha.fxml");
+    }
+
+    @FXML
+    private void openModal() {
+        loadContent("/com/pembukuan_cv_abba_barokah/View/Modal.fxml");
+    }
+
     private void loadContent(String fxml) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));

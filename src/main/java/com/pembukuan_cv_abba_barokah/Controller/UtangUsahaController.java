@@ -2,56 +2,150 @@ package com.pembukuan_cv_abba_barokah.Controller;
 
 import com.pembukuan_cv_abba_barokah.Model.UtangUsaha;
 import com.pembukuan_cv_abba_barokah.Service.UtangUsahaService;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
 
-import java.util.List;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class UtangUsahaController {
 
-    private final UtangUsahaService utangService;
+    @FXML private TextField txtNoUtang;
+    @FXML private DatePicker dpTanggalUtang;
+    @FXML private DatePicker dpJatuhTempo;
+    @FXML private TextField txtIdPembelian;
+    @FXML private TextField txtJumlahUtang;
+    @FXML private TextField txtJumlahDibayar;
+    @FXML private ComboBox<UtangUsaha.StatusUtang> cbStatusUtang;
+    @FXML private TextField txtKeterangan;
 
-    public UtangUsahaController() {
-        this.utangService = new UtangUsahaService();
+    @FXML private TableView<UtangUsaha> tableUtang;
+    @FXML private TableColumn<UtangUsaha, Integer> colNoUtang;
+    @FXML private TableColumn<UtangUsaha, LocalDate> colTanggal;
+    @FXML private TableColumn<UtangUsaha, LocalDate> colJatuhTempo;
+    @FXML private TableColumn<UtangUsaha, BigDecimal> colSisa;
+    @FXML private TableColumn<UtangUsaha, String> colStatus;
+
+    private final UtangUsahaService service = new UtangUsahaService();
+    private final ObservableList<UtangUsaha> data = FXCollections.observableArrayList();
+
+    @FXML
+    public void initialize() {
+        cbStatusUtang.setItems(
+                FXCollections.observableArrayList(UtangUsaha.StatusUtang.values())
+        );
+
+        colNoUtang.setCellValueFactory(c -> 
+                new javafx.beans.property.SimpleIntegerProperty(c.getValue().getNo_Utang()).asObject()
+        );
+        colTanggal.setCellValueFactory(c -> 
+                new javafx.beans.property.SimpleObjectProperty<>(c.getValue().getTanggal_Utang())
+        );
+        colJatuhTempo.setCellValueFactory(c -> 
+                new javafx.beans.property.SimpleObjectProperty<>(c.getValue().getTanggal_Jatuh_Tempo())
+        );
+        colSisa.setCellValueFactory(c -> 
+                new javafx.beans.property.SimpleObjectProperty<>(c.getValue().getSisa_Utang())
+        );
+        colStatus.setCellValueFactory(c -> 
+                new javafx.beans.property.SimpleStringProperty(c.getValue().getStatus_Utang().toString())
+        );
+
+        loadData();
+
+        tableUtang.getSelectionModel().selectedItemProperty().addListener(
+                (obs, oldVal, newVal) -> fillForm(newVal)
+        );
     }
 
-    // ================== READ ==================
-
-    public List<UtangUsaha> getAllUtang() {
-        return utangService.getAll();
+    private void loadData() {
+        data.setAll(service.getAll());
+        tableUtang.setItems(data);
     }
 
-    public UtangUsaha getUtangById(int id) {
-        return utangService.getById(id);
+    private void fillForm(UtangUsaha u) {
+        if (u == null) return;
+
+        txtNoUtang.setText(String.valueOf(u.getNo_Utang()));
+        dpTanggalUtang.setValue(u.getTanggal_Utang());
+        dpJatuhTempo.setValue(u.getTanggal_Jatuh_Tempo());
+        txtIdPembelian.setText(String.valueOf(u.getid_Pembelian()));
+        txtJumlahUtang.setText(u.getJumlah_Utang().toString());
+        txtJumlahDibayar.setText(u.getJumlah_Dibayar().toString());
+        cbStatusUtang.setValue(u.getStatus_Utang());
+        txtKeterangan.setText(u.getKeterangan());
     }
 
-    // ================== CREATE ==================
+    @FXML
+    private void handleSimpan() {
+        BigDecimal jumlahUtang = new BigDecimal(txtJumlahUtang.getText());
+        BigDecimal jumlahDibayar = new BigDecimal(txtJumlahDibayar.getText());
+        BigDecimal sisa = jumlahUtang.subtract(jumlahDibayar);
 
-    /**
-     * Mencatat utang baru
-     */
-    public boolean tambahUtang(UtangUsaha utang) {
-        // hitung sisa utang awal
-        utang.hitungSisaUtang();
-        return utangService.tambahUtang(utang);
+        UtangUsaha utang = new UtangUsaha(
+                Integer.parseInt(txtNoUtang.getText()),
+                dpTanggalUtang.getValue(),
+                dpJatuhTempo.getValue(),
+                Integer.parseInt(txtIdPembelian.getText()),
+                jumlahUtang,
+                jumlahDibayar,
+                sisa,
+                cbStatusUtang.getValue(),
+                txtKeterangan.getText()
+        );
+
+        service.tambahUtang(utang);
+        clearForm();
+        loadData();
     }
 
-    // ================== UPDATE / BAYAR ==================
+    @FXML
+    private void handleUpdate() {
+        UtangUsaha selected = tableUtang.getSelectionModel().getSelectedItem();
+        if (selected == null) return;
 
-    /**
-     * Membayar atau memperbarui utang
-     * @param utang Data utang terbaru
-     * @param idAdministrasi akun kas/bank
-     */
-    public boolean bayarUtang(UtangUsaha utang, int idAdministrasi) {
-        utang.hitungSisaUtang();
-        return utangService.bayarUtang(utang, idAdministrasi);
+        selected.setNo_Utang(Integer.parseInt(txtNoUtang.getText()));
+        selected.setTanggal_Utang(dpTanggalUtang.getValue());
+        selected.setTanggal_Jatuh_Tempo(dpJatuhTempo.getValue());
+        selected.setid_Pembelian(Integer.parseInt(txtIdPembelian.getText()));
+
+        BigDecimal jumlahUtang = new BigDecimal(txtJumlahUtang.getText());
+        BigDecimal jumlahDibayar = new BigDecimal(txtJumlahDibayar.getText());
+
+        selected.setJumlah_Utang(jumlahUtang);
+        selected.setJumlah_Dibayar(jumlahDibayar);
+        selected.setSisa_Utang(jumlahUtang.subtract(jumlahDibayar));
+        selected.setStatus_Utang(cbStatusUtang.getValue());
+        selected.setKeterangan(txtKeterangan.getText());
+
+        // idAdministrasi = disuplai dari konteks (misalnya kas utama = 1)
+        service.bayarUtang(selected, 1);
+
+        clearForm();
+        loadData();
     }
 
-    // ================== DELETE ==================
+    @FXML
+    private void handleHapus() {
+        UtangUsaha selected = tableUtang.getSelectionModel().getSelectedItem();
+        if (selected == null) return;
 
-    /**
-     * Menghapus catatan utang
-     */
-    public boolean hapusUtang(int idUtang, int idAdministrasi) {
-        return utangService.hapusUtang(idUtang, idAdministrasi);
+        service.hapusUtang(selected.getId(), 1);
+        clearForm();
+        loadData();
+    }
+
+    private void clearForm() {
+        txtNoUtang.clear();
+        dpTanggalUtang.setValue(null);
+        dpJatuhTempo.setValue(null);
+        txtIdPembelian.clear();
+        txtJumlahUtang.clear();
+        txtJumlahDibayar.clear();
+        cbStatusUtang.setValue(null);
+        txtKeterangan.clear();
+        tableUtang.getSelectionModel().clearSelection();
     }
 }

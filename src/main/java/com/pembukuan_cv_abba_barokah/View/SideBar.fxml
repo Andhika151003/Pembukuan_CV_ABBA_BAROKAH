@@ -47,6 +47,16 @@
                             <VBox spacing="4">
                                 <Label text="Harga Pokok Penjualan" styleClass="menu-item" onMouseClicked="#openHpp"/>
                                 <Label text="Penjualan" styleClass="menu-item" onMouseClicked="#openPenjualan"/>
+                                <Label text="Pembayaran Dari Pembeli" styleClass="menu-item" onMouseClicked="#openPembayaran"/>
+                                <Label text="Setor Pajak" styleClass="menu-item" onMouseClicked="#openSetorPajak"/>
+                                <Label text="Biaya Pemasaran" styleClass="menu-item" onMouseClicked="#openPemasaran"/>
+                                <Label text="Biaya Administrasi Utama" styleClass="menu-item" onMouseClicked="#openAdministrasi"/>
+                                <Label text="Pembelian Inventaris" styleClass="menu-item" onMouseClicked="#openInventaris"/>
+                                <Label text="Retur Penjualan" styleClass="menu-item" onMouseClicked="#openReturPenjualan"/>
+                                <Label text="Retur Pembelian" styleClass="menu-item" onMouseClicked="#openReturPembelian"/>
+                                <Label text="Persediaan Barang" styleClass="menu-item" onMouseClicked="#openPersediaan"/>
+                                <Label text="Utang Usaha" styleClass="menu-item" onMouseClicked="#openUtang"/>
+                                <Label text="Modal" styleClass="menu-item" onMouseClicked="#openModal"/>
                             </VBox>
 
                             <!-- <Separator/> -->
