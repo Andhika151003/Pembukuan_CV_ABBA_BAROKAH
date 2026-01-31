@@ -28,6 +28,7 @@ com\pembukuan_cv_abba_barokah\Model\ReturPembelian$StatusRetur.class
 com\pembukuan_cv_abba_barokah\Model\BiayaPemasaran.class
 com\pembukuan_cv_abba_barokah\Model\Pembayaran.class
 com\pembukuan_cv_abba_barokah\Service\PembelianInventarisService.class
+com\pembukuan_cv_abba_barokah\Controller\RekapTotalController.class
 com\pembukuan_cv_abba_barokah\App.class
 com\pembukuan_cv_abba_barokah\DAO\UtangUsahaDao.class
 com\pembukuan_cv_abba_barokah\Controller\UtangUsahaController.class
@@ -103,6 +104,7 @@ com\pembukuan_cv_abba_barokah\Model\PembelianInventaris$MetodePembayaran.class
 com\pembukuan_cv_abba_barokah\Service\NeracaKeuanganService.class
 com\pembukuan_cv_abba_barokah\DAO\NeracaKeuanganDao.class
 com\pembukuan_cv_abba_barokah\Model\User.class
+com\pembukuan_cv_abba_barokah\Service\RekapTotalService.class
 com\pembukuan_cv_abba_barokah\Model\PersediaanBarang$JenisTransaksi.class
 com\pembukuan_cv_abba_barokah\DAO\PenjualanDao.class
 com\pembukuan_cv_abba_barokah\Model\UtangUsaha$StatusUtang.class

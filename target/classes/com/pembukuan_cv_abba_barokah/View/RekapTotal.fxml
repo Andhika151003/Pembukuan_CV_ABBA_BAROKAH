@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.pembukuan_cv_abba_barokah.Controller.RekapTotalController"
+      stylesheets="@RekapTotal.css"
+      spacing="20"
+      styleClass="rekap-root">
+
+    <!-- JUDUL -->
+    <Label text="Perhitungan Utama"
+           styleClass="rekap-title"/>
+
+    <!-- CARD -->
+    <VBox styleClass="rekap-card">
+
+        <!-- ROW -->
+        <HBox styleClass="rekap-row">
+            <Label text="Total HPP" styleClass="rekap-label"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="lblTotalHpp" styleClass="rekap-value"/>
+        </HBox>
+
+        <HBox styleClass="rekap-row">
+            <Label text="Total Penjualan" styleClass="rekap-label"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="lblTotalPenjualan" styleClass="rekap-value"/>
+        </HBox>
+
+        <HBox styleClass="rekap-row">
+            <Label text="Total Pembayaran Masuk" styleClass="rekap-label"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="lblTotalPembayaranMasuk" styleClass="rekap-value"/>
+        </HBox>
+
+        <HBox styleClass="rekap-row">
+            <Label text="Total Setor Pajak" styleClass="rekap-label"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="lblTotalSetorPajak" styleClass="rekap-value"/>
+        </HBox>
+
+        <HBox styleClass="rekap-row">
+            <Label text="Total Biaya Pemasaran" styleClass="rekap-label"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="lblTotalBiayaPemasaran" styleClass="rekap-value"/>
+        </HBox>
+
+        <Separator styleClass="rekap-divider"/>
+
+        <HBox styleClass="rekap-row">
+            <Label text="Total Biaya Operasional" styleClass="total-operasional"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="lblTotalBiayaOperasional"
+                   styleClass="total-operasional"/>
+        </HBox>
+
+        <HBox styleClass="rekap-row">
+            <Label text="Laba Kotor" styleClass="rekap-label"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="lblLabaKotor" styleClass="rekap-value"/>
+        </HBox>
+
+        <HBox styleClass="rekap-row">
+            <Label text="PPH 11%" styleClass="rekap-label"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="lblPph11" styleClass="rekap-value"/>
+        </HBox>
+
+        <HBox styleClass="rekap-row">
+            <Label text="Pajak yang Belum Disetor" styleClass="rekap-label"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="lblPajakBelumDisetor"
+                   styleClass="pph-warning"/>
+        </HBox>
+
+        <Separator styleClass="rekap-divider"/>
+
+        <HBox styleClass="rekap-row">
+            <Label text="Laba Bersih"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="lblLabaBersih"
+                   styleClass="laba-bersih"/>
+        </HBox>
+
+    </VBox>
+</VBox>

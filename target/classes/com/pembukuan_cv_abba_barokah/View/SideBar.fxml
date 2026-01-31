@@ -59,16 +59,13 @@
                                 <Label text="Modal" styleClass="menu-item" onMouseClicked="#openModal"/>
                             </VBox>
 
-                            <!-- <Separator/> -->
+                            <Separator/>
 
                             <!-- PERHITUNGAN -->
-                            <!-- <Label text="PERHITUNGAN" styleClass="menu-section"/>
+                            <Label text="PERHITUNGAN" styleClass="menu-section"/>
                             <VBox spacing="4">
-                                <Label text="Rekap/Jumlah Total" styleClass="menu-item" onMouseClicked="#openRekap"/>
-                                <Label text="Laba Kotor" styleClass="menu-item" onMouseClicked="#openLaba"/>
-                                <Label text="PPH 11%" styleClass="menu-item" onMouseClicked="#openPph"/>
-                                <Label text="Pajak Belum Disetor" styleClass="menu-item" onMouseClicked="#openBelumSetorPajak"/>
-                            </VBox> -->
+                                <Label text="Perhitungan Utama" styleClass="menu-item" onMouseClicked="#openRekap"/>
+                            </VBox>
 
                             <!-- <Separator/> -->
 

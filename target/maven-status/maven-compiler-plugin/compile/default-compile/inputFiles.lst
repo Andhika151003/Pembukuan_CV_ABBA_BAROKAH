@@ -26,10 +26,12 @@ C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_AB
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\DAO\PembelianInventarisDao.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Controller\NeracaKeuanganController.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Service\BiayaPemasaranService.java
+C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Controller\RekapTotalController.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Model\NeracaLabaRugi.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Model\Administrasi.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\DAO\PersediaanBarangDao.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Controller\CashflowPenjualanController.java
+C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Service\RekapTotalService.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Controller\BiayaPemasaranController.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Controller\ReturPembelianController.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Model\Transaksi.java

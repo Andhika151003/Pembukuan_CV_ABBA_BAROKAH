@@ -88,6 +88,11 @@ public class SideBarController {
         loadContent("/com/pembukuan_cv_abba_barokah/View/Modal.fxml");
     }
 
+    @FXML
+    private void openRekap() {
+        loadContent("/com/pembukuan_cv_abba_barokah/View/RekapTotal.fxml");
+    }
+
     private void loadContent(String fxml) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
