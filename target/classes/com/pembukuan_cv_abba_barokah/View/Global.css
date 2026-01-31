@@ -6,18 +6,31 @@
 
 /* ================= CONTENT ================= */
 .content {
-    -fx-padding: 24;
+    -fx-padding: 32;
+    -fx-spacing: 20;
 }
 
-/* ================= LABEL ================= */
+/* ================= CARD ================= */
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 14;
+    -fx-padding: 24;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 20, 0, 0, 6);
+}
+
+/* ================= FORM ================= */
+.form-grid {
+    -fx-hgap: 14;
+    -fx-vgap: 12;
+}
+
 .label {
     -fx-font-size: 13px;
 }
 
-/* ================= FORM ================= */
 .text-field, .date-picker {
-    -fx-background-radius: 6;
-    -fx-border-radius: 6;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
     -fx-border-color: #c7d2fe;
 }
 
@@ -29,8 +42,8 @@
 .button {
     -fx-background-color: #6366f1;
     -fx-text-fill: white;
-    -fx-background-radius: 8;
-    -fx-padding: 6 18;
+    -fx-background-radius: 10;
+    -fx-padding: 8 22;
     -fx-font-weight: bold;
 }
 
@@ -48,8 +61,8 @@
 
 /* ================= TABLE ================= */
 .table-view {
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
     -fx-border-color: #e5e7eb;
 }
 

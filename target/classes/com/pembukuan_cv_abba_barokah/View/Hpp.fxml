@@ -7,63 +7,70 @@
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.pembukuan_cv_abba_barokah.Controller.HppController"
       stylesheets="@Global.css"
-      spacing="16"
+      spacing="24"
       styleClass="content">
 
+    <!-- TITLE -->
     <Label text="Harga Pokok Penjualan"
-           style="-fx-font-size: 22px; -fx-font-weight: bold;" />
+           style="-fx-font-size: 24px; -fx-font-weight: bold;" />
 
-    <!-- FORM INPUT -->
-    <GridPane hgap="12" vgap="10">
-        <columnConstraints>
-            <ColumnConstraints prefWidth="140"/>
-            <ColumnConstraints/>
-        </columnConstraints>
+    <!-- FORM CENTER -->
+    <StackPane>
+        <VBox maxWidth="520" styleClass="card">
 
-        <children>
-            <Label text="Tanggal"/>
-            <DatePicker fx:id="tanggalField" GridPane.columnIndex="1"/>
+            <GridPane styleClass="form-grid">
+                <columnConstraints>
+                    <ColumnConstraints prefWidth="150"/>
+                    <ColumnConstraints/>
+                </columnConstraints>
 
-            <Label text="Jenis Produk" GridPane.rowIndex="1"/>
-            <TextField fx:id="jenisProdukField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <children>
+                    <Label text="Tanggal"/>
+                    <DatePicker fx:id="tanggalField" GridPane.columnIndex="1"/>
 
-            <Label text="Kategori" GridPane.rowIndex="2"/>
-            <TextField fx:id="kategoriField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                    <Label text="Jenis Produk" GridPane.rowIndex="1"/>
+                    <TextField fx:id="jenisProdukField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-            <Label text="Nama Item" GridPane.rowIndex="3"/>
-            <TextField fx:id="namaItemField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                    <Label text="Kategori" GridPane.rowIndex="2"/>
+                    <TextField fx:id="kategoriField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-            <Label text="Kuantitas" GridPane.rowIndex="4"/>
-            <TextField fx:id="kuantitasField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                    <Label text="Nama Item" GridPane.rowIndex="3"/>
+                    <TextField fx:id="namaItemField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-            <Label text="Harga Satuan" GridPane.rowIndex="5"/>
-            <TextField fx:id="hargaSatuanField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                    <Label text="Kuantitas" GridPane.rowIndex="4"/>
+                    <TextField fx:id="kuantitasField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
-            <Label text="Keterangan" GridPane.rowIndex="6"/>
-            <TextField fx:id="keteranganField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                    <Label text="Harga Satuan" GridPane.rowIndex="5"/>
+                    <TextField fx:id="hargaSatuanField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 
-            <Label text="ID Transaksi" GridPane.rowIndex="7"/>
-            <TextField fx:id="idTransaksiField" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
-        </children>
-    </GridPane>
+                    <Label text="Keterangan" GridPane.rowIndex="6"/>
+                    <TextField fx:id="keteranganField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
-    <!-- BUTTON -->
-    <HBox spacing="10">
-        <Button text="Simpan" onAction="#handleSimpan"/>
-        <Button text="Hapus" styleClass="button-danger" onAction="#handleHapus"/>
-    </HBox>
+                    <Label text="ID Transaksi" GridPane.rowIndex="7"/>
+                    <TextField fx:id="idTransaksiField" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+                </children>
+            </GridPane>
 
-    <!-- TABLE (TANPA ID TRANSAKSI) -->
-    <TableView fx:id="tableHpp" prefHeight="320">
+            <!-- BUTTON -->
+            <HBox spacing="12" alignment="CENTER_RIGHT" style="-fx-padding: 18 0 0 0;">
+                <Button text="Simpan" onAction="#handleSimpan"/>
+                <Button text="Hapus" styleClass="button-danger" onAction="#handleHapus"/>
+            </HBox>
+
+        </VBox>
+    </StackPane>
+
+    <!-- TABLE FULL WIDTH -->
+    <TableView fx:id="tableHpp" prefHeight="360">
         <columns>
             <TableColumn text="Tanggal" fx:id="colTanggal" prefWidth="120"/>
             <TableColumn text="Jenis Produk" fx:id="colJenisProduk" prefWidth="140"/>
             <TableColumn text="Kategori" fx:id="colKategori" prefWidth="120"/>
             <TableColumn text="Nama Item" fx:id="colNamaItem" prefWidth="180"/>
             <TableColumn text="Kuantitas" fx:id="colKuantitas" prefWidth="90"/>
-            <TableColumn text="Harga Satuan" fx:id="colHargaSatuan" prefWidth="130"/>
-            <TableColumn text="Total Harga" fx:id="colTotalHarga" prefWidth="150"/>
-            <TableColumn text="Keterangan" fx:id="colKeterangan" prefWidth="200"/>
+            <TableColumn text="Harga Satuan" fx:id="colHargaSatuan" prefWidth="140"/>
+            <TableColumn text="Total Harga" fx:id="colTotalHarga" prefWidth="160"/>
+            <TableColumn text="Keterangan" fx:id="colKeterangan" prefWidth="220"/>
         </columns>
     </TableView>
 
