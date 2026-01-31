@@ -14,25 +14,22 @@
           prefWidth="320"
           styleClass="login-card">
 
-        <Label text="Login Sistem"
+        <Label text="Register Akun"
                styleClass="title"/>
 
-        <Label text="CV Abba Barokah"
-               styleClass="subtitle"/>
-
-        <TextField fx:id="usernameField"
+        <TextField fx:id="regUsernameField"
                    promptText="Username"
                    styleClass="input"/>
 
-        <PasswordField fx:id="passwordField"
+        <PasswordField fx:id="regPasswordField"
                        promptText="Password"
                        styleClass="input"/>
 
-        <Button text="LOGIN"
-                onAction="#handleLogin"
+        <Button text="REGISTER"
+                onAction="#handleRegister"
                 styleClass="login-button"/>
 
-        <Label fx:id="messageLabel"
+        <Label fx:id="regMessageLabel"
                styleClass="message"/>
     </VBox>
 

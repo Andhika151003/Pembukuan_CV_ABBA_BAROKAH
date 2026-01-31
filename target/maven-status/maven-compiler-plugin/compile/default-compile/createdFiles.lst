@@ -16,7 +16,6 @@ com\pembukuan_cv_abba_barokah\DAO\CashflowDao.class
 com\pembukuan_cv_abba_barokah\Service\UtangUsahaService.class
 com\pembukuan_cv_abba_barokah\Model\PembelianInventaris$JenisInventaris.class
 com\pembukuan_cv_abba_barokah\Model\PembelianInventaris.class
-com\pembukuan_cv_abba_barokah\Model\Administrasi$TipeAdministrasi.class
 com\pembukuan_cv_abba_barokah\Service\TransaksiService.class
 com\pembukuan_cv_abba_barokah\Model\Pegawai$StatusPegawai.class
 com\pembukuan_cv_abba_barokah\Service\SetorPajakService.class
@@ -35,7 +34,6 @@ com\pembukuan_cv_abba_barokah\Controller\UtangUsahaController.class
 com\pembukuan_cv_abba_barokah\Controller\ModalController.class
 com\pembukuan_cv_abba_barokah\DAO\ReturPenjualanDao.class
 com\pembukuan_cv_abba_barokah\Service\NeracaLabaRugiService$1.class
-com\pembukuan_cv_abba_barokah\Controller\LoginController.class
 com\pembukuan_cv_abba_barokah\Service\CashflowService.class
 com\pembukuan_cv_abba_barokah\Controller\TransaksiController.class
 com\pembukuan_cv_abba_barokah\Model\PembelianInventaris$StatusPembelian.class

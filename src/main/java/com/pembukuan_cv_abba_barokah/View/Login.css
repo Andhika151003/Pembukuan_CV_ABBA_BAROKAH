@@ -1,119 +1,106 @@
-/* Root */
+/* ================= ROOT ================= */
 .root {
-    -fx-font-family: "SF Pro Display";
-    -fx-background-color: #F6F6F6;
-}
-
-/* ===== Title & Logo ===== */
-.app-title {
-    -fx-font-size: 40px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #000000;
-}
-
-.logo-icon {
-    -fx-font-size: 40px;
-    -fx-text-fill: #9EA300;
-}
-
-/* ===== Login Card ===== */
-.login-card {
     -fx-background-color: linear-gradient(
         to bottom right,
-        #5C00D6,
-        #3F009E
+        #4f46e5,
+        #06b6d4
     );
-    -fx-padding: 36 36 36 36;
-    -fx-background-radius: 18;
-    -fx-pref-width: 380;
+
+    /* memastikan card tepat di tengah */
     -fx-alignment: center;
+    -fx-padding: 40;
 
+    -fx-font-family: "Segoe UI", "Inter", sans-serif;
+}
+
+/* ================= LOGIN CARD ================= */
+.login-card {
+    -fx-background-color: #ffffff;   /* background putih */
+    -fx-padding: 40 36;              /* padding dalam card */
+    -fx-spacing: 14;
+
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+
+    -fx-min-width: 360;
+    -fx-max-width: 360;
+
+    /* shadow lembut */
     -fx-effect: dropshadow(
         gaussian,
-        rgba(0,0,0,0.35),
-        25,
-        0.3,
+        rgba(0, 0, 0, 0.20),
+        24,
         0,
-        12
+        0,
+        8
     );
 }
 
-/* ===== Text ===== */
-.welcome-text {
-    -fx-font-size: 16px;
+/* ================= TITLE ================= */
+.title {
+    -fx-font-size: 24px;
     -fx-font-weight: bold;
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: #1e293b;
 }
 
-.subtitle-text {
-    -fx-font-size: 14px;
-    -fx-text-fill: #E5DEFF;
-}
-
-.field-label {
+.subtitle {
     -fx-font-size: 13px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: #64748b;
 }
 
-/* ===== Input Field ===== */
-.input-field {
-    -fx-background-color: #FFFFFF;
-    -fx-background-radius: 22;
-    -fx-padding: 12 16;
+/* ================= INPUT ================= */
+.input {
+    -fx-pref-width: 100%;
+    -fx-padding: 12 14;
+
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+
+    -fx-border-color: #c7d2fe;
+    -fx-border-width: 1;
+
     -fx-font-size: 13px;
-    -fx-border-color: transparent;
-    -fx-effect: innershadow(
-        gaussian,
-        rgba(0,0,0,0.08),
-        4,
-        0,
-        0,
-        2
-    );
 }
 
-/* ===== Button ===== */
-.submit-button {
-    -fx-background-color: linear-gradient(
-        to bottom,
-        #22008F,
-        #16006B
-    );
-    -fx-text-fill: #FFFFFF;
+.input:focused {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #4f46e5;
+    -fx-border-width: 1.5;
+}
+
+/* ================= BUTTON ================= */
+.login-button {
+    -fx-pref-width: 100%;
+    -fx-padding: 12;
+
+    -fx-background-radius: 10;
+    -fx-background-color: #4f46e5;
+
+    -fx-text-fill: #ffffff;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-background-radius: 14;
-    -fx-padding: 12 0;
-    -fx-pref-width: 150;
+
     -fx-cursor: hand;
-
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(0,0,0,0.35),
-        12,
-        0.2,
-        0,
-        4
-    );
 }
 
-.submit-button:hover {
-    -fx-background-color: linear-gradient(
-        to bottom,
-        #2C00B8,
-        #1C008F
-    );
+.login-button:hover {
+    -fx-background-color: #4338ca;
 }
 
-.submit-button:pressed {
-    -fx-translate-y: 1;
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(0,0,0,0.25),
-        6,
-        0.1,
-        0,
-        2
-    );
+.login-button:pressed {
+    -fx-background-color: #3730a3;
+}
+
+/* ================= MESSAGE ================= */
+.message {
+    -fx-font-size: 12px;
+}
+
+.success {
+    -fx-text-fill: #16a34a;
+}
+
+.error {
+    -fx-text-fill: #dc2626;
 }

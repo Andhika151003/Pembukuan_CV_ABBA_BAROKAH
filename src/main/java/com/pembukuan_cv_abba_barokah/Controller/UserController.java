@@ -2,59 +2,89 @@ package com.pembukuan_cv_abba_barokah.Controller;
 
 import com.pembukuan_cv_abba_barokah.Model.User;
 import com.pembukuan_cv_abba_barokah.Service.UserService;
-
-import java.util.List;
+import com.pembukuan_cv_abba_barokah.DAO.UserDao;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
 
 public class UserController {
 
     private final UserService userService;
+    private final UserDao userDao;
 
     public UserController() {
         this.userService = new UserService();
+        this.userDao = new UserDao();
     }
 
-    // ===================== AUTH =====================
+    // ===================== LOGIN =====================
+    @FXML private TextField usernameField;
+    @FXML private PasswordField passwordField;
+    @FXML private Label messageLabel;
 
-    /**
-     * Proses login user
-     */
-    public User login(String username, String password) {
-        return userService.login(username, password);
+    @FXML
+    private void handleLogin() {
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+
+        if (username.isBlank() || password.isBlank()) {
+            messageLabel.setText("Username dan password wajib diisi!");
+            messageLabel.getStyleClass().setAll("error");
+            return;
+        }
+
+        User user = userService.login(username, password);
+
+        if (user != null) {
+            messageLabel.setText("Login berhasil sebagai: " + user.getRole());
+            messageLabel.getStyleClass().setAll("success");
+
+            // TODO: redirect dashboard
+        } else {
+            messageLabel.setText("Username atau password salah!");
+            messageLabel.getStyleClass().setAll("error");
+        }
     }
 
-    // ===================== READ =====================
+    // ===================== REGISTER =====================
+    @FXML private TextField regUsernameField;
+    @FXML private PasswordField regPasswordField;
+    @FXML private Label regMessageLabel;
 
-    public List<User> tampilkanSemuaUser() {
-        return userService.getAllUsers();
-    }
+    @FXML
+    private void handleRegister() {
+        String username = regUsernameField.getText();
+        String password = regPasswordField.getText();
 
-    public User tampilkanUserById(int id) {
-        return userService.getUserById(id);
-    }
+        if (username.isBlank() || password.isBlank()) {
+            regMessageLabel.setText("Semua field wajib diisi!");
+            regMessageLabel.getStyleClass().setAll("error");
+            return;
+        }
 
-    // ===================== UPDATE =====================
+        // cek username sudah ada
+        if (userDao.getByUsername(username) != null) {
+            regMessageLabel.setText("Username sudah digunakan!");
+            regMessageLabel.getStyleClass().setAll("error");
+            return;
+        }
 
-    public boolean perbaruiUser(
-            int id,
-            String username,
-            String password,
-            String role
-    ) {
         String hashedPassword = User.hashPassword(password);
 
         User user = new User(
-                id,
-                username,
-                hashedPassword,
-                role
+            0,
+            username,
+            hashedPassword,
+            "user 1"
         );
 
-        return userService.updateUser(user);
-    }
+        boolean success = userDao.save(user);
 
-    // ===================== DELETE =====================
-
-    public boolean hapusUser(int id) {
-        return userService.deleteUser(id);
+        if (success) {
+            regMessageLabel.setText("Registrasi berhasil! Silakan login.");
+            regMessageLabel.getStyleClass().setAll("success");
+        } else {
+            regMessageLabel.setText("Registrasi gagal!");
+            regMessageLabel.getStyleClass().setAll("error");
+        }
     }
 }
