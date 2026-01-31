@@ -46,6 +46,7 @@
                             <Label text="INPUT DATA" styleClass="menu-section"/>
                             <VBox spacing="4">
                                 <Label text="Harga Pokok Penjualan" styleClass="menu-item" onMouseClicked="#openHpp"/>
+                                <Label text="Penjualan" styleClass="menu-item" onMouseClicked="#openPenjualan"/>
                             </VBox>
 
                             <!-- <Separator/> -->

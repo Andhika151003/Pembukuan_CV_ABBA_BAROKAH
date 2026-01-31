@@ -11,8 +11,10 @@
       styleClass="content">
 
     <!-- TITLE -->
-    <Label text="Harga Pokok Penjualan"
+    <HBox alignment="CENTER">
+        <Label text="Harga Pokok Penjualan"
            style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+    </HBox>
 
     <!-- FORM CENTER -->
     <StackPane>
