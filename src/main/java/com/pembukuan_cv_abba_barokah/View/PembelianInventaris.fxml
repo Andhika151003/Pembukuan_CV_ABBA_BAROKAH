@@ -34,14 +34,15 @@
 
                     <Label text="Tanggal Pembelian" GridPane.rowIndex="1"/>
                     <DatePicker fx:id="dpTanggalPembelian"
+                                editable="false"
                                 GridPane.rowIndex="1"
                                 GridPane.columnIndex="1"/>
 
                     <Label text="Jenis Inventaris" GridPane.rowIndex="2"/>
                     <ComboBox fx:id="cbJenisInventaris"
+                              prefWidth="320"
                               GridPane.rowIndex="2"
-                              GridPane.columnIndex="1"
-                              prefWidth="320"/>
+                              GridPane.columnIndex="1"/>
 
                     <Label text="Nama Barang" GridPane.rowIndex="3"/>
                     <TextField fx:id="txtNamaBarang"
@@ -70,15 +71,15 @@
 
                     <Label text="Metode Pembayaran" GridPane.rowIndex="8"/>
                     <ComboBox fx:id="cbMetodePembayaran"
+                              prefWidth="320"
                               GridPane.rowIndex="8"
-                              GridPane.columnIndex="1"
-                              prefWidth="320"/>
+                              GridPane.columnIndex="1"/>
 
                     <Label text="Status Pembelian" GridPane.rowIndex="9"/>
                     <ComboBox fx:id="cbStatus"
+                              prefWidth="320"
                               GridPane.rowIndex="9"
-                              GridPane.columnIndex="1"
-                              prefWidth="320"/>
+                              GridPane.columnIndex="1"/>
 
                     <Label text="Keterangan" GridPane.rowIndex="10"/>
                     <TextField fx:id="txtKeterangan"
@@ -91,9 +92,12 @@
             <HBox spacing="14"
                   alignment="CENTER_RIGHT"
                   style="-fx-padding: 20 0 0 0;">
-                <Button text="Simpan"/>
-                <Button text="Update"/>
+                <Button text="Simpan"
+                        onAction="#handleSimpan"/>
+                <Button text="Update"
+                        onAction="#handleUpdate"/>
                 <Button text="Hapus"
+                        onAction="#handleHapus"
                         styleClass="button-danger"/>
             </HBox>
 

@@ -56,7 +56,7 @@ public class PersediaanBarangDao implements BaseDao<PersediaanBarang> {
 
     @Override
     public PersediaanBarang getById(int id) {
-        String sql = "SELECT * FROM persediaan_barang WHERE id = ?";
+        String sql = "SELECT * FROM PersediaanBarang WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -76,7 +76,7 @@ public class PersediaanBarangDao implements BaseDao<PersediaanBarang> {
 
     @Override
     public boolean update(PersediaanBarang t) {
-        String sql = "UPDATE persediaan_barang SET tanggal = ?, nama_barang = ?, satuan = ?, " +
+        String sql = "UPDATE PersediaanBarang SET tanggal = ?, nama_barang = ?, satuan = ?, " +
                      "jenis_transaksi = ?, jumlah_masuk = ?, jumlah_keluar = ?, " +
                      "saldo_akhir = ?, harga_satuan = ?, keterangan = ? WHERE id = ?";
         
@@ -103,7 +103,7 @@ public class PersediaanBarangDao implements BaseDao<PersediaanBarang> {
 
     @Override
     public boolean delete(int id) {
-        String sql = "DELETE FROM persediaan_barang WHERE id = ?";
+        String sql = "DELETE FROM PersediaanBarang WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
