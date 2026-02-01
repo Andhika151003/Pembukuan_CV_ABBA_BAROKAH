@@ -13,7 +13,7 @@ public class PersediaanBarangDao implements BaseDao<PersediaanBarang> {
     @Override
     public List<PersediaanBarang> getAll() {
         List<PersediaanBarang> list = new ArrayList<>();
-        String sql = "SELECT * FROM persediaan_barang";
+        String sql = "SELECT * FROM PersediaanBarang";
 
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -30,7 +30,7 @@ public class PersediaanBarangDao implements BaseDao<PersediaanBarang> {
 
     @Override
     public boolean save(PersediaanBarang t) {
-        String sql = "INSERT INTO persediaan_barang (tanggal, nama_barang, satuan, jenis_transaksi, " +
+        String sql = "INSERT INTO PersediaanBarang (tanggal, nama_barang, satuan, jenis_transaksi, " +
                      "jumlah_masuk, jumlah_keluar, saldo_akhir, harga_satuan, keterangan) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         

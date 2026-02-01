@@ -13,7 +13,7 @@ public class PenjualanDao implements BaseDao<Penjualan> {
     @Override
     public List<Penjualan> getAll() {
         List<Penjualan> list = new ArrayList<>();
-        String sql = "SELECT * FROM penjualan";
+        String sql = "SELECT * FROM Penjualan";
 
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -31,7 +31,7 @@ public class PenjualanDao implements BaseDao<Penjualan> {
     @Override
     public boolean save(Penjualan t) {
         // Asumsi: Anda menambahkan kolom id_administrasi di tabel database penjualan
-        String sql = "INSERT INTO penjualan (no_penjualan, tanggal_penjualan, nama_customer, " +
+        String sql = "INSERT INTO Penjualan (no_penjualan, tanggal_penjualan, nama_customer, " +
                      "alamat_customer, total_penjualan, metode_pembayaran, status_pembayaran, " +
                      "keterangan) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         
@@ -56,7 +56,7 @@ public class PenjualanDao implements BaseDao<Penjualan> {
 
     @Override
     public Penjualan getById(int id) {
-        String sql = "SELECT * FROM penjualan WHERE id = ?";
+        String sql = "SELECT * FROM Penjualan WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -76,7 +76,7 @@ public class PenjualanDao implements BaseDao<Penjualan> {
 
     @Override
     public boolean update(Penjualan t) {
-        String sql = "UPDATE penjualan SET no_penjualan = ?, tanggal_penjualan = ?, " +
+        String sql = "UPDATE Penjualan SET no_penjualan = ?, tanggal_penjualan = ?, " +
                      "nama_customer = ?, alamat_customer = ?, total_penjualan = ?, " +
                      "metode_pembayaran = ?, status_pembayaran = ?, keterangan = ? WHERE id = ?";
         
