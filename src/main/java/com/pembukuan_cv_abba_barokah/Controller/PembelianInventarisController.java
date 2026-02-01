@@ -37,7 +37,6 @@ public class PembelianInventarisController {
 
     private final PembelianInventarisService service = new PembelianInventarisService();
     private final ObservableList<PembelianInventaris> data = FXCollections.observableArrayList();
-
     private PembelianInventaris selected;
 
     // ===================== INIT =====================
@@ -57,21 +56,19 @@ public class PembelianInventarisController {
 
         loadData();
 
-        tableInventaris.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) {
-                selected = newVal;
-                fillForm(newVal);
+        tableInventaris.getSelectionModel().selectedItemProperty().addListener((obs, o, n) -> {
+            if (n != null) {
+                selected = n;
+                fillForm(n);
             }
         });
     }
 
-    // ===================== LOAD =====================
     private void loadData() {
         data.setAll(service.getAll());
         tableInventaris.setItems(data);
     }
 
-    // ===================== FORM =====================
     private void fillForm(PembelianInventaris p) {
         txtNoPembelian.setText(String.valueOf(p.getNoPembelian()));
         dpTanggalPembelian.setValue(p.getTanggalPembelian());
@@ -104,6 +101,10 @@ public class PembelianInventarisController {
     // ===================== ACTION =====================
     @FXML
     private void handleSimpan() {
+        if (dpTanggalPembelian.getValue() == null) {
+            dpTanggalPembelian.setValue(LocalDate.now());
+        }
+
         PembelianInventaris p = new PembelianInventaris(
                 Integer.parseInt(txtNoPembelian.getText()),
                 dpTanggalPembelian.getValue(),
