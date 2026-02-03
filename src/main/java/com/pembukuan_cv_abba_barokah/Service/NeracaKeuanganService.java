@@ -1,58 +1,91 @@
 package com.pembukuan_cv_abba_barokah.Service;
 
-import com.pembukuan_cv_abba_barokah.DAO.NeracaKeuanganDao;
-import com.pembukuan_cv_abba_barokah.Model.NeracaKeuangan;
+import com.pembukuan_cv_abba_barokah.DAO.*;
+import com.pembukuan_cv_abba_barokah.Model.*;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 public class NeracaKeuanganService {
-    private final NeracaKeuanganDao neracaDao;
+    private final JurnalPembukuanService jurnalService = new JurnalPembukuanService();
+    private final PenjualanDao penjualanDao = new PenjualanDao();
+    private final PembayaranDao pembayaranDao = new PembayaranDao();
+    private final PersediaanBarangDao persediaanDao = new PersediaanBarangDao();
+    private final PembelianInventarisDao inventarisDao = new PembelianInventarisDao();
+    private final UtangUsahaDao utangDao = new UtangUsahaDao();
+    private final ModalDao modalDao = new ModalDao();
+    private final NeracaLabaRugiService labaRugiService = new NeracaLabaRugiService();
 
-    public NeracaKeuanganService() {
-        this.neracaDao = new NeracaKeuanganDao();
-    }
+    public NeracaKeuangan generateNeracaOtomatis(int tahun) {
+        // 1. Ambil Saldo Bank/Kas dari Jurnal (Saldo Terakhir di tahun tersebut)
+        List<JurnalPembukuan> listJurnal = jurnalService.getAllJurnalWithSaldo();
+        BigDecimal saldoKas = listJurnal.stream()
+                .filter(j -> j.getTanggal().getYear() == tahun)
+                .reduce((first, second) -> second)
+                .map(JurnalPembukuan::getSaldo)
+                .orElse(BigDecimal.ZERO);
 
-    public List<NeracaKeuangan> getAll() {
-        return neracaDao.getAll();
-    }
+        // 2. Hitung Piutang (Total Penjualan - Total Pembayaran Terkait Penjualan)
+        BigDecimal totalPenjualan = penjualanDao.getAll().stream()
+                .filter(p -> p.getTanggal_Penjualan().getYear() == tahun)
+                .map(Penjualan::getTotal_Penjualan)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-    public NeracaKeuangan getById(int id) {
-        return neracaDao.getById(id);
-    }
+        BigDecimal totalBayarPenjualan = pembayaranDao.getAll().stream()
+                .filter(p -> p.getId_Penjualan() > 0 && p.getTanggal_Pembayaran().getYear() == tahun)
+                .map(Pembayaran::getJumlah_Pembayaran)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-    /**
-     * Menyimpan data neraca keuangan baru.
-     * Melakukan pengecekan apakah posisi keuangan sudah seimbang.
-     */
-    public boolean simpanNeraca(NeracaKeuangan neraca) {
-        if (!isBalanced(neraca)) {
-            // Logika bisnis: Laporan neraca tidak boleh disimpan jika tidak seimbang
-            return false;
-        }
-        return neracaDao.save(neraca);
-    }
+        BigDecimal piutang = totalPenjualan.subtract(totalBayarPenjualan);
 
-    /**
-     * Memperbarui data neraca keuangan yang sudah ada.
-     */
-    public boolean perbaruiNeraca(NeracaKeuangan neraca) {
-        if (!isBalanced(neraca)) {
-            return false;
-        }
-        return neracaDao.update(neraca);
-    }
+        // 3. Persediaan Barang (Saldo Akhir)
+        BigDecimal totalPersediaan = persediaanDao.getAll().stream()
+                .filter(p -> p.getTanggal().getYear() == tahun)
+                .map(p -> p.getSaldo_Akhir().multiply(p.getHarga_Satuan()))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-    public boolean hapusNeraca(int id) {
-        return neracaDao.delete(id);
-    }
+        // 4. Aset Tidak Lancar (Total Inventaris)
+        BigDecimal totalInventaris = inventarisDao.getAll().stream()
+                .filter(i -> i.getTanggalPembelian().getYear() == tahun)
+                .map(PembelianInventaris::getTotalHarga)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-    /**
-     * Memvalidasi keseimbangan akuntansi: Total Aset = Total Kewajiban + Total Ekuitas.
-     * Memanfaatkan metode perhitungan yang sudah ada di model NeracaKeuangan.
-     */
-    public boolean isBalanced(NeracaKeuangan neraca) {
-        // Bandingkan Total Aset dengan (Total Kewajiban + Total Ekuitas)
-        return neraca.getTotalAset().compareTo(
-            neraca.getTotalKewajiban().add(neraca.getTotalEkuitas())
-        ) == 0;
+        // 5. Kewajiban (Total Utang Usaha yang belum lunas)
+        BigDecimal totalUtang = utangDao.getAll().stream()
+                .map(UtangUsaha::getJumlah_Utang)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal totalBayarUtang = pembayaranDao.getAll().stream()
+                .filter(p -> p.getId_Utang() > 0)
+                .map(Pembayaran::getJumlah_Pembayaran)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal sisaUtangUsaha = totalUtang.subtract(totalBayarUtang);
+
+        // 6. Ambil Laba Bersih dari Laba Rugi Service
+        NeracaLabaRugi lr = labaRugiService.generateLabaRugiOtomatis(tahun);
+        BigDecimal labaBersih = lr.getLaba_Bersih();
+
+        // 7. Ambil Modal Disetor
+        BigDecimal totalModal = modalDao.getAll().stream()
+                .filter(m -> m.getJenis_Modal() == Modal.JenisModal.MODAL_AWAL)
+                .map(Modal::getJumlah)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        // Kembalikan objek Model NeracaKeuangan
+        return new NeracaKeuangan(
+                LocalDate.now(),
+                tahun,
+                saldoKas,
+                piutang,
+                totalPersediaan,
+                totalInventaris,
+                BigDecimal.ZERO, // transportasi
+                BigDecimal.ZERO, // akumulasi_penyusutan
+                sisaUtangUsaha,
+                BigDecimal.ZERO, // utang_jangka_panjang
+                totalModal,
+                labaBersih,
+                "Laporan Otomatis Tahun " + tahun);
     }
 }

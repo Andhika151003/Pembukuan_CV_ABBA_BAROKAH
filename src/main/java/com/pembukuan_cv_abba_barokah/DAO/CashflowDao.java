@@ -2,7 +2,7 @@ package com.pembukuan_cv_abba_barokah.DAO;
 
 import com.pembukuan_cv_abba_barokah.Model.Cashflow;
 import com.pembukuan_cv_abba_barokah.Util.DatabaseConnection;
-import java.math.BigDecimal;
+// import java.math.BigDecimal;
 import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public class CashflowDao implements BaseDao<Cashflow> {
     @Override
     public List<Cashflow> getAll() {
         List<Cashflow> cashflows = new ArrayList<>();
-        String sql = "SELECT * FROM Cashflow";
+        String sql = "SELECT * FROM Cashflow ORDER BY tanggal DESC";
 
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -21,7 +21,6 @@ public class CashflowDao implements BaseDao<Cashflow> {
             while (rs.next()) {
                 cashflows.add(mapResultSetToCashflow(rs));
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -30,17 +29,17 @@ public class CashflowDao implements BaseDao<Cashflow> {
 
     @Override
     public boolean save(Cashflow t) {
-        String sql = "INSERT INTO Cashflow (bulan, tahun, total_pemasukan, total_pengeluaran, saldo_awal, saldo_akhir, id_administrasi) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Cashflow (tanggal, total_pemasukan, total_pengeluaran, saldo_awal, saldo_akhir, pph) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, t.getBulan());
-            pstmt.setInt(2, t.getTahun());
-            pstmt.setString(3, t.getTotalPemasukan().toString());
-            pstmt.setString(4, t.getTotalPengeluaran().toString());
-            pstmt.setString(5, t.getSaldoAwal().toString());
-            pstmt.setString(6, t.getSaldoAkhir().toString());
+            pstmt.setDate(1, Date.valueOf(t.getTanggal()));
+            pstmt.setBigDecimal(2, t.getTotalPemasukan());
+            pstmt.setBigDecimal(3, t.getTotalPengeluaran());
+            pstmt.setBigDecimal(4, t.getSaldoAwal());
+            pstmt.setBigDecimal(5, t.getSaldoAkhir());
+            pstmt.setBigDecimal(6, t.getPph());
 
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -63,7 +62,6 @@ public class CashflowDao implements BaseDao<Cashflow> {
                     return mapResultSetToCashflow(rs);
                 }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -72,17 +70,17 @@ public class CashflowDao implements BaseDao<Cashflow> {
 
     @Override
     public boolean update(Cashflow t) {
-        String sql = "UPDATE Cashflow SET bulan = ?, tahun = ?, total_pemasukan = ?, total_pengeluaran = ?, saldo_awal = ?, saldo_akhir = ?, id_administrasi = ? WHERE id = ?";  // ✅ Fix: tambahkan WHERE clause
+        String sql = "UPDATE Cashflow SET tanggal = ?, total_pemasukan = ?, total_pengeluaran = ?, saldo_awal = ?, saldo_akhir = ?, pph = ? WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, t.getBulan());
-            pstmt.setInt(2, t.getTahun());
-            pstmt.setString(3, t.getTotalPemasukan().toString());
-            pstmt.setString(4, t.getTotalPengeluaran().toString());
-            pstmt.setString(5, t.getSaldoAwal().toString());
-            pstmt.setString(6, t.getSaldoAkhir().toString());
+            pstmt.setDate(1, Date.valueOf(t.getTanggal()));
+            pstmt.setBigDecimal(2, t.getTotalPemasukan());
+            pstmt.setBigDecimal(3, t.getTotalPengeluaran());
+            pstmt.setBigDecimal(4, t.getSaldoAwal());
+            pstmt.setBigDecimal(5, t.getSaldoAkhir());
+            pstmt.setBigDecimal(6, t.getPph());
             pstmt.setInt(7, t.getId());
 
             return pstmt.executeUpdate() > 0;
@@ -107,16 +105,15 @@ public class CashflowDao implements BaseDao<Cashflow> {
         }
     }
 
-    // Helper method
     private Cashflow mapResultSetToCashflow(ResultSet rs) throws SQLException {
         return new Cashflow(
             rs.getInt("id"),
-            rs.getString("bulan"),
-            rs.getInt("tahun"),
-            new BigDecimal(rs.getString("total_pemasukan")),
-            new BigDecimal(rs.getString("total_pengeluaran")),
-            new BigDecimal(rs.getString("saldo_awal")),
-            new BigDecimal(rs.getString("saldo_akhir"))
+            rs.getDate("tanggal").toLocalDate(),
+            rs.getBigDecimal("total_pemasukan"),
+            rs.getBigDecimal("total_pengeluaran"),
+            rs.getBigDecimal("saldo_awal"),
+            rs.getBigDecimal("saldo_akhir"),
+            rs.getBigDecimal("pph")
         );
     }
 }

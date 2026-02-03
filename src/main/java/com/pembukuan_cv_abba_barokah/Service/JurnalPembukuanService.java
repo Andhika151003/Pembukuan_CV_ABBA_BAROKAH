@@ -13,46 +13,48 @@ public class JurnalPembukuanService {
         this.jurnalDao = new JurnalPembukuanDao();
     }
 
-    public List<JurnalPembukuan> getAllJurnal() {
-        return jurnalDao.getAll();
+    /**
+     * Mengambil semua data rekap dan menghitung saldo secara dinamis.
+     */
+    public List<JurnalPembukuan> getAllJurnalWithSaldo() {
+        List<JurnalPembukuan> list = jurnalDao.getAll();
+        BigDecimal saldoAkumulasi = BigDecimal.ZERO;
+
+        for (JurnalPembukuan jurnal : list) {
+            // Rumus: Saldo Baru = Saldo Sebelumnya + Debit - Kredit
+            saldoAkumulasi = saldoAkumulasi.add(jurnal.getDebit()).subtract(jurnal.getKredit());
+            jurnal.setSaldo(saldoAkumulasi);
+        }
+
+        return list;
     }
 
-    public boolean tambahJurnal(JurnalPembukuan jurnal) {
-        return jurnalDao.save(jurnal);
-    }
-
-    public boolean updateJurnal(JurnalPembukuan jurnal) {
-        return jurnalDao.update(jurnal);
-    }
-
-    public boolean hapusJurnal(int id) {
-        return jurnalDao.delete(id);
-    }
-
-    // --- Fungsi Filter & Logika Bisnis ---
-
-    public List<JurnalPembukuan> getJurnalByKategori(JurnalPembukuan.Kategori kategori) {
-        return jurnalDao.getAll().stream()
-                .filter(j -> j.getKategori() == kategori)
-                .collect(Collectors.toList());
-    }
-
-    public List<JurnalPembukuan> getJurnalByPeriode(int bulan, int tahun) {
-        return jurnalDao.getAll().stream()
-                .filter(j -> j.getTanggal().getMonthValue() == bulan && 
-                             j.getTanggal().getYear() == tahun)
-                .collect(Collectors.toList());
-    }
-
+    /**
+     * Menghitung total seluruh debit dari list yang ditampilkan.
+     */
     public BigDecimal hitungTotalDebit(List<JurnalPembukuan> list) {
         return list.stream()
                 .map(JurnalPembukuan::getDebit)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
+    /**
+     * Menghitung total seluruh kredit dari list yang ditampilkan.
+     */
     public BigDecimal hitungTotalKredit(List<JurnalPembukuan> list) {
         return list.stream()
                 .map(JurnalPembukuan::getKredit)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    /**
+     * Filter data berdasarkan periode bulan dan tahun.
+     */
+    public List<JurnalPembukuan> getJurnalByPeriode(int bulan, int tahun) {
+        // Ambil semua data yang sudah ber-saldo, lalu filter
+        return getAllJurnalWithSaldo().stream()
+                .filter(j -> j.getTanggal().getMonthValue() == bulan && 
+                             j.getTanggal().getYear() == tahun)
+                .collect(Collectors.toList());
     }
 }

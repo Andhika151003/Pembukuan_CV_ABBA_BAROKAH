@@ -1,39 +1,43 @@
 package com.pembukuan_cv_abba_barokah.Model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class Cashflow {
     private int id;
-    private String bulan;
-    private int tahun;
+    private LocalDate tanggal;
     private BigDecimal totalPemasukan;      
     private BigDecimal totalPengeluaran;   
     private BigDecimal saldoAwal;           
     private BigDecimal saldoAkhir;
+    private BigDecimal pph;
+
+    //Konstanta tarif pph
+    private static final BigDecimal TARIF_PPH = new BigDecimal("0.11");
 
     // Constructor
-    public Cashflow(int id, String bulan, int tahun, BigDecimal totalPemasukan,
+    public Cashflow(int id, LocalDate tanggal, BigDecimal totalPemasukan,
                     BigDecimal totalPengeluaran, BigDecimal saldoAwal, 
-                    BigDecimal saldoAkhir) {
+                    BigDecimal saldoAkhir, BigDecimal pph) {
         this.id = id;
-        this.bulan = bulan;
-        this.tahun = tahun;
+        this.tanggal = tanggal;
         this.totalPemasukan = totalPemasukan;
         this.totalPengeluaran = totalPengeluaran;
         this.saldoAwal = saldoAwal;
         this.saldoAkhir = saldoAkhir;
+        this.pph = pph;
     }
 
     // Constructor (tanpa id)
-    public Cashflow(String bulan, int tahun, BigDecimal totalPemasukan,
+    public Cashflow(LocalDate tanggal , BigDecimal totalPemasukan,
                     BigDecimal totalPengeluaran, BigDecimal saldoAwal, 
-                    BigDecimal saldoAkhir) {
-        this.bulan = bulan;
-        this.tahun = tahun;
+                    BigDecimal saldoAkhir, BigDecimal pph) {
+        this.tanggal = tanggal;
         this.totalPemasukan = totalPemasukan;
         this.totalPengeluaran = totalPengeluaran;
         this.saldoAwal = saldoAwal;
         this.saldoAkhir = saldoAkhir;
+        this.pph = pph;
     }
 
     // Getters and Setters
@@ -45,20 +49,12 @@ public class Cashflow {
         this.id = id;
     }
 
-    public String getBulan() {
-        return bulan;
+    public LocalDate getTanggal() {
+        return tanggal;
     }
 
-    public void setBulan(String bulan) {
-        this.bulan = bulan;
-    }
-
-    public int getTahun() {
-        return tahun;
-    }
-
-    public void setTahun(int tahun) {
-        this.tahun = tahun;
+    public void setTanggal(LocalDate tanggal) {
+        this.tanggal = tanggal;
     }
 
     public BigDecimal getTotalPemasukan() {
@@ -93,23 +89,42 @@ public class Cashflow {
         this.saldoAkhir = saldoAkhir;
     }
 
+    public BigDecimal getPph() {
+        return pph;
+    }
+
+    public void setPph(BigDecimal pph) {
+        this.pph = pph;
+    }
+
     //Method kalkulasi
     public void hitungSaldoAkhir() {
+        if (this.pph == null) kalkulasiPph();
         this.saldoAkhir = this.saldoAwal
             .add(this.totalPemasukan)
-            .subtract(this.totalPengeluaran);
+            .subtract(this.totalPengeluaran)
+            .subtract(this.pph);
+    }
+
+    //Method kalkulasi menghitung pph otomatis
+    public void kalkulasiPph() {
+        if (this.totalPemasukan != null) {
+            this.pph = this.totalPemasukan.multiply(TARIF_PPH);
+        } else {
+            this.pph = BigDecimal.ZERO;
+        }
     }
 
     @Override
     public String toString() {
         return "Cashflow{" +
                 "id=" + id +
-                ", bulan='" + bulan + '\'' +
-                ", tahun=" + tahun +
+                ", tanggal='" + tanggal +
                 ", totalPemasukan=" + totalPemasukan +
                 ", totalPengeluaran=" + totalPengeluaran +
                 ", saldoAwal=" + saldoAwal +
                 ", saldoAkhir=" + saldoAkhir +
+                ", pph=" + pph +
                 '}';
     }
 }

@@ -21,18 +21,14 @@ public class UtangUsahaService {
         return utangDao.getById(id);
     }
 
-    /**
-     * Mencatat utang baru.
-     * Karena ini utang, saldo administrasi TIDAK berubah (kredit).
-     */
     public boolean tambahUtang(UtangUsaha utang) {
         return utangDao.save(utang);
     }
 
     /**
      * Memperbarui data utang atau melakukan pembayaran utang.
-     * @param utangBaru Data utang yang diperbarui
-     * @param idAdministrasi ID akun kas/bank yang digunakan untuk membayar
+     * @param utangBaru
+     * @param idAdministrasi 
      */
     public boolean bayarUtang(UtangUsaha utangBaru, int idAdministrasi) {
         UtangUsaha utangLama = utangDao.getById(utangBaru.getId());
@@ -41,21 +37,15 @@ public class UtangUsahaService {
         boolean isUpdated = utangDao.update(utangBaru);
 
         if (isUpdated) {
-            // LOGIKA: Jika status berubah dari BELUM_LUNAS menjadi LUNAS
             if (utangLama.getStatus_Utang() != UtangUsaha.StatusUtang.LUNAS && 
                 utangBaru.getStatus_Utang() == UtangUsaha.StatusUtang.LUNAS) {
-                
-                // Kurangi saldo administrasi (Uang keluar untuk bayar utang)
+
                 return administrasiService.kurangSaldo(idAdministrasi, utangBaru.getJumlah_Utang());
             }
         }
         return isUpdated;
     }
 
-    /**
-     * Menghapus catatan utang.
-     * Jika utang yang dihapus statusnya sudah LUNAS, saldo akan dikembalikan (refund).
-     */
     public boolean hapusUtang(int id, int idAdministrasi) {
         UtangUsaha utang = utangDao.getById(id);
         if (utang == null) return false;
@@ -64,7 +54,6 @@ public class UtangUsahaService {
 
         if (isDeleted) {
             if (utang.getStatus_Utang() == UtangUsaha.StatusUtang.LUNAS) {
-                // Kembalikan uang ke saldo karena transaksi pembayaran dibatalkan
                 return administrasiService.tambahSaldo(idAdministrasi, utang.getJumlah_Utang());
             }
             return true;
