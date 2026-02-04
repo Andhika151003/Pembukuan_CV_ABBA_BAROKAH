@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.pembukuan_cv_abba_barokah.Controller.NeracaKeuanganController"
+      spacing="20"
+      alignment="TOP_CENTER"
+      styleClass="content"
+      stylesheets="@Global.css">
+
+    <!-- TITLE -->
+    <VBox alignment="CENTER" spacing="6">
+        <Label text="LAPORAN NERACA KEUANGAN"
+               style="-fx-font-size:22px; -fx-font-weight:bold"/>
+        <Label text="TAHUN : 2026"
+               style="-fx-font-size:14px"/>
+    </VBox>
+
+    <!-- INFO PERUSAHAAN -->
+    <VBox spacing="4" maxWidth="720">
+        <Label text="Nama   : CV. ABBA BAROKAH"/>
+        <Label text="NPWP   : 92.357.426.3-612.000"/>
+        <Label text="Alamat : JL. MH. THAMRIN 3 NO. 10 RT 003 RW 002 Tlogobendung, Gresik"/>
+    </VBox>
+
+    <!-- CARD -->
+    <VBox maxWidth="720" spacing="16" styleClass="card">
+
+        <!-- ASET LANCAR -->
+        <Label text="ASET LANCAR" styleClass="section-title"/>
+
+        <GridPane hgap="20" vgap="10">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="60"/>
+                <ColumnConstraints percentWidth="40"/>
+            </columnConstraints>
+
+            <Label text="Kas / Bank"/>
+            <Label fx:id="lblKasBank" GridPane.columnIndex="1"/>
+
+            <Label text="Piutang Usaha" GridPane.rowIndex="1"/>
+            <Label fx:id="lblPiutang" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+            <Label text="Persediaan Barang" GridPane.rowIndex="2"/>
+            <Label fx:id="lblPersediaan" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+            <Separator GridPane.columnSpan="2" GridPane.rowIndex="3"/>
+
+            <Label text="TOTAL ASET LANCAR" styleClass="bold" GridPane.rowIndex="4"/>
+            <Label fx:id="lblTotalAsetLancar"
+                   GridPane.columnIndex="1"
+                   GridPane.rowIndex="4"
+                   styleClass="bold"/>
+        </GridPane>
+
+        <!-- ASET TIDAK LANCAR -->
+        <Label text="ASET TIDAK LANCAR" styleClass="section-title"/>
+
+        <GridPane hgap="20" vgap="10">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="60"/>
+                <ColumnConstraints percentWidth="40"/>
+            </columnConstraints>
+
+            <Label text="Total Pembelian Inventaris"/>
+            <Label fx:id="lblAsetTidakLancar" GridPane.columnIndex="1"/>
+
+            <Separator GridPane.columnSpan="2" GridPane.rowIndex="1"/>
+
+            <Label text="TOTAL ASET TIDAK LANCAR" styleClass="bold" GridPane.rowIndex="2"/>
+            <Label fx:id="lblAsetTidakLancar"
+                   GridPane.columnIndex="1"
+                   GridPane.rowIndex="2"
+                   styleClass="bold"/>
+        </GridPane>
+
+        <!-- JUMLAH ASET -->
+        <Separator/>
+
+        <GridPane hgap="20">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="60"/>
+                <ColumnConstraints percentWidth="40"/>
+            </columnConstraints>
+
+            <Label text="JUMLAH ASET" styleClass="bold"/>
+            <Label fx:id="lblJumlahAset"
+                   GridPane.columnIndex="1"
+                   styleClass="bold"/>
+        </GridPane>
+
+        <!-- KEWAJIBAN -->
+        <Separator/>
+        <Label text="KEWAJIBAN JANGKA PENDEK" styleClass="section-title"/>
+
+        <GridPane hgap="20">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="60"/>
+                <ColumnConstraints percentWidth="40"/>
+            </columnConstraints>
+
+            <Label text="Total Utang Usaha"/>
+            <Label fx:id="lblUtangUsaha" GridPane.columnIndex="1"/>
+        </GridPane>
+
+        <!-- EKUITAS -->
+        <Separator/>
+        <Label text="EKUITAS" styleClass="section-title"/>
+
+        <GridPane hgap="20" vgap="10">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="60"/>
+                <ColumnConstraints percentWidth="40"/>
+            </columnConstraints>
+
+            <Label text="Modal Disetor"/>
+            <Label fx:id="lblModalDisetor" GridPane.columnIndex="1"/>
+
+            <Label text="Laba Ditahan" GridPane.rowIndex="1"/>
+            <Label fx:id="lblLabaDitahan" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+            <Separator GridPane.columnSpan="2" GridPane.rowIndex="2"/>
+
+            <Label text="JUMLAH EKUITAS" styleClass="bold" GridPane.rowIndex="3"/>
+            <Label fx:id="lblJumlahEkuitas"
+                   GridPane.columnIndex="1"
+                   GridPane.rowIndex="3"
+                   styleClass="bold"/>
+        </GridPane>
+
+        <!-- TOTAL -->
+        <Separator/>
+
+        <GridPane hgap="20">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="60"/>
+                <ColumnConstraints percentWidth="40"/>
+            </columnConstraints>
+
+            <Label text="JUMLAH KEWAJIBAN DAN EKUITAS" styleClass="bold"/>
+            <Label fx:id="lblTotalKewajibanEkuitas"
+                   GridPane.columnIndex="1"
+                   styleClass="bold"/>
+        </GridPane>
+
+    </VBox>
+</VBox>

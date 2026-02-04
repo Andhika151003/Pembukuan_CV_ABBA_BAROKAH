@@ -3,121 +3,64 @@ package com.pembukuan_cv_abba_barokah.Controller;
 import com.pembukuan_cv_abba_barokah.Model.JurnalPembukuan;
 import com.pembukuan_cv_abba_barokah.Service.JurnalPembukuanService;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.List;
 
 public class JurnalPembukuanController {
 
-    private final JurnalPembukuanService jurnalService;
+    @FXML private ComboBox<String> cbBulan;
+    @FXML private ComboBox<String> cbTahun;
 
-    public JurnalPembukuanController() {
-        this.jurnalService = new JurnalPembukuanService();
+    @FXML private TableView<JurnalPembukuan> table;
+    @FXML private TableColumn<JurnalPembukuan, String> colTanggal;
+    @FXML private TableColumn<JurnalPembukuan, String> colKeterangan;
+    @FXML private TableColumn<JurnalPembukuan, BigDecimal> colDebit;
+    @FXML private TableColumn<JurnalPembukuan, BigDecimal> colKredit;
+
+    private final JurnalPembukuanService service = new JurnalPembukuanService();
+    private final ObservableList<JurnalPembukuan> data = FXCollections.observableArrayList();
+
+    @FXML
+    public void initialize() {
+
+        cbBulan.setItems(FXCollections.observableArrayList(
+                "01","02","03","04","05","06",
+                "07","08","09","10","11","12"
+        ));
+        cbTahun.setItems(FXCollections.observableArrayList("2025","2026","2027"));
+
+        cbBulan.setValue("02");
+        cbTahun.setValue("2026");
+
+        colTanggal.setCellValueFactory(c ->
+                new javafx.beans.property.SimpleStringProperty(
+                        c.getValue().getTanggal().toString()));
+
+        colKeterangan.setCellValueFactory(c ->
+                new javafx.beans.property.SimpleStringProperty(
+                        c.getValue().getKeterangan()));
+
+        colDebit.setCellValueFactory(c ->
+                new javafx.beans.property.SimpleObjectProperty<>(
+                        c.getValue().getDebit()));
+
+        colKredit.setCellValueFactory(c ->
+                new javafx.beans.property.SimpleObjectProperty<>(
+                        c.getValue().getKredit()));
+
+        table.setItems(data);
+        loadData();
     }
 
-    // ===================== READ =====================
-
-    public List<JurnalPembukuan> tampilkanSemuaJurnal() {
-        return jurnalService.getAllJurnal();
-    }
-
-    public List<JurnalPembukuan> tampilkanJurnalByKategori(
-            JurnalPembukuan.Kategori kategori
-    ) {
-        return jurnalService.getJurnalByKategori(kategori);
-    }
-
-    public List<JurnalPembukuan> tampilkanJurnalByPeriode(
-            int bulan,
-            int tahun
-    ) {
-        return jurnalService.getJurnalByPeriode(bulan, tahun);
-    }
-
-    // ===================== CREATE =====================
-
-    public boolean tambahJurnal(
-            LocalDate tanggal,
-            int nomorJurnal,
-            JurnalPembukuan.JenisTransaksi jenisTransaksi,
-            JurnalPembukuan.Kategori kategori,
-            String deskripsi,
-            BigDecimal debit,
-            BigDecimal kredit,
-            BigDecimal saldo,
-            int idTransaksi,
-            int idPembayaran,
-            int idPembelian,
-            int idGaji
-    ) {
-        JurnalPembukuan jurnal = new JurnalPembukuan(
-                0,              // id (auto)
-                tanggal,
-                nomorJurnal,
-                jenisTransaksi,
-                kategori,
-                deskripsi,
-                debit,
-                kredit,
-                saldo,
-                idTransaksi,
-                idPembayaran,
-                idPembelian,
-                idGaji
-        );
-
-        return jurnalService.tambahJurnal(jurnal);
-    }
-
-    // ===================== UPDATE =====================
-
-    public boolean updateJurnal(
-            int id,
-            LocalDate tanggal,
-            int nomorJurnal,
-            JurnalPembukuan.JenisTransaksi jenisTransaksi,
-            JurnalPembukuan.Kategori kategori,
-            String deskripsi,
-            BigDecimal debit,
-            BigDecimal kredit,
-            BigDecimal saldo,
-            int idTransaksi,
-            int idPembayaran,
-            int idPembelian,
-            int idGaji
-    ) {
-        JurnalPembukuan jurnal = new JurnalPembukuan(
-                id,
-                tanggal,
-                nomorJurnal,
-                jenisTransaksi,
-                kategori,
-                deskripsi,
-                debit,
-                kredit,
-                saldo,
-                idTransaksi,
-                idPembayaran,
-                idPembelian,
-                idGaji
-        );
-
-        return jurnalService.updateJurnal(jurnal);
-    }
-
-    // ===================== DELETE =====================
-
-    public boolean hapusJurnal(int id) {
-        return jurnalService.hapusJurnal(id);
-    }
-
-    // ===================== REKAP =====================
-
-    public BigDecimal hitungTotalDebit(List<JurnalPembukuan> list) {
-        return jurnalService.hitungTotalDebit(list);
-    }
-
-    public BigDecimal hitungTotalKredit(List<JurnalPembukuan> list) {
-        return jurnalService.hitungTotalKredit(list);
+    @FXML
+    private void loadData() {
+        data.setAll(service.getByPeriode(
+                cbBulan.getValue(),
+                cbTahun.getValue()
+        ));
     }
 }

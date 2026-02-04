@@ -6,18 +6,17 @@
 <VBox xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.pembukuan_cv_abba_barokah.Controller.BiayaAdministrasiController"
+      stylesheets="@Global.css"
       spacing="24"
-      style="-fx-padding: 16;">
+      styleClass="content">
 
-    <!-- ===================== TITLE ===================== -->
     <HBox alignment="CENTER">
-        <Label text="Form Biaya Administrasi"
+        <Label text="Biaya Administrasi"
                style="-fx-font-size: 24px; -fx-font-weight: bold;" />
     </HBox>
 
-    <!-- ===================== FORM (CENTERED) ===================== -->
     <StackPane>
-        <VBox maxWidth="520" styleClass="card">
+        <VBox maxWidth="650" styleClass="card">
 
             <GridPane styleClass="form-grid">
                 <columnConstraints>
@@ -27,66 +26,51 @@
 
                 <children>
                     <Label text="Tanggal"/>
-                    <DatePicker fx:id="dpTanggal"
+                    <DatePicker fx:id="tanggalField"
                                 GridPane.columnIndex="1"/>
 
-                    <Label text="Jenis Administrasi" GridPane.rowIndex="1"/>
-                    <TextField fx:id="txtJenisAdministrasi"
-                               GridPane.rowIndex="1"
-                               GridPane.columnIndex="1"/>
-
-                    <Label text="Deskripsi" GridPane.rowIndex="2"/>
-                    <TextField fx:id="txtDeskripsi"
+                    <Label text="Jenis Administrasi"
+                           GridPane.rowIndex="1"/>
+                    <ComboBox fx:id="cbJenisAdministrasi"
+                              GridPane.rowIndex="1"
+                              GridPane.columnIndex="1"/>
+                    
+                    <Label text="Deskripsi"
+                           GridPane.rowIndex="2"/>
+                    <TextField fx:id="deskripsiField"
                                GridPane.rowIndex="2"
                                GridPane.columnIndex="1"/>
-
-                    <Label text="Jumlah" GridPane.rowIndex="3"/>
-                    <TextField fx:id="txtJumlah"
+                    
+                    <Label text="Jumlah Biaya Administrasi"
+                           GridPane.rowIndex="3"/>
+                    <TextField fx:id="jumlahField"
                                GridPane.rowIndex="3"
                                GridPane.columnIndex="1"/>
 
-                    <Label text="Keterangan" GridPane.rowIndex="4"/>
-                    <TextField fx:id="txtKeterangan"
+                    <Label text="Keterangan"
+                           GridPane.rowIndex="4"/>
+                    <TextField fx:id="keteranganField"
                                GridPane.rowIndex="4"
                                GridPane.columnIndex="1"/>
                 </children>
             </GridPane>
 
-            <!-- ===================== BUTTON ===================== -->
-            <HBox spacing="12"
-                  alignment="CENTER_RIGHT"
-                  style="-fx-padding: 18 0 0 0;">
+            <HBox alignment="CENTER_RIGHT" spacing="12">
                 <Button text="Simpan"
                         onAction="#handleSimpan"/>
-                <Button text="Update"
-                        onAction="#handleUpdate"/>
-                <Button text="Hapus"
-                        styleClass="button-danger"
-                        onAction="#handleHapus"/>
             </HBox>
 
         </VBox>
     </StackPane>
 
-    <!-- ===================== TABLE ===================== -->
-    <TableView fx:id="tableAdministrasi" prefHeight="360">
+    <TableView fx:id="tableAdministrasi" prefHeight="300">
         <columns>
-            <TableColumn fx:id="colTanggal"
-                         text="Tanggal"
-                         prefWidth="120"/>
-            <TableColumn fx:id="colJenis"
-                         text="Jenis Administrasi"
-                         prefWidth="180"/>
-            <TableColumn fx:id="colDeskripsi"
-                         text="Deskripsi"
-                         prefWidth="240"/>
-            <TableColumn fx:id="colJumlah"
-                         text="Jumlah"
-                         prefWidth="140"/>
-            <TableColumn fx:id="colKeterangan"
-                         text="Keterangan"
-                         prefWidth="220"/>
+            <TableColumn fx:id="colTanggal" text="Tanggal" prefWidth="120"/>
+            <TableColumn fx:id="colJenis" text="Jenis Administrasi" prefWidth="120"/>
+            <TableColumn fx:id="colDeskripsi" text="Deskripsi" prefWidth="120"/>
+            <TableColumn fx:id="colJumlah" text="Jumlah Biaya Administrasi" prefWidth="200"/>
+            <TableColumn fx:id="colKeterangan" text="Keterangan" prefWidth="120"/>
         </columns>
     </TableView>
-
+    
 </VBox>

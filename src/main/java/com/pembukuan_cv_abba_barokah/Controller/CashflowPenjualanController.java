@@ -1,94 +1,95 @@
 package com.pembukuan_cv_abba_barokah.Controller;
 
-import com.pembukuan_cv_abba_barokah.Model.Cashflow;
-import com.pembukuan_cv_abba_barokah.Service.CashflowService;
-import javafx.beans.property.SimpleStringProperty;
+import com.pembukuan_cv_abba_barokah.Model.CashflowPenjualan;
+import com.pembukuan_cv_abba_barokah.Service.CashflowPenjualanService;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 
-import java.time.LocalDate;
-import java.time.format.TextStyle;
-import java.util.List;
+import java.text.NumberFormat;
 import java.util.Locale;
 
 public class CashflowPenjualanController {
 
-    @FXML private Label bulanTahunLabel;
-    @FXML private TableView<Cashflow> table;
+    @FXML private ComboBox<String> cbBulan;
+    @FXML private ComboBox<String> cbTahun;
 
-    @FXML private TableColumn<Cashflow, String> bulanCol;
-    @FXML private TableColumn<Cashflow, String> pemasukanCol;
-    @FXML private TableColumn<Cashflow, String> pengeluaranCol;
-    @FXML private TableColumn<Cashflow, String> saldoAwalCol;
-    @FXML private TableColumn<Cashflow, String> saldoAkhirCol;
+    @FXML private TableView<CashflowPenjualan> table;
+    @FXML private TableColumn<CashflowPenjualan, String> colTanggal;
+    @FXML private TableColumn<CashflowPenjualan, String> colNoFaktur;
+    @FXML private TableColumn<CashflowPenjualan, Number> colPenjualan;
+    @FXML private TableColumn<CashflowPenjualan, Number> colPembayaran;
+    @FXML private TableColumn<CashflowPenjualan, Number> colPph;
 
-    private final ObservableList<Cashflow> data =
-            FXCollections.observableArrayList();
-
-    private final CashflowService cashflowService =
-            new CashflowService();
+    private final CashflowPenjualanService service = new CashflowPenjualanService();
 
     @FXML
-    private void initialize() {
+    public void initialize() {
 
-        // ===== HEADER BULAN & TAHUN =====
-        LocalDate now = LocalDate.now();
-        String bulan = now.getMonth()
-                .getDisplayName(TextStyle.FULL, new Locale("id", "ID"));
+        cbBulan.setItems(FXCollections.observableArrayList(
+                "01","02","03","04","05","06","07","08","09","10","11","12"
+        ));
+        cbTahun.setItems(FXCollections.observableArrayList(
+                "2024","2025","2026","2027"
+        ));
 
-        bulanTahunLabel.setText(
-                "Cashflow Bulan " + capitalize(bulan) + " " + now.getYear()
-        );
+        cbBulan.setValue("01");
+        cbTahun.setValue("2026");
 
-        // ===== SINKRONISASI KOLOM DENGAN MODEL =====
-        bulanCol.setCellValueFactory(c ->
-                new SimpleStringProperty(
-                        c.getValue().getBulan() + " " + c.getValue().getTahun()
+        colTanggal.setCellValueFactory(d ->
+                new javafx.beans.property.SimpleStringProperty(
+                        d.getValue().getTanggal().toString()
                 )
         );
 
-        pemasukanCol.setCellValueFactory(c ->
-                new SimpleStringProperty(
-                        c.getValue().getTotalPemasukan().toString()
+        colNoFaktur.setCellValueFactory(d ->
+                new javafx.beans.property.SimpleStringProperty(
+                        d.getValue().getNoFaktur()
                 )
         );
 
-        pengeluaranCol.setCellValueFactory(c ->
-                new SimpleStringProperty(
-                        c.getValue().getTotalPengeluaran().toString()
+        colPenjualan.setCellValueFactory(d ->
+                new javafx.beans.property.SimpleObjectProperty<>(
+                        d.getValue().getNominalPenjualan()
                 )
         );
 
-        saldoAwalCol.setCellValueFactory(c ->
-                new SimpleStringProperty(
-                        c.getValue().getSaldoAwal().toString()
+        colPembayaran.setCellValueFactory(d ->
+                new javafx.beans.property.SimpleObjectProperty<>(
+                        d.getValue().getNominalPembayaran()
                 )
         );
 
-        saldoAkhirCol.setCellValueFactory(c ->
-                new SimpleStringProperty(
-                        c.getValue().getSaldoAkhir().toString()
+        colPph.setCellValueFactory(d ->
+                new javafx.beans.property.SimpleObjectProperty<>(
+                        d.getValue().getPph11()
                 )
         );
 
-        // ===== LOAD DATA =====
-        loadCashflowFromDatabase();
+        formatRupiah(colPenjualan);
+        formatRupiah(colPembayaran);
+        formatRupiah(colPph);
+
+        loadData();
     }
 
-    private void loadCashflowFromDatabase() {
-        data.clear();
-        List<Cashflow> cashflows =
-                cashflowService.getAllCashflow();
-        data.addAll(cashflows);
-        table.setItems(data);
+    @FXML
+    private void loadData() {
+        table.setItems(
+                FXCollections.observableArrayList(
+                        service.getByPeriode(cbBulan.getValue(), cbTahun.getValue())
+                )
+        );
     }
 
-    private String capitalize(String text) {
-        if (text == null || text.isEmpty()) return text;
-        return text.substring(0, 1).toUpperCase() + text.substring(1);
+    private void formatRupiah(TableColumn<CashflowPenjualan, Number> col) {
+        NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+        col.setCellFactory(tc -> new TableCell<>() {
+            @Override
+            protected void updateItem(Number value, boolean empty) {
+                super.updateItem(value, empty);
+                setText(empty || value == null ? "" : nf.format(value));
+            }
+        });
     }
 }

@@ -10,13 +10,11 @@
       spacing="24"
       styleClass="content">
 
-    <!-- TITLE -->
     <HBox alignment="CENTER">
         <Label text="Harga Pokok Penjualan"
-           style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+               style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
     </HBox>
 
-    <!-- FORM CENTER -->
     <StackPane>
         <VBox maxWidth="520" styleClass="card">
 
@@ -30,49 +28,50 @@
                     <Label text="Tanggal"/>
                     <DatePicker fx:id="tanggalField" GridPane.columnIndex="1"/>
 
-                    <Label text="Jenis Produk" GridPane.rowIndex="1"/>
-                    <TextField fx:id="jenisProdukField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                    <Label text="Jenis HPP" GridPane.rowIndex="1"/>
+                    <ComboBox fx:id="cbJenis" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-                    <Label text="Kategori" GridPane.rowIndex="2"/>
-                    <TextField fx:id="kategoriField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                    <Label text="Sub Jenis" GridPane.rowIndex="2"/>
+                    <ComboBox fx:id="cbSubJenis" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-                    <Label text="Nama Item" GridPane.rowIndex="3"/>
-                    <TextField fx:id="namaItemField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                    <Label text="Detail Biaya" GridPane.rowIndex="3"/>
+                    <ComboBox fx:id="cbDetail" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-                    <Label text="Kuantitas" GridPane.rowIndex="4"/>
-                    <TextField fx:id="kuantitasField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                    <Label text="Nama Item" GridPane.rowIndex="4"/>
+                    <TextField fx:id="namaItemField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
-                    <Label text="Harga Satuan" GridPane.rowIndex="5"/>
-                    <TextField fx:id="hargaSatuanField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                    <Label text="Kuantitas" GridPane.rowIndex="5"/>
+                    <TextField fx:id="kuantitasField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 
-                    <Label text="Keterangan" GridPane.rowIndex="6"/>
-                    <TextField fx:id="keteranganField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                    <Label text="Harga Satuan" GridPane.rowIndex="6"/>
+                    <TextField fx:id="hargaSatuanField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
-                    <Label text="ID Transaksi" GridPane.rowIndex="7"/>
-                    <TextField fx:id="idTransaksiField" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+                    <Label text="Keterangan" GridPane.rowIndex="7"/>
+                    <TextField fx:id="keteranganField" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+
+                    <Label text="ID Penjualan" GridPane.rowIndex="8"/>
+                    <ComboBox fx:id="cbIdPenjualan" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
                 </children>
             </GridPane>
 
-            <!-- BUTTON -->
-            <HBox spacing="12" alignment="CENTER_RIGHT" style="-fx-padding: 18 0 0 0;">
+            <!-- br -->
+
+            <HBox alignment="CENTER_RIGHT" spacing="12">
                 <Button text="Simpan" onAction="#handleSimpan"/>
-                <Button text="Hapus" styleClass="button-danger" onAction="#handleHapus"/>
+                <Button text="Update" onAction="#handleUpdate"/>
+                <Button text="Hapus" onAction="#handleDelete" styleClass="button-danger"/>
             </HBox>
 
         </VBox>
     </StackPane>
 
-    <!-- TABLE FULL WIDTH -->
-    <TableView fx:id="tableHpp" prefHeight="360">
+    <TableView fx:id="tableHpp" prefHeight="300">
         <columns>
-            <TableColumn text="Tanggal" fx:id="colTanggal" prefWidth="120"/>
-            <TableColumn text="Jenis Produk" fx:id="colJenisProduk" prefWidth="140"/>
-            <TableColumn text="Kategori" fx:id="colKategori" prefWidth="120"/>
-            <TableColumn text="Nama Item" fx:id="colNamaItem" prefWidth="180"/>
-            <TableColumn text="Kuantitas" fx:id="colKuantitas" prefWidth="90"/>
-            <TableColumn text="Harga Satuan" fx:id="colHargaSatuan" prefWidth="140"/>
-            <TableColumn text="Total Harga" fx:id="colTotalHarga" prefWidth="160"/>
-            <TableColumn text="Keterangan" fx:id="colKeterangan" prefWidth="220"/>
+            <TableColumn fx:id="colTanggal" text="Tanggal" prefWidth="120"/>
+            <TableColumn fx:id="colJenis" text="Jenis" prefWidth="140"/>
+            <TableColumn fx:id="colItem" text="Item" prefWidth="180"/>
+            <TableColumn fx:id="colTotal" text="Total" prefWidth="140"/>
+            <TableColumn fx:id="colIdPenjualan" text="ID Penjualan" prefWidth="120"/>
         </columns>
     </TableView>
 

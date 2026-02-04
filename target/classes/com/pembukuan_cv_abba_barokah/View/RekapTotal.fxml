@@ -1,89 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
 <VBox xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1"
+      xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.pembukuan_cv_abba_barokah.Controller.RekapTotalController"
-      stylesheets="@RekapTotal.css"
-      spacing="20"
-      styleClass="rekap-root">
+      spacing="24"
+      alignment="TOP_CENTER"
+      stylesheets="@Global.css"
+      styleClass="content">
 
-    <!-- JUDUL -->
-    <Label text="Perhitungan Utama"
-           styleClass="rekap-title"/>
+    <!-- ================= TITLE ================= -->
+    <HBox alignment="CENTER">
+        <Label text="Rekapitulasi Total Keuangan"
+               style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+    </HBox>
 
-    <!-- CARD -->
-    <VBox styleClass="rekap-card">
+    <!-- ================= CENTER WRAPPER ================= -->
+    <StackPane VBox.vgrow="ALWAYS">
 
-        <!-- ROW -->
-        <HBox styleClass="rekap-row">
-            <Label text="Total HPP" styleClass="rekap-label"/>
-            <Region HBox.hgrow="ALWAYS"/>
-            <Label fx:id="lblTotalHpp" styleClass="rekap-value"/>
-        </HBox>
+        <!-- ================= CARD ================= -->
+        <VBox maxWidth="700"
+              styleClass="card">
 
-        <HBox styleClass="rekap-row">
-            <Label text="Total Penjualan" styleClass="rekap-label"/>
-            <Region HBox.hgrow="ALWAYS"/>
-            <Label fx:id="lblTotalPenjualan" styleClass="rekap-value"/>
-        </HBox>
+            <GridPane hgap="28" vgap="14">
 
-        <HBox styleClass="rekap-row">
-            <Label text="Total Pembayaran Masuk" styleClass="rekap-label"/>
-            <Region HBox.hgrow="ALWAYS"/>
-            <Label fx:id="lblTotalPembayaranMasuk" styleClass="rekap-value"/>
-        </HBox>
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="60"/>
+                    <ColumnConstraints percentWidth="40"/>
+                </columnConstraints>
 
-        <HBox styleClass="rekap-row">
-            <Label text="Total Setor Pajak" styleClass="rekap-label"/>
-            <Region HBox.hgrow="ALWAYS"/>
-            <Label fx:id="lblTotalSetorPajak" styleClass="rekap-value"/>
-        </HBox>
+                <!-- ===== TOTAL ===== -->
+                <Label text="Total Penjualan"/>
+                <Label fx:id="lblTotalPenjualan" GridPane.columnIndex="1"/>
 
-        <HBox styleClass="rekap-row">
-            <Label text="Total Biaya Pemasaran" styleClass="rekap-label"/>
-            <Region HBox.hgrow="ALWAYS"/>
-            <Label fx:id="lblTotalBiayaPemasaran" styleClass="rekap-value"/>
-        </HBox>
+                <Label text="Total HPP" GridPane.rowIndex="1"/>
+                <Label fx:id="lblTotalHpp"
+                       GridPane.rowIndex="1"
+                       GridPane.columnIndex="1"/>
 
-        <Separator styleClass="rekap-divider"/>
+                <Label text="Total Pembayaran dari Pembeli" GridPane.rowIndex="2"/>
+                <Label fx:id="lblTotalPembayaran"
+                       GridPane.rowIndex="2"
+                       GridPane.columnIndex="1"/>
 
-        <HBox styleClass="rekap-row">
-            <Label text="Total Biaya Operasional" styleClass="total-operasional"/>
-            <Region HBox.hgrow="ALWAYS"/>
-            <Label fx:id="lblTotalBiayaOperasional"
-                   styleClass="total-operasional"/>
-        </HBox>
+                <Label text="Total Biaya Pemasaran" GridPane.rowIndex="3"/>
+                <Label fx:id="lblTotalBiayaPemasaran"
+                       GridPane.rowIndex="3"
+                       GridPane.columnIndex="1"/>
 
-        <HBox styleClass="rekap-row">
-            <Label text="Laba Kotor" styleClass="rekap-label"/>
-            <Region HBox.hgrow="ALWAYS"/>
-            <Label fx:id="lblLabaKotor" styleClass="rekap-value"/>
-        </HBox>
+                <Label text="Total Biaya Operasional" GridPane.rowIndex="4"/>
+                <Label fx:id="lblTotalBiayaOperasional"
+                       GridPane.rowIndex="4"
+                       GridPane.columnIndex="1"/>
 
-        <HBox styleClass="rekap-row">
-            <Label text="PPH 11%" styleClass="rekap-label"/>
-            <Region HBox.hgrow="ALWAYS"/>
-            <Label fx:id="lblPph11" styleClass="rekap-value"/>
-        </HBox>
+                <Label text="Total Setor Pajak" GridPane.rowIndex="5"/>
+                <Label fx:id="lblTotalSetorPajak"
+                       GridPane.rowIndex="5"
+                       GridPane.columnIndex="1"/>
 
-        <HBox styleClass="rekap-row">
-            <Label text="Pajak yang Belum Disetor" styleClass="rekap-label"/>
-            <Region HBox.hgrow="ALWAYS"/>
-            <Label fx:id="lblPajakBelumDisetor"
-                   styleClass="pph-warning"/>
-        </HBox>
+                <Separator GridPane.rowIndex="6"
+                           GridPane.columnSpan="2"/>
 
-        <Separator styleClass="rekap-divider"/>
+                <!-- ===== LABA ===== -->
+                <Label text="Laba Kotor" GridPane.rowIndex="7"/>
+                <Label fx:id="lblLabaKotor"
+                       GridPane.rowIndex="7"
+                       GridPane.columnIndex="1"/>
 
-        <HBox styleClass="rekap-row">
-            <Label text="Laba Bersih"/>
-            <Region HBox.hgrow="ALWAYS"/>
-            <Label fx:id="lblLabaBersih"
-                   styleClass="laba-bersih"/>
-        </HBox>
+                <Label text="PPh Final 11%" GridPane.rowIndex="8"/>
+                <Label fx:id="lblPph11"
+                       GridPane.rowIndex="8"
+                       GridPane.columnIndex="1"/>
 
-    </VBox>
+                <Label text="Pajak Belum Disetor" GridPane.rowIndex="9"/>
+                <Label fx:id="lblPajakBelumDisetor"
+                       GridPane.rowIndex="9"
+                       GridPane.columnIndex="1"/>
+
+                <Separator GridPane.rowIndex="10"
+                           GridPane.columnSpan="2"/>
+
+                <!-- ===== LABA BERSIH ===== -->
+                <Label text="Laba Bersih"
+                       GridPane.rowIndex="11"
+                       styleClass="bold"/>
+                <Label fx:id="lblLabaBersih"
+                       GridPane.rowIndex="11"
+                       GridPane.columnIndex="1"
+                       styleClass="bold"/>
+
+            </GridPane>
+        </VBox>
+    </StackPane>
+
 </VBox>

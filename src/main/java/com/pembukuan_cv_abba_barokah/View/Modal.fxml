@@ -8,73 +8,66 @@
       fx:controller="com.pembukuan_cv_abba_barokah.Controller.ModalController"
       stylesheets="@Global.css"
       spacing="24"
-      alignment="TOP_CENTER"
-      style="-fx-padding: 24;">
+      styleClass="content">
 
-    <!-- ===================== TITLE ===================== -->
-    <Label text="Form Modal"
-           style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+    <HBox alignment="CENTER">
+        <Label text="Modal Usaha"
+               style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+    </HBox>
 
-    <!-- ===================== FORM CARD ===================== -->
-    <VBox maxWidth="520"
-          alignment="CENTER"
-          styleClass="card">
+    <StackPane>
+        <VBox maxWidth="800" styleClass="card">
 
-        <GridPane styleClass="form-grid">
-            <columnConstraints>
-                <ColumnConstraints prefWidth="160"/>
-                <ColumnConstraints/>
-            </columnConstraints>
+            <GridPane styleClass="form-grid">
+                <columnConstraints>
+                    <ColumnConstraints prefWidth="160"/>
+                    <ColumnConstraints/>
+                </columnConstraints>
 
-            <children>
-                <Label text="Tanggal"/>
-                <DatePicker fx:id="dpTanggal"
-                            GridPane.columnIndex="1"/>
+                <children>
+                    <Label text="Tanggal"/>
+                    <DatePicker fx:id="tanggalField" GridPane.columnIndex="1"/>
 
-                <Label text="Jenis Modal" GridPane.rowIndex="1"/>
-                <ComboBox fx:id="cbJenisModal"
-                          GridPane.rowIndex="1"
-                          GridPane.columnIndex="1"/>
+                    <Label text="Jenis Modal" GridPane.rowIndex="1"/>
+                    <ComboBox fx:id="cbJenisModal"
+                              GridPane.rowIndex="1"
+                              GridPane.columnIndex="1"/>
 
-                <Label text="Jumlah" GridPane.rowIndex="2"/>
-                <TextField fx:id="txtJumlah"
-                           GridPane.rowIndex="2"
-                           GridPane.columnIndex="1"/>
+                    <Label text="Jumlah" GridPane.rowIndex="2"/>
+                    <TextField fx:id="jumlahField"
+                               GridPane.rowIndex="2"
+                               GridPane.columnIndex="1"/>
 
-                <Label text="Nama Pemilik" GridPane.rowIndex="3"/>
-                <TextField fx:id="txtNamaPemilik"
-                           GridPane.rowIndex="3"
-                           GridPane.columnIndex="1"/>
+                    <Label text="Nama Pemilik" GridPane.rowIndex="3"/>
+                    <TextField fx:id="namaPemilikField"
+                               GridPane.rowIndex="3"
+                               GridPane.columnIndex="1"/>
 
-                <Label text="Keterangan" GridPane.rowIndex="4"/>
-                <TextField fx:id="txtKeterangan"
-                           GridPane.rowIndex="4"
-                           GridPane.columnIndex="1"/>
-            </children>
-        </GridPane>
+                    <Label text="Keterangan" GridPane.rowIndex="4"/>
+                    <TextField fx:id="keteranganField"
+                               GridPane.rowIndex="4"
+                               GridPane.columnIndex="1"/>
+                </children>
+            </GridPane>
 
-        <!-- ===================== BUTTON ===================== -->
-        <HBox spacing="12"
-              alignment="CENTER_RIGHT"
-              style="-fx-padding: 18 0 0 0;">
-            <Button text="Simpan"
-                    onAction="#handleSimpan"/>
-            <Button text="Hapus"
-                    styleClass="button-danger"
-                    onAction="#handleHapus"/>
-        </HBox>
-    </VBox>
+            <HBox spacing="12"
+                  alignment="CENTER_RIGHT"
+                  style="-fx-padding: 18 0 0 0;">
+                <Button text="Simpan" onAction="#handleSimpan"/>
+                <Button text="Update" onAction="#handleUpdate"/>
+                <Button text="Hapus"
+                        styleClass="button-danger"
+                        onAction="#handleHapus"/>
+            </HBox>
 
-    <!-- ===================== TABLE ===================== -->
-    <TableView fx:id="tableModal"
-               prefHeight="360"
-               maxWidth="1000">
+        </VBox>
+    </StackPane>
 
+    <TableView fx:id="table" prefHeight="360">
         <columns>
-            <TableColumn fx:id="colTanggal" text="Tanggal" prefWidth="140"/>
-            <TableColumn fx:id="colJenis" text="Jenis Modal" prefWidth="200"/>
-            <TableColumn fx:id="colJumlah" text="Jumlah" prefWidth="160"/>
-            <TableColumn fx:id="colSaldo" text="Saldo Modal" prefWidth="180"/>
+            <TableColumn fx:id="colTanggal" text="Tanggal" prefWidth="120"/>
+            <TableColumn fx:id="colJenis" text="Jenis Modal" prefWidth="160"/>
+            <TableColumn fx:id="colJumlah" text="Jumlah" prefWidth="140"/>
             <TableColumn fx:id="colPemilik" text="Pemilik" prefWidth="200"/>
         </columns>
     </TableView>

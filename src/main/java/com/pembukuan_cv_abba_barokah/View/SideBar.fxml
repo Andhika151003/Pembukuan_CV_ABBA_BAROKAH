@@ -50,7 +50,7 @@
                                 <Label text="Pembayaran Dari Pembeli" styleClass="menu-item" onMouseClicked="#openPembayaran"/>
                                 <Label text="Setor Pajak" styleClass="menu-item" onMouseClicked="#openSetorPajak"/>
                                 <Label text="Biaya Pemasaran" styleClass="menu-item" onMouseClicked="#openPemasaran"/>
-                                <Label text="Biaya Administrasi Utama" styleClass="menu-item" onMouseClicked="#openAdministrasi"/>
+                                <Label text="Biaya Administrasi" styleClass="menu-item" onMouseClicked="#openAdministrasi"/>
                                 <Label text="Pembelian Inventaris" styleClass="menu-item" onMouseClicked="#openInventaris"/>
                                 <Label text="Retur Penjualan" styleClass="menu-item" onMouseClicked="#openReturPenjualan"/>
                                 <Label text="Retur Pembelian" styleClass="menu-item" onMouseClicked="#openReturPembelian"/>
@@ -67,16 +67,16 @@
                                 <Label text="Perhitungan Utama" styleClass="menu-item" onMouseClicked="#openRekap"/>
                             </VBox>
 
-                            <!-- <Separator/> -->
+                            <Separator/>
 
                             <!-- LAPORAN -->
-                            <!-- <Label text="LAPORAN / OUTPUT" styleClass="menu-section"/>
+                            <Label text="LAPORAN / OUTPUT" styleClass="menu-section"/>
                             <VBox spacing="4">
                                 <Label text="Jurnal Pembukuan" styleClass="menu-item" onMouseClicked="#openJurnal"/>
                                 <Label text="Cashflow Penjualan Barang" styleClass="menu-item" onMouseClicked="#openCashflow"/>
                                 <Label text="Laporan Laba" styleClass="menu-item" onMouseClicked="#openLaporanLaba"/>
-                                <Label text="Laporan Neraca Keuangan" styleClass="menu-item" onMouseClicked="#openLaporanNeracaKeuangan"/>
-                            </VBox> -->
+                                <Label text="Laporan Neraca Keuangan" styleClass="menu-item" onMouseClicked="#openNeraca"/>
+                            </VBox>
 
                             <!-- LOGOUT -->
                             <VBox styleClass="logout-container">

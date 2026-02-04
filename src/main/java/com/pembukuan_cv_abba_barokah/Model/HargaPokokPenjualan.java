@@ -4,83 +4,80 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class HargaPokokPenjualan {
+
+    public enum JenisHpp {
+        PEMBELIAN_LANGSUNG, SWAKELOLA
+    }
+
+    public enum SubJenisHpp {
+        HARGA_PEROLEHAN_BARANG, BIAYA_LAIN,
+        HARGA_BARANG, BIAYA_PRODUKSI
+    }
+
+    public enum DetailHpp {
+        TRANSPORT, UPAH,
+        BAHAN_1, BAHAN_2, BAHAN_3,
+        ONGKOS_POTONG, ONGKOS_JAHIT
+    }
+
     private int id;
     private LocalDate tanggal;
-    private String jenisProduk;
-    private String kategori;
+    private JenisHpp jenis;
+    private SubJenisHpp subJenis;
+    private DetailHpp detail;
+
     private String namaItem;
     private int kuantitas;
     private BigDecimal hargaSatuan;
     private BigDecimal totalHarga;
     private String keterangan;
-    private int id_Transaksi;
 
-    // Constructor Lengkap
-    public HargaPokokPenjualan(int id, LocalDate tanggal, String jenisProduk, String kategori, 
-                               String namaItem, int kuantitas, BigDecimal hargaSatuan, 
-                               BigDecimal totalHarga, String keterangan, int id_Transaksi) {
+    // FK
+    private int idPenjualan;
+
+    public HargaPokokPenjualan(
+            int id, LocalDate tanggal, JenisHpp jenis,
+            SubJenisHpp subJenis, DetailHpp detail,
+            String namaItem, int kuantitas,
+            BigDecimal hargaSatuan, BigDecimal totalHarga,
+            String keterangan, int idPenjualan) {
+
         this.id = id;
         this.tanggal = tanggal;
-        this.jenisProduk = jenisProduk;
-        this.kategori = kategori;
+        this.jenis = jenis;
+        this.subJenis = subJenis;
+        this.detail = detail;
         this.namaItem = namaItem;
         this.kuantitas = kuantitas;
         this.hargaSatuan = hargaSatuan;
         this.totalHarga = totalHarga;
         this.keterangan = keterangan;
-        this.id_Transaksi = id_Transaksi;
+        this.idPenjualan = idPenjualan;
     }
 
-    // Constructor Tanpa ID
-    public HargaPokokPenjualan(LocalDate tanggal, String jenisProduk, String kategori, 
-                               String namaItem, int kuantitas, BigDecimal hargaSatuan, 
-                               BigDecimal totalHarga, String keterangan, int id_Transaksi) {
-        this.tanggal = tanggal;
-        this.jenisProduk = jenisProduk;
-        this.kategori = kategori;
-        this.namaItem = namaItem;
-        this.kuantitas = kuantitas;
-        this.hargaSatuan = hargaSatuan;
-        this.totalHarga = totalHarga;
-        this.keterangan = keterangan;
-        this.id_Transaksi = id_Transaksi;
+    public HargaPokokPenjualan(
+            LocalDate tanggal, JenisHpp jenis,
+            SubJenisHpp subJenis, DetailHpp detail,
+            String namaItem, int kuantitas,
+            BigDecimal hargaSatuan,
+            String keterangan, int idPenjualan) {
+
+        this(0, tanggal, jenis, subJenis, detail,
+                namaItem, kuantitas, hargaSatuan,
+                hargaSatuan.multiply(BigDecimal.valueOf(kuantitas)),
+                keterangan, idPenjualan);
     }
 
-    // Getters and Setters
+    // GETTER
     public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
     public LocalDate getTanggal() { return tanggal; }
-    public void setTanggal(LocalDate tanggal) { this.tanggal = tanggal; }
-    public String getJenisProduk() { return jenisProduk; }
-    public void setJenisProduk(String jenisProduk) { this.jenisProduk = jenisProduk; }
-    public String getKategori() { return kategori; }
-    public void setKategori(String kategori) { this.kategori = kategori; }
+    public JenisHpp getJenis() { return jenis; }
+    public SubJenisHpp getSubJenis() { return subJenis; }
+    public DetailHpp getDetail() { return detail; }
     public String getNamaItem() { return namaItem; }
-    public void setNamaItem(String namaItem) { this.namaItem = namaItem; }
     public int getKuantitas() { return kuantitas; }
-    public void setKuantitas(int kuantitas) { this.kuantitas = kuantitas; }
     public BigDecimal getHargaSatuan() { return hargaSatuan; }
-    public void setHargaSatuan(BigDecimal hargaSatuan) { this.hargaSatuan = hargaSatuan; }
     public BigDecimal getTotalHarga() { return totalHarga; }
-    public void setTotalHarga(BigDecimal totalHarga) { this.totalHarga = totalHarga; }
     public String getKeterangan() { return keterangan; }
-    public void setKeterangan(String keterangan) { this.keterangan = keterangan; }
-    public int getId_Transaksi() { return id_Transaksi; }
-    public void setId_Transaksi(int id_Transaksi) { this.id_Transaksi = id_Transaksi; }
-
-    @Override
-    public String toString() {
-        return "HargaPokokPenjualan{" +
-                "id=" + id +
-                ", tanggal=" + tanggal +
-                ", jenisProduk='" + jenisProduk + '\'' +
-                ", kategori='" + kategori + '\'' +
-                ", namaItem='" + namaItem + '\'' +
-                ", kuantitas=" + kuantitas +
-                ", hargaSatuan=" + hargaSatuan +
-                ", totalHarga=" + totalHarga +
-                ", keterangan='" + keterangan + '\'' +
-                ", id_Transaksi=" + id_Transaksi+
-                '}';
-    }
+    public int getIdPenjualan() { return idPenjualan; }
 }

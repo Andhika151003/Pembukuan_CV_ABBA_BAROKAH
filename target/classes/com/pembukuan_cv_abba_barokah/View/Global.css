@@ -13,15 +13,16 @@
 /* ================= CARD ================= */
 .card {
     -fx-background-color: white;
+    -fx-padding: 20;
     -fx-background-radius: 14;
-    -fx-padding: 24;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 20, 0, 0, 6);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 12, 0, 0, 4);
 }
 
 /* ================= FORM ================= */
 .form-grid {
-    -fx-hgap: 14;
+    -fx-hgap: 20;
     -fx-vgap: 12;
+    -fx-padding: 0 0 20 0;
 }
 
 .label {
@@ -71,5 +72,10 @@
 }
 
 .table-view .column-header {
+    -fx-font-weight: bold;
+}
+
+.page-title {
+    -fx-font-size: 22px;
     -fx-font-weight: bold;
 }

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.pembukuan_cv_abba_barokah.Controller.LaporanLabaRugiController"
+      spacing="20"
+      alignment="TOP_CENTER"
+      styleClass="content"
+      stylesheets="@Global.css">
+
+    <!-- TITLE -->
+    <VBox alignment="CENTER" spacing="6">
+        <Label text="LAPORAN LABA RUGI"
+               style="-fx-font-size:22px; -fx-font-weight:bold"/>
+        <Label text="TAHUN : 2026"/>
+    </VBox>
+
+    <!-- INFO -->
+    <VBox spacing="4" maxWidth="720">
+        <Label text="Nama   : CV. ABBA BAROKAH"/>
+        <Label text="NPWP   : 92.357.426.3-612.000"/>
+        <Label text="Alamat : JL. MH. THAMRIN 3 NO. 10 RT 003 RW 002 Tlogobendung, Gresik"/>
+    </VBox>
+
+    <!-- CARD -->
+    <VBox maxWidth="720" spacing="18" styleClass="card">
+
+        <!-- PENDAPATAN -->
+        <Label text="PENDAPATAN" styleClass="section-title"/>
+
+        <GridPane hgap="20" vgap="10">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="60"/>
+                <ColumnConstraints percentWidth="40"/>
+            </columnConstraints>
+
+            <Label text="Total Penjualan"/>
+            <Label fx:id="lblTotalPenjualan" GridPane.columnIndex="1"/>
+
+            <Label text="Retur Penjualan" GridPane.rowIndex="1"/>
+            <Label fx:id="lblReturPenjualan"
+                   GridPane.columnIndex="1"
+                   GridPane.rowIndex="1"/>
+
+            <Separator GridPane.columnSpan="2" GridPane.rowIndex="2"/>
+
+            <Label text="TOTAL PENDAPATAN" styleClass="bold" GridPane.rowIndex="3"/>
+            <Label fx:id="lblTotalPendapatan"
+                   GridPane.columnIndex="1"
+                   GridPane.rowIndex="3"
+                   styleClass="bold"/>
+        </GridPane>
+
+        <!-- HPP -->
+        <Label text="HARGA POKOK PENJUALAN" styleClass="section-title"/>
+
+        <GridPane hgap="20">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="60"/>
+                <ColumnConstraints percentWidth="40"/>
+            </columnConstraints>
+
+            <Label text="Total HPP"/>
+            <Label fx:id="lblTotalHpp" GridPane.columnIndex="1"/>
+        </GridPane>
+
+        <GridPane hgap="20">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="60"/>
+                <ColumnConstraints percentWidth="40"/>
+            </columnConstraints>
+
+            <Label text="LABA KOTOR" styleClass="bold"/>
+            <Label fx:id="lblLabaKotor"
+                   GridPane.columnIndex="1"
+                   styleClass="bold"/>
+        </GridPane>
+
+        <!-- BIAYA -->
+        <Label text="BIAYA OPERASIONAL" styleClass="section-title"/>
+
+        <GridPane hgap="20" vgap="10">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="60"/>
+                <ColumnConstraints percentWidth="40"/>
+            </columnConstraints>
+
+            <Label text="Biaya Administrasi"/>
+            <Label fx:id="lblBiayaAdministrasi" GridPane.columnIndex="1"/>
+
+            <Label text="Biaya Pemasaran" GridPane.rowIndex="1"/>
+            <Label fx:id="lblBiayaPemasaran"
+                   GridPane.columnIndex="1"
+                   GridPane.rowIndex="1"/>
+
+            <Label text="Pajak" GridPane.rowIndex="2"/>
+            <Label fx:id="lblTotalPajak"
+                   GridPane.columnIndex="1"
+                   GridPane.rowIndex="2"/>
+
+            <Separator GridPane.columnSpan="2" GridPane.rowIndex="3"/>
+
+            <Label text="TOTAL BIAYA OPERASIONAL" styleClass="bold" GridPane.rowIndex="4"/>
+            <Label fx:id="lblTotalBiayaOperasional"
+                   GridPane.columnIndex="1"
+                   GridPane.rowIndex="4"
+                   styleClass="bold"/>
+        </GridPane>
+
+        <!-- LABA BERSIH -->
+        <Separator/>
+
+        <GridPane hgap="20">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="60"/>
+                <ColumnConstraints percentWidth="40"/>
+            </columnConstraints>
+
+            <Label text="LABA BERSIH" styleClass="bold"/>
+            <Label fx:id="lblLabaBersih"
+                   GridPane.columnIndex="1"
+                   styleClass="bold"/>
+        </GridPane>
+
+    </VBox>
+</VBox>

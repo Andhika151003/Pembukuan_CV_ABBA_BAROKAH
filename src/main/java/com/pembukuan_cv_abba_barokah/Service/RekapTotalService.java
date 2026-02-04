@@ -1,97 +1,86 @@
 package com.pembukuan_cv_abba_barokah.Service;
 
 import com.pembukuan_cv_abba_barokah.Model.*;
+
 import java.math.BigDecimal;
 
 public class RekapTotalService {
 
-    private final HppService hppService;
-    private final PenjualanService penjualanService;
-    private final PembayaranService pembayaranService;
-    private final SetorPajakService setorPajakService;
-    private final BiayaPemasaranService biayaPemasaranService;
-
-    public RekapTotalService() {
-        this.hppService = new HppService();
-        this.penjualanService = new PenjualanService();
-        this.pembayaranService = new PembayaranService();
-        this.setorPajakService = new SetorPajakService();
-        this.biayaPemasaranService = new BiayaPemasaranService();
-    }
+    private final HppService hppService = new HppService();
+    private final PenjualanService penjualanService = new PenjualanService();
+    private final PembayaranService pembayaranService = new PembayaranService();
+    private final SetorPajakService setorPajakService = new SetorPajakService();
+    private final BiayaPemasaranService biayaPemasaranService = new BiayaPemasaranService();
 
     /* =========================
-       TOTAL PER SUB MENU
+       TOTAL DASAR
        ========================= */
 
-    public BigDecimal getTotalHpp() {
-        return hppService.getAllHpp().stream()
+    public BigDecimal totalHpp() {
+        return hppService.getAll().stream()
                 .map(HargaPokokPenjualan::getTotalHarga)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    public BigDecimal getTotalPenjualan() {
+    public BigDecimal totalPenjualan() {
         return penjualanService.getAll().stream()
-                .map(Penjualan::getTotal_Penjualan)
+                .map(Penjualan::getTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    public BigDecimal getTotalPembayaranMasuk() {
-        return pembayaranService.getAllPembayaran().stream()
-                .map(Pembayaran::getJumlah_Pembayaran)
+    public BigDecimal totalPembayaranMasuk() {
+        return pembayaranService.getAll().stream()
+                .map(Pembayaran::getJumlahPembayaran)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    public BigDecimal getTotalSetorPajak() {
-        return setorPajakService.getAllPajak().stream()
-                .map(SetorPajak::getJumlah_Pajak)
+    public BigDecimal totalSetorPajak() {
+        return setorPajakService.getAll().stream()
+                .map(SetorPajak::getJumlahPajak)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    public BigDecimal getTotalBiayaPemasaran() {
+    public BigDecimal totalBiayaPemasaran() {
         return biayaPemasaranService.getAll().stream()
-                .map(b -> new BigDecimal(b.getJumlah()))
+                .map(BiayaPemasaran::getJumlahPemasaran)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     /* =========================
-       RINGKASAN KEUANGAN
+       PERHITUNGAN LABA
        ========================= */
 
-    public BigDecimal getTotalBiaya() {
-        return getTotalHpp()
-                .add(getTotalBiayaPemasaran())
-                .add(getTotalSetorPajak());
+    public BigDecimal labaKotor() {
+        return totalPenjualan().subtract(totalHpp());
     }
 
-    public BigDecimal getLabaKotor() {
-        return getTotalPenjualan().subtract(getTotalHpp());
-    }
-
-    /* =========================
-       PAJAK
-       ========================= */
-
-    // PPH 11% dari Laba Kotor
-    public BigDecimal getPph11Persen() {
-        BigDecimal labaKotor = getLabaKotor();
-
-        if (labaKotor.compareTo(BigDecimal.ZERO) <= 0) {
+    // PPh Final 11% dari laba kotor
+    public BigDecimal pph11Persen() {
+        BigDecimal laba = labaKotor();
+        if (laba.compareTo(BigDecimal.ZERO) <= 0) {
             return BigDecimal.ZERO;
         }
-
-        return labaKotor.multiply(new BigDecimal("0.11"));
+        return laba.multiply(new BigDecimal("0.11"));
     }
 
-    // Pajak Belum Disetor = PPH 11% - Setor Pajak
-    public BigDecimal getPajakBelumDisetor() {
-        BigDecimal sisa = getPph11Persen().subtract(getTotalSetorPajak());
-
+    public BigDecimal pajakBelumDisetor() {
+        BigDecimal sisa = pph11Persen().subtract(totalSetorPajak());
         return sisa.compareTo(BigDecimal.ZERO) < 0
                 ? BigDecimal.ZERO
                 : sisa;
     }
 
-    public BigDecimal getLabaBersih() {
-        return getTotalPenjualan().subtract(getTotalBiaya());
+    /* =========================
+       BIAYA & LABA BERSIH
+       ========================= */
+
+    public BigDecimal totalBiayaOperasional() {
+        return totalBiayaPemasaran(); // siap ditambah biaya lain nanti
+    }
+
+    public BigDecimal labaBersih() {
+        return labaKotor()
+                .subtract(totalBiayaOperasional())
+                .subtract(pph11Persen());
     }
 }

@@ -10,15 +10,13 @@
       spacing="24"
       styleClass="content">
 
-    <!-- ===================== TITLE ===================== -->
     <HBox alignment="CENTER">
         <Label text="Setor Pajak"
                style="-fx-font-size: 24px; -fx-font-weight: bold;" />
     </HBox>
 
-    <!-- ===================== FORM ===================== -->
     <StackPane>
-        <VBox maxWidth="520" styleClass="card">
+        <VBox maxWidth="600" styleClass="card">
 
             <GridPane styleClass="form-grid">
                 <columnConstraints>
@@ -27,66 +25,57 @@
                 </columnConstraints>
 
                 <children>
-                    <Label text="Tanggal Setor"/>
-                    <DatePicker fx:id="dpTanggal"
+                    <Label text="Tanggal"/>
+                    <DatePicker fx:id="tanggalField"
                                 GridPane.columnIndex="1"/>
 
-                    <Label text="Jenis Pajak" GridPane.rowIndex="1"/>
-                    <TextField fx:id="txtJenisPajak"
-                               GridPane.rowIndex="1"
-                               GridPane.columnIndex="1"/>
+                    <Label text="Jenis Pajak"
+                           GridPane.rowIndex="1"/>
+                    <ComboBox fx:id="cbJenisPajak"
+                              GridPane.rowIndex="1"
+                              GridPane.columnIndex="1"/>
 
-                    <Label text="Jumlah Pajak" GridPane.rowIndex="2"/>
-                    <TextField fx:id="txtJumlah"
+                    <Label text="Jumlah Pajak"
+                           GridPane.rowIndex="2"/>
+                    <TextField fx:id="jumlahField"
                                GridPane.rowIndex="2"
                                GridPane.columnIndex="1"/>
 
-                    <Label text="Periode" GridPane.rowIndex="3"/>
-                    <TextField fx:id="txtPeriode"
+                    <Label text="Periode"
+                           GridPane.rowIndex="3"/>
+                    <TextField fx:id="periodeField"
                                GridPane.rowIndex="3"
                                GridPane.columnIndex="1"/>
 
-                    <Label text="Bukti Setor" GridPane.rowIndex="4"/>
-                    <TextField fx:id="txtBuktiSetor"
+                    <Label text="Bukti Setor"
+                           GridPane.rowIndex="4"/>
+                    <TextField fx:id="buktiField"
                                GridPane.rowIndex="4"
                                GridPane.columnIndex="1"/>
+
+                    <Label text="ID Penjualan"
+                           GridPane.rowIndex="5"/>
+                    <ComboBox fx:id="cbIdPenjualan"
+                              GridPane.rowIndex="5"
+                              GridPane.columnIndex="1"/>
                 </children>
             </GridPane>
 
-            <!-- ===================== BUTTON ===================== -->
-            <HBox spacing="12"
-                  alignment="CENTER_RIGHT"
-                  style="-fx-padding: 18 0 0 0;">
+            <HBox alignment="CENTER_RIGHT" spacing="12">
                 <Button text="Simpan"
                         onAction="#handleSimpan"/>
-                <Button text="Update"
-                        onAction="#handleUpdate"/>
-                <Button text="Hapus"
-                        styleClass="button-danger"
-                        onAction="#handleHapus"/>
             </HBox>
 
         </VBox>
     </StackPane>
 
-    <!-- ===================== TABLE ===================== -->
-    <TableView fx:id="tableSetorPajak" prefHeight="360">
+    <TableView fx:id="tablePajak" prefHeight="300">
         <columns>
-            <TableColumn fx:id="colTanggal"
-                         text="Tanggal"
-                         prefWidth="120"/>
-            <TableColumn fx:id="colJenis"
-                         text="Jenis Pajak"
-                         prefWidth="160"/>
-            <TableColumn fx:id="colJumlah"
-                         text="Jumlah"
-                         prefWidth="160"/>
-            <TableColumn fx:id="colPeriode"
-                         text="Periode"
-                         prefWidth="140"/>
-            <TableColumn fx:id="colBukti"
-                         text="Bukti Setor"
-                         prefWidth="220"/>
+            <TableColumn fx:id="colTanggal" text="Tanggal" prefWidth="120"/>
+            <TableColumn fx:id="colJenis" text="Jenis Pajak" prefWidth="140"/>
+            <TableColumn fx:id="colJumlah" text="Jumlah" prefWidth="120"/>
+            <TableColumn fx:id="colPeriode" text="Periode" prefWidth="120"/>
+            <TableColumn fx:id="colIdPenjualan" text="ID Penjualan" prefWidth="120"/>
         </columns>
     </TableView>
 

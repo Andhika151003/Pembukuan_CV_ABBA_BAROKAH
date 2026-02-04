@@ -21,7 +21,6 @@
 
     -fx-pref-width: 380;
     -fx-max-width: 380;
-    -fx-pref-height: USE_COMPUTED_SIZE;
     -fx-max-height: 360;   /* ⬅ INI KUNCI */
 
     -fx-effect: dropshadow(

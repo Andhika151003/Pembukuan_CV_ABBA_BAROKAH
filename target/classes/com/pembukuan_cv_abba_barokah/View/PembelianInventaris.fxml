@@ -7,113 +7,92 @@
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.pembukuan_cv_abba_barokah.Controller.PembelianInventarisController"
       stylesheets="@Global.css"
-      spacing="32"
+      spacing="24"
       styleClass="content">
 
-    <!-- ===================== TITLE ===================== -->
+    <!-- TITLE -->
     <HBox alignment="CENTER">
-        <Label text="Form Pembelian Inventaris"
+        <Label text="Pembelian Inventaris"
                style="-fx-font-size: 24px; -fx-font-weight: bold;" />
     </HBox>
 
-    <!-- ===================== FORM CENTER ===================== -->
+    <!-- FORM -->
     <StackPane>
-        <VBox maxWidth="640" styleClass="card">
+        <VBox maxWidth="700" styleClass="card">
 
-            <GridPane styleClass="form-grid"
-                      alignment="CENTER">
+            <GridPane styleClass="form-grid">
                 <columnConstraints>
-                    <ColumnConstraints prefWidth="200"/>
-                    <ColumnConstraints prefWidth="320"/>
+                    <ColumnConstraints prefWidth="180"/>
+                    <ColumnConstraints/>
                 </columnConstraints>
 
                 <children>
-                    <Label text="No Pembelian"/>
-                    <TextField fx:id="txtNoPembelian"
-                               GridPane.columnIndex="1"/>
+                    <Label text="Tanggal"/>
+                    <DatePicker fx:id="tanggalField" GridPane.columnIndex="1"/>
 
-                    <Label text="Tanggal Pembelian" GridPane.rowIndex="1"/>
-                    <DatePicker fx:id="dpTanggalPembelian"
-                                editable="false"
-                                GridPane.rowIndex="1"
-                                GridPane.columnIndex="1"/>
+                    <Label text="No Pembelian" GridPane.rowIndex="1"/>
+                    <TextField fx:id="noPembelianField"
+                               GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
                     <Label text="Jenis Inventaris" GridPane.rowIndex="2"/>
-                    <ComboBox fx:id="cbJenisInventaris"
-                              prefWidth="320"
-                              GridPane.rowIndex="2"
-                              GridPane.columnIndex="1"/>
+                    <TextField fx:id="jenisInventarisField"
+                               GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
                     <Label text="Nama Barang" GridPane.rowIndex="3"/>
-                    <TextField fx:id="txtNamaBarang"
-                               GridPane.rowIndex="3"
-                               GridPane.columnIndex="1"/>
+                    <TextField fx:id="namaBarangField"
+                               GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
                     <Label text="Jumlah" GridPane.rowIndex="4"/>
-                    <TextField fx:id="txtJumlah"
-                               GridPane.rowIndex="4"
-                               GridPane.columnIndex="1"/>
+                    <TextField fx:id="jumlahField"
+                               GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
                     <Label text="Satuan" GridPane.rowIndex="5"/>
-                    <TextField fx:id="txtSatuan"
-                               GridPane.rowIndex="5"
-                               GridPane.columnIndex="1"/>
+                    <TextField fx:id="satuanField"
+                               GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 
                     <Label text="Harga Satuan" GridPane.rowIndex="6"/>
-                    <TextField fx:id="txtHargaSatuan"
-                               GridPane.rowIndex="6"
-                               GridPane.columnIndex="1"/>
+                    <TextField fx:id="hargaSatuanField"
+                               GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
                     <Label text="Ongkos Kirim" GridPane.rowIndex="7"/>
-                    <TextField fx:id="txtOngkosKirim"
-                               GridPane.rowIndex="7"
-                               GridPane.columnIndex="1"/>
+                    <TextField fx:id="ongkosKirimField"
+                               GridPane.rowIndex="7" GridPane.columnIndex="1"/>
 
                     <Label text="Metode Pembayaran" GridPane.rowIndex="8"/>
-                    <ComboBox fx:id="cbMetodePembayaran"
-                              prefWidth="320"
-                              GridPane.rowIndex="8"
-                              GridPane.columnIndex="1"/>
+                    <ComboBox fx:id="cbMetode"
+                              GridPane.rowIndex="8" GridPane.columnIndex="1"/>
 
                     <Label text="Status Pembelian" GridPane.rowIndex="9"/>
                     <ComboBox fx:id="cbStatus"
-                              prefWidth="320"
-                              GridPane.rowIndex="9"
-                              GridPane.columnIndex="1"/>
+                              GridPane.rowIndex="9" GridPane.columnIndex="1"/>
 
                     <Label text="Keterangan" GridPane.rowIndex="10"/>
-                    <TextField fx:id="txtKeterangan"
-                               GridPane.rowIndex="10"
-                               GridPane.columnIndex="1"/>
+                    <TextField fx:id="keteranganField"
+                               GridPane.rowIndex="10" GridPane.columnIndex="1"/>
                 </children>
             </GridPane>
 
-            <!-- ===================== BUTTON ===================== -->
-            <HBox spacing="14"
-                  alignment="CENTER_RIGHT"
-                  style="-fx-padding: 20 0 0 0;">
-                <Button text="Simpan"
-                        onAction="#handleSimpan"/>
-                <Button text="Update"
-                        onAction="#handleUpdate"/>
-                <Button text="Hapus"
-                        onAction="#handleHapus"
-                        styleClass="button-danger"/>
+            <!-- BUTTON -->
+            <HBox spacing="12" alignment="CENTER_RIGHT"
+                  style="-fx-padding: 18 0 0 0;">
+                <Button text="Simpan" onAction="#handleSimpan"/>
+                <Button text="Update" onAction="#handleUpdate"/>
+                <Button text="Hapus" styleClass="button-danger"
+                        onAction="#handleHapus"/>
             </HBox>
 
         </VBox>
     </StackPane>
 
-    <!-- ===================== TABLE ===================== -->
+    <!-- TABLE -->
     <TableView fx:id="tableInventaris" prefHeight="360">
         <columns>
-            <TableColumn fx:id="colNo" text="No Pembelian" prefWidth="140"/>
-            <TableColumn fx:id="colTanggal" text="Tanggal" prefWidth="120"/>
-            <TableColumn fx:id="colNama" text="Nama Barang" prefWidth="240"/>
+            <TableColumn fx:id="colNoPembelian" text="No Pembelian" prefWidth="140"/>
+            <TableColumn fx:id="colNamaBarang" text="Nama Barang" prefWidth="200"/>
             <TableColumn fx:id="colJumlah" text="Jumlah" prefWidth="90"/>
-            <TableColumn fx:id="colSatuan" text="Satuan" prefWidth="90"/>
-            <TableColumn fx:id="colTotal" text="Total Harga" prefWidth="160"/>
-            <TableColumn fx:id="colStatus" text="Status" prefWidth="140"/>
+            <TableColumn fx:id="colHarga" text="Harga" prefWidth="120"/>
+            <TableColumn fx:id="colMetode" text="Metode" prefWidth="120"/>
+            <TableColumn fx:id="colStatus" text="Status" prefWidth="120"/>
         </columns>
     </TableView>
 

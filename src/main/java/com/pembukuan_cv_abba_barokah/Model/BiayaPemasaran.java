@@ -1,83 +1,72 @@
 package com.pembukuan_cv_abba_barokah.Model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class BiayaPemasaran {
 
-    public enum ExpenseCategory {
-        PEMASARAN,
-        OPERASIONAL,
-        ADMINISTRASI,
-        GAJI,
-        UTILITAS
-    }
-
-    public enum MarketingExpenseType {
-        IKLAN,
-        PROMOSI,
-        KOMISI_SALES,
-        EVENT,
-        MATERI_PROMOSI,
-        TRANSPORT_MARKETING,
-        TOOLS_DIGITAL
+    public enum MarketingType {
+        IKLAN, PROMOSI, EVENT, LAINNYA
     }
 
     private int id;
     private LocalDate tanggal;
     private String deskripsi;
-    private int jumlah;
-    private ExpenseCategory category;
-    private MarketingExpenseType marketingType;
+    private BigDecimal jumlahPemasaran;
+    private String kategori;
+    private MarketingType marketingType;
 
-    // Constructor Lengkap
-    public BiayaPemasaran(int id, LocalDate tanggal, String deskripsi, int jumlah, 
-                          ExpenseCategory category, MarketingExpenseType marketingType) {
+    // Constructor full (SELECT)
+    public BiayaPemasaran(
+            int id,
+            LocalDate tanggal,
+            String deskripsi,
+            BigDecimal jumlahPemasaran,
+            String kategori,
+            MarketingType marketingType) {
+
         this.id = id;
         this.tanggal = tanggal;
         this.deskripsi = deskripsi;
-        this.jumlah = jumlah;
-        this.category = category;
+        this.jumlahPemasaran = jumlahPemasaran;
+        this.kategori = kategori;
         this.marketingType = marketingType;
     }
 
-    // Constructor Tanpa ID (untuk penambahan data baru)
-    public BiayaPemasaran(LocalDate tanggal, String deskripsi, int jumlah, 
-                          ExpenseCategory category, MarketingExpenseType marketingType) {
-        this.tanggal = tanggal;
-        this.deskripsi = deskripsi;
-        this.jumlah = jumlah;
-        this.category = category;
-        this.marketingType = marketingType;
+    // Constructor insert
+    public BiayaPemasaran(
+            LocalDate tanggal,
+            String deskripsi,
+            BigDecimal jumlahPemasaran,
+            String kategori,
+            MarketingType marketingType) {
+
+        this(0, tanggal, deskripsi,
+                jumlahPemasaran, kategori, marketingType);
     }
 
-    // Getters and Setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    // GETTER
+    public int getId() {
+        return id;
+    }
 
-    public LocalDate getTanggal() { return tanggal; }
-    public void setTanggal(LocalDate tanggal) { this.tanggal = tanggal; }
+    public LocalDate getTanggal() {
+        return tanggal;
+    }
 
-    public String getDeskripsi() { return deskripsi; }
-    public void setDeskripsi(String deskripsi) { this.deskripsi = deskripsi; }
+    public String getDeskripsi() {
+        return deskripsi;
+    }
 
-    public int getJumlah() { return jumlah; }
-    public void setJumlah(int jumlah) { this.jumlah = jumlah; }
+    public BigDecimal getJumlahPemasaran() {
+        return jumlahPemasaran;
+    }
 
-    public ExpenseCategory getCategory() { return category; }
-    public void setCategory(ExpenseCategory category) { this.category = category; }
+    public String getKategori() {
+        return kategori;
+    }
 
-    public MarketingExpenseType getMarketingType() { return marketingType; }
-    public void setMarketingType(MarketingExpenseType marketingType) { this.marketingType = marketingType; }
-
-    @Override
-    public String toString() {
-        return "BiayaPemasaran{" +
-                "id=" + id +
-                ", tanggal=" + tanggal +
-                ", deskripsi='" + deskripsi + '\'' +
-                ", jumlah=" + jumlah +
-                ", category=" + category +
-                ", marketingType=" + marketingType +
-                '}';
+    public MarketingType getMarketingType() {
+        return marketingType;
     }
 }

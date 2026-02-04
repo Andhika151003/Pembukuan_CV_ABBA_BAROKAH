@@ -2,107 +2,47 @@ package com.pembukuan_cv_abba_barokah.Controller;
 
 import com.pembukuan_cv_abba_barokah.Model.NeracaKeuangan;
 import com.pembukuan_cv_abba_barokah.Service.NeracaKeuanganService;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.List;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class NeracaKeuanganController {
 
-    private final NeracaKeuanganService neracaService;
+    @FXML private Label lblKasBank, lblPiutang, lblPersediaan, lblTotalAsetLancar;
+    @FXML private Label lblAsetTidakLancar, lblJumlahAset;
+    @FXML private Label lblUtangUsaha, lblModalDisetor, lblLabaDitahan;
+    @FXML private Label lblJumlahEkuitas, lblTotalKewajibanEkuitas;
 
-    public NeracaKeuanganController() {
-        this.neracaService = new NeracaKeuanganService();
+    private final NeracaKeuanganService service = new NeracaKeuanganService();
+
+    @FXML
+    public void initialize() {
+        load();
     }
 
-    // ===================== READ =====================
+    private void load() {
+        NeracaKeuangan n = service.get();
 
-    public List<NeracaKeuangan> tampilkanSemuaNeraca() {
-        return neracaService.getAll();
+        lblKasBank.setText(rp(n.getKasBank()));
+        lblPiutang.setText(rp(n.getPiutangUsaha()));
+        lblPersediaan.setText(rp(n.getPersediaanBarang()));
+        lblTotalAsetLancar.setText(rp(service.totalAsetLancar(n)));
+
+        lblAsetTidakLancar.setText(rp(n.getAsetTidakLancar()));
+        lblJumlahAset.setText(rp(service.jumlahAset(n)));
+
+        lblUtangUsaha.setText(rp(n.getTotalUtang()));
+        lblModalDisetor.setText(rp(n.getModalDisetor()));
+        lblLabaDitahan.setText(rp(service.labaDitahan(n)));
+
+        lblJumlahEkuitas.setText(rp(service.jumlahEkuitas(n)));
+        lblTotalKewajibanEkuitas.setText(rp(service.totalKewajibanDanEkuitas(n)));
     }
 
-    public NeracaKeuangan tampilkanNeracaById(int id) {
-        return neracaService.getById(id);
-    }
-
-    // ===================== CREATE =====================
-
-    public boolean tambahNeraca(
-            LocalDate tanggal,
-            int tahun,
-            BigDecimal kas,
-            BigDecimal piutangUsaha,
-            BigDecimal persediaanBarang,
-            BigDecimal peralatan,
-            BigDecimal transportasi,
-            BigDecimal akumulasiPenyusutan,
-            BigDecimal utangUsaha,
-            BigDecimal utangJangkaPanjang,
-            BigDecimal modalPemilik,
-            BigDecimal labaRugi,
-            String keterangan
-    ) {
-        NeracaKeuangan neraca = new NeracaKeuangan(
-                tanggal,
-                tahun,
-                kas,
-                piutangUsaha,
-                persediaanBarang,
-                peralatan,
-                transportasi,
-                akumulasiPenyusutan,
-                utangUsaha,
-                utangJangkaPanjang,
-                modalPemilik,
-                labaRugi,
-                keterangan
-        );
-
-        // Validasi keseimbangan dilakukan di Service
-        return neracaService.simpanNeraca(neraca);
-    }
-
-    // ===================== UPDATE =====================
-
-    public boolean perbaruiNeraca(
-            int id,
-            LocalDate tanggal,
-            int tahun,
-            BigDecimal kas,
-            BigDecimal piutangUsaha,
-            BigDecimal persediaanBarang,
-            BigDecimal peralatan,
-            BigDecimal transportasi,
-            BigDecimal akumulasiPenyusutan,
-            BigDecimal utangUsaha,
-            BigDecimal utangJangkaPanjang,
-            BigDecimal modalPemilik,
-            BigDecimal labaRugi,
-            String keterangan
-    ) {
-        NeracaKeuangan neraca = new NeracaKeuangan(
-                id,
-                tanggal,
-                tahun,
-                kas,
-                piutangUsaha,
-                persediaanBarang,
-                peralatan,
-                transportasi,
-                akumulasiPenyusutan,
-                utangUsaha,
-                utangJangkaPanjang,
-                modalPemilik,
-                labaRugi,
-                keterangan
-        );
-
-        return neracaService.perbaruiNeraca(neraca);
-    }
-
-    // ===================== DELETE =====================
-
-    public boolean hapusNeraca(int id) {
-        return neracaService.hapusNeraca(id);
+    private String rp(Object v) {
+        return NumberFormat.getCurrencyInstance(new Locale("id", "ID"))
+                .format(v);
     }
 }

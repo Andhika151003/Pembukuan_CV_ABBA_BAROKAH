@@ -55,7 +55,7 @@ public class SideBarController {
 
     @FXML
     private void openAdministrasi() {
-        loadContent("/com/pembukuan_cv_abba_barokah/View/BiayaAdministrasiMain.fxml");
+        loadContent("/com/pembukuan_cv_abba_barokah/View/BiayaAdministrasi.fxml");
     }
 
     @FXML
@@ -93,6 +93,26 @@ public class SideBarController {
         loadContent("/com/pembukuan_cv_abba_barokah/View/RekapTotal.fxml");
     }
 
+    @FXML
+    private void openJurnal() {
+        loadContent("/com/pembukuan_cv_abba_barokah/View/JurnalPembukuan.fxml");
+    }
+
+    @FXML
+    private void openCashflow() {
+        loadContent("/com/pembukuan_cv_abba_barokah/View/CashflowPenjualan.fxml");
+    }
+
+    @FXML
+    private void openNeraca() {
+        loadContent("/com/pembukuan_cv_abba_barokah/View/NeracaKeuangan.fxml");
+    }
+
+    @FXML
+    private void openLaporanLaba() {
+        loadContent("/com/pembukuan_cv_abba_barokah/View/LaporanLabaRugi.fxml");
+    }
+    
     private void loadContent(String fxml) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));

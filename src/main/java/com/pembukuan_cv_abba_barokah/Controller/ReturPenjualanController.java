@@ -2,152 +2,151 @@ package com.pembukuan_cv_abba_barokah.Controller;
 
 import com.pembukuan_cv_abba_barokah.Model.ReturPenjualan;
 import com.pembukuan_cv_abba_barokah.Service.ReturPenjualanService;
+import com.pembukuan_cv_abba_barokah.Service.PenjualanService;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-
 public class ReturPenjualanController {
 
-    private final ReturPenjualanService returService = new ReturPenjualanService();
-    private final ObservableList<ReturPenjualan> dataRetur = FXCollections.observableArrayList();
+    @FXML private TextField noReturField;
+    @FXML private DatePicker tanggalReturField;
+    @FXML private TextField jumlahReturField;
+    @FXML private TextField alasanReturField;
+    @FXML private TextField keteranganReturField;
+    @FXML private ComboBox<ReturPenjualan.StatusRetur> cbStatus;
+    @FXML private ComboBox<ReturPenjualan.JenisPengembalian> cbJenis;
+    @FXML private DatePicker tanggalPengembalianField;
+    @FXML private ComboBox<Integer> cbIdPenjualan;
 
-    // ===================== FORM =====================
-    @FXML private TextField txtNoRetur;
-    @FXML private DatePicker dpTanggalRetur;
-    @FXML private TextField txtIdPenjualan;
-    @FXML private TextField txtIdTransaksi;
-    @FXML private TextField txtJumlahRetur;
-    @FXML private TextField txtNilaiRetur;
-    @FXML private ComboBox<ReturPenjualan.AlasanRetur> cbAlasanRetur;
-    @FXML private ComboBox<ReturPenjualan.StatusRetur> cbStatusRetur;
-    @FXML private ComboBox<ReturPenjualan.JenisPengembalian> cbJenisPengembalian;
-    @FXML private DatePicker dpTanggalPengembalian;
-    @FXML private TextField txtKeterangan;
-
-    // ===================== TABLE =====================
     @FXML private TableView<ReturPenjualan> tableRetur;
-    @FXML private TableColumn<ReturPenjualan, Integer> colNoRetur;
-    @FXML private TableColumn<ReturPenjualan, LocalDate> colTanggal;
+    @FXML private TableColumn<ReturPenjualan, String> colNo;
     @FXML private TableColumn<ReturPenjualan, Integer> colJumlah;
-    @FXML private TableColumn<ReturPenjualan, BigDecimal> colNilai;
-    @FXML private TableColumn<ReturPenjualan, ReturPenjualan.StatusRetur> colStatus;
+    @FXML private TableColumn<ReturPenjualan, String> colStatus;
+    @FXML private TableColumn<ReturPenjualan, Integer> colIdPenjualan;
 
-    private ReturPenjualan selectedRetur;
+    private final ReturPenjualanService service = new ReturPenjualanService();
+    private final PenjualanService penjualanService = new PenjualanService();
+    private final ObservableList<ReturPenjualan> data = FXCollections.observableArrayList();
 
-    // ===================== INIT =====================
+    private ReturPenjualan selected;
+
     @FXML
     public void initialize() {
-        cbAlasanRetur.setItems(FXCollections.observableArrayList(ReturPenjualan.AlasanRetur.values()));
-        cbStatusRetur.setItems(FXCollections.observableArrayList(ReturPenjualan.StatusRetur.values()));
-        cbJenisPengembalian.setItems(FXCollections.observableArrayList(ReturPenjualan.JenisPengembalian.values()));
 
-        colNoRetur.setCellValueFactory(data -> new javafx.beans.property.SimpleIntegerProperty(data.getValue().getNo_Retur()).asObject());
-        colTanggal.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getTanggal_Retur()));
-        colJumlah.setCellValueFactory(data -> new javafx.beans.property.SimpleIntegerProperty(data.getValue().getJumlah_Retur()).asObject());
-        colNilai.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getNilai_Retur()));
-        colStatus.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getStatus_Retur()));
+        cbStatus.setItems(FXCollections.observableArrayList(
+                ReturPenjualan.StatusRetur.values()));
 
-        tableRetur.setItems(dataRetur);
+        cbJenis.setItems(FXCollections.observableArrayList(
+                ReturPenjualan.JenisPengembalian.values()));
+
+        cbIdPenjualan.setItems(FXCollections.observableArrayList(
+                penjualanService.getAll().stream().map(p -> p.getId()).toList()
+        ));
+
+        colNo.setCellValueFactory(c ->
+                new javafx.beans.property.SimpleStringProperty(c.getValue().getNoRetur()));
+
+        colJumlah.setCellValueFactory(c ->
+                new javafx.beans.property.SimpleObjectProperty<>(c.getValue().getJumlahRetur()));
+
+        colStatus.setCellValueFactory(c ->
+                new javafx.beans.property.SimpleStringProperty(
+                        c.getValue().getStatusRetur().name()));
+
+        colIdPenjualan.setCellValueFactory(c ->
+                new javafx.beans.property.SimpleObjectProperty<>(
+                        c.getValue().getIdPenjualan()));
+
+        tableRetur.setItems(data);
         loadData();
 
-        tableRetur.getSelectionModel().selectedItemProperty().addListener(
-            (obs, oldVal, newVal) -> pilihData(newVal)
-        );
+        tableRetur.getSelectionModel()
+                .selectedItemProperty()
+                .addListener((obs, o, n) -> isiForm(n));
     }
 
     private void loadData() {
-        dataRetur.setAll(returService.getAll());
+        data.setAll(service.getAll());
     }
 
-    private void pilihData(ReturPenjualan retur) {
-        if (retur == null) return;
-        selectedRetur = retur;
-
-        txtNoRetur.setText(String.valueOf(retur.getNo_Retur()));
-        dpTanggalRetur.setValue(retur.getTanggal_Retur());
-        txtIdPenjualan.setText(String.valueOf(retur.getId_Penjualan()));
-        txtIdTransaksi.setText(String.valueOf(retur.getid_Transaksi()));
-        txtJumlahRetur.setText(String.valueOf(retur.getJumlah_Retur()));
-        txtNilaiRetur.setText(retur.getNilai_Retur().toString());
-        cbAlasanRetur.setValue(retur.getAlasan_Retur());
-        cbStatusRetur.setValue(retur.getStatus_Retur());
-        cbJenisPengembalian.setValue(retur.getJenis_Pengembalian());
-        dpTanggalPengembalian.setValue(retur.getTanggal_Pengembalian());
-        txtKeterangan.setText(retur.getKeterangan_Retur());
-    }
-
-    // ===================== ACTION =====================
     @FXML
     private void handleSimpan() {
-        ReturPenjualan retur = new ReturPenjualan(
-            Integer.parseInt(txtNoRetur.getText()),
-            dpTanggalRetur.getValue(),
-            Integer.parseInt(txtIdPenjualan.getText()),
-            Integer.parseInt(txtIdTransaksi.getText()),
-            Integer.parseInt(txtJumlahRetur.getText()),
-            new BigDecimal(txtNilaiRetur.getText()),
-            cbAlasanRetur.getValue(),
-            txtKeterangan.getText(),
-            cbStatusRetur.getValue(),
-            cbJenisPengembalian.getValue(),
-            dpTanggalPengembalian.getValue()
+
+        ReturPenjualan r = new ReturPenjualan(
+                noReturField.getText(),
+                tanggalReturField.getValue(),
+                Integer.parseInt(jumlahReturField.getText()),
+                alasanReturField.getText(),
+                keteranganReturField.getText(),
+                cbStatus.getValue(),
+                cbJenis.getValue(),
+                tanggalPengembalianField.getValue(),
+                cbIdPenjualan.getValue()
         );
 
-        // sementara pakai idAdministrasi = 1 (kas utama)
-        returService.tambahRetur(retur, 1);
-        clearForm();
+        service.simpan(r);
         loadData();
+        clearForm();
     }
 
     @FXML
     private void handleUpdate() {
-        if (selectedRetur == null) return;
+        if (selected == null) return;
 
-        ReturPenjualan retur = new ReturPenjualan(
-            selectedRetur.getId(),
-            Integer.parseInt(txtNoRetur.getText()),
-            dpTanggalRetur.getValue(),
-            Integer.parseInt(txtIdPenjualan.getText()),
-            Integer.parseInt(txtIdTransaksi.getText()),
-            Integer.parseInt(txtJumlahRetur.getText()),
-            new BigDecimal(txtNilaiRetur.getText()),
-            cbAlasanRetur.getValue(),
-            txtKeterangan.getText(),
-            cbStatusRetur.getValue(),
-            cbJenisPengembalian.getValue(),
-            dpTanggalPengembalian.getValue()
+        ReturPenjualan r = new ReturPenjualan(
+                selected.getId(),
+                noReturField.getText(),
+                tanggalReturField.getValue(),
+                Integer.parseInt(jumlahReturField.getText()),
+                alasanReturField.getText(),
+                keteranganReturField.getText(),
+                cbStatus.getValue(),
+                cbJenis.getValue(),
+                tanggalPengembalianField.getValue(),
+                cbIdPenjualan.getValue()
         );
 
-        returService.perbaruiRetur(retur, 1);
-        clearForm();
+        service.update(r);
         loadData();
+        clearForm();
     }
 
     @FXML
     private void handleHapus() {
-        if (selectedRetur == null) return;
-        returService.hapusRetur(selectedRetur.getId(), 1);
-        clearForm();
+        if (selected == null) return;
+        service.hapus(selected.getId());
         loadData();
+        clearForm();
+    }
+
+    private void isiForm(ReturPenjualan r) {
+        if (r == null) return;
+        selected = r;
+
+        noReturField.setText(r.getNoRetur());
+        tanggalReturField.setValue(r.getTanggalRetur());
+        jumlahReturField.setText(String.valueOf(r.getJumlahRetur()));
+        alasanReturField.setText(r.getAlasanRetur());
+        keteranganReturField.setText(r.getKeteranganRetur());
+        cbStatus.setValue(r.getStatusRetur());
+        cbJenis.setValue(r.getJenisPengembalian());
+        tanggalPengembalianField.setValue(r.getTanggalPengembalian());
+        cbIdPenjualan.setValue(r.getIdPenjualan());
     }
 
     private void clearForm() {
-        txtNoRetur.clear();
-        txtIdPenjualan.clear();
-        txtIdTransaksi.clear();
-        txtJumlahRetur.clear();
-        txtNilaiRetur.clear();
-        txtKeterangan.clear();
-        dpTanggalRetur.setValue(null);
-        dpTanggalPengembalian.setValue(null);
-        cbAlasanRetur.setValue(null);
-        cbStatusRetur.setValue(null);
-        cbJenisPengembalian.setValue(null);
-        selectedRetur = null;
-        tableRetur.getSelectionModel().clearSelection();
+        selected = null;
+        noReturField.clear();
+        jumlahReturField.clear();
+        alasanReturField.clear();
+        keteranganReturField.clear();
+        tanggalReturField.setValue(null);
+        tanggalPengembalianField.setValue(null);
+        cbStatus.getSelectionModel().clearSelection();
+        cbJenis.getSelectionModel().clearSelection();
+        cbIdPenjualan.getSelectionModel().clearSelection();
     }
 }

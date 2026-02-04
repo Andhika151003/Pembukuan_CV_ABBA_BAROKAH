@@ -5,104 +5,70 @@ import java.time.LocalDate;
 
 public class Penjualan {
 
-    // Enum untuk Metode Pembayaran
     public enum MetodePembayaran {
-        TUNAI("Tunai"),
-        KREDIT("Kredit"),
-        TRANSFER("Transfer");
-
-        private final String deskripsi;
-        MetodePembayaran(String deskripsi) { this.deskripsi = deskripsi; }
-        @Override public String toString() { return deskripsi; }
+        TUNAI, TRANSFER, KREDIT
     }
 
-    // Enum untuk Status Pembayaran
     public enum StatusPembayaran {
-        LUNAS("Lunas"),
-        BELUM_LUNAS("Belum Lunas"),
-        DIBATALKAN("Dibatalkan");
-
-        private final String deskripsi;
-        StatusPembayaran(String deskripsi) { this.deskripsi = deskripsi; }
-        @Override public String toString() { return deskripsi; }
+        LUNAS, BELUM_LUNAS
     }
 
-    private int id;
-    private int no_Penjualan; // Unique
-    private LocalDate tanggal_Penjualan;
-    private String nama_Customer;
-    private String alamat_Customer;
-    private BigDecimal total_Penjualan;
-    private MetodePembayaran metode_Pembayaran;
-    private StatusPembayaran status_Pembayaran;
+    private int id;                 // PK
+    private String noFaktur;        // UNIQUE bisnis
+    private LocalDate tanggal;
+    private String namaCustomer;
+    private String alamatCustomer;
+    private BigDecimal total;
+    private MetodePembayaran metode;
+    private StatusPembayaran status;
     private String keterangan;
 
-    // Constructor Lengkap (Dengan ID)
-    public Penjualan(int id, int no_Penjualan, LocalDate tanggal_Penjualan, String nama_Customer, 
-                     String alamat_Customer, BigDecimal total_Penjualan, 
-                     MetodePembayaran metode_Pembayaran, StatusPembayaran status_Pembayaran, 
+    // Constructor INSERT
+    public Penjualan(String noFaktur, LocalDate tanggal, String namaCustomer,
+                     String alamatCustomer, BigDecimal total,
+                     MetodePembayaran metode, StatusPembayaran status,
                      String keterangan) {
+
+        this.noFaktur = noFaktur;
+        this.tanggal = tanggal;
+        this.namaCustomer = namaCustomer;
+        this.alamatCustomer = alamatCustomer;
+        this.total = total;
+        this.metode = metode;
+        this.status = status;
+        this.keterangan = keterangan;
+    }
+
+    // Constructor SELECT
+    public Penjualan(int id, String noFaktur, LocalDate tanggal, String namaCustomer,
+                     String alamatCustomer, BigDecimal total,
+                     MetodePembayaran metode, StatusPembayaran status,
+                     String keterangan) {
+
+        this(noFaktur, tanggal, namaCustomer, alamatCustomer,
+             total, metode, status, keterangan);
         this.id = id;
-        this.no_Penjualan = no_Penjualan;
-        this.tanggal_Penjualan = tanggal_Penjualan;
-        this.nama_Customer = nama_Customer;
-        this.alamat_Customer = alamat_Customer;
-        this.total_Penjualan = total_Penjualan;
-        this.metode_Pembayaran = metode_Pembayaran;
-        this.status_Pembayaran = status_Pembayaran;
-        this.keterangan = keterangan;
     }
 
-    // Constructor Tanpa ID (Untuk Insert Data Baru)
-    public Penjualan(int no_Penjualan, LocalDate tanggal_Penjualan, String nama_Customer, 
-                     String alamat_Customer, BigDecimal total_Penjualan, 
-                     MetodePembayaran metode_Pembayaran, StatusPembayaran status_Pembayaran, 
-                     String keterangan) {
-        this.no_Penjualan = no_Penjualan;
-        this.tanggal_Penjualan = tanggal_Penjualan;
-        this.nama_Customer = nama_Customer;
-        this.alamat_Customer = alamat_Customer;
-        this.total_Penjualan = total_Penjualan;
-        this.metode_Pembayaran = metode_Pembayaran;
-        this.status_Pembayaran = status_Pembayaran;
-        this.keterangan = keterangan;
-    }
+    /* ===== GETTER ===== */
 
-    // Getters and Setters
     public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
-
-    public int getNo_Penjualan() { return no_Penjualan; }
-    public void setNo_Penjualan(int no_Penjualan) { this.no_Penjualan = no_Penjualan; }
-
-    public LocalDate getTanggal_Penjualan() { return tanggal_Penjualan; }
-    public void setTanggal_Penjualan(LocalDate tanggal_Penjualan) { this.tanggal_Penjualan = tanggal_Penjualan; }
-
-    public String getNama_Customer() { return nama_Customer; }
-    public void setNama_Customer(String nama_Customer) { this.nama_Customer = nama_Customer; }
-
-    public String getAlamat_Customer() { return alamat_Customer; }
-    public void setAlamat_Customer(String alamat_Customer) { this.alamat_Customer = alamat_Customer; }
-
-    public BigDecimal getTotal_Penjualan() { return total_Penjualan; }
-    public void setTotal_Penjualan(BigDecimal total_Penjualan) { this.total_Penjualan = total_Penjualan; }
-
-    public MetodePembayaran getMetode_Pembayaran() { return metode_Pembayaran; }
-    public void setMetode_Pembayaran(MetodePembayaran metode_Pembayaran) { this.metode_Pembayaran = metode_Pembayaran; }
-
-    public StatusPembayaran getStatus_Pembayaran() { return status_Pembayaran; }
-    public void setStatus_Pembayaran(StatusPembayaran status_Pembayaran) { this.status_Pembayaran = status_Pembayaran; }
-
+    public String getNoFaktur() { return noFaktur; }
+    public LocalDate getTanggal() { return tanggal; }
+    public String getNamaCustomer() { return namaCustomer; }
+    public String getAlamatCustomer() { return alamatCustomer; }
+    public BigDecimal getTotal() { return total; }
+    public MetodePembayaran getMetode() { return metode; }
+    public StatusPembayaran getStatus() { return status; }
     public String getKeterangan() { return keterangan; }
-    public void setKeterangan(String keterangan) { this.keterangan = keterangan; }
 
-    @Override
-    public String toString() {
-        return "Penjualan{" +
-                "no_Penjualan='" + no_Penjualan + '\'' +
-                ", nama_Customer='" + nama_Customer + '\'' +
-                ", total_Penjualan=" + total_Penjualan +
-                ", status_Pembayaran=" + status_Pembayaran +
-                '}';
-    }
+    public void setId(int id) { this.id = id; }
+    public void setNoFaktur(String noFaktur) { this.noFaktur = noFaktur; }
+    public void setTanggal(LocalDate tanggal) { this.tanggal = tanggal; }
+    public void setNamaCustomer(String namaCustomer) { this.namaCustomer = namaCustomer; }
+    public void setAlamatCustomer(String alamatCustomer) { this.alamatCustomer = alamatCustomer; }
+    public void setTotal(BigDecimal total) { this.total = total; }
+    public void setMetode(MetodePembayaran metode) { this.metode = metode; }
+    public void setStatus(StatusPembayaran status) { this.status = status; }
+    public void setKeterangan(String keterangan) { this.keterangan = keterangan; }
 }

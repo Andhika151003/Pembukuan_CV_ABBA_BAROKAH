@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.pembukuan_cv_abba_barokah.Controller.JurnalPembukuanController"
+      spacing="24"
+      stylesheets="@Global.css"
+      styleClass="content">
+
+    <HBox alignment="CENTER">
+        <Label text="Jurnal Pembukuan Bulanan"
+               style="-fx-font-size: 24px; -fx-font-weight: bold"/>
+    </HBox>
+
+    <HBox spacing="12" alignment="CENTER">
+        <Label text="Bulan"/>
+        <ComboBox fx:id="cbBulan"/>
+        <Label text="Tahun"/>
+        <ComboBox fx:id="cbTahun"/>
+        <Button text="Tampilkan" onAction="#loadData"/>
+    </HBox>
+
+    <TableView fx:id="table" prefHeight="460">
+        <columns>
+            <TableColumn fx:id="colTanggal" text="Tanggal" prefWidth="140"/>
+            <TableColumn fx:id="colKeterangan" text="Keterangan" prefWidth="260"/>
+            <TableColumn fx:id="colDebit" text="Debit (Rp)" prefWidth="160"/>
+            <TableColumn fx:id="colKredit" text="Kredit (Rp)" prefWidth="160"/>
+        </columns>
+    </TableView>
+
+</VBox>
