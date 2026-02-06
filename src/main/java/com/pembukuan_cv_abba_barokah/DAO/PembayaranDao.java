@@ -112,4 +112,19 @@ public class PembayaranDao {
             return false;
         }
     }
+
+    public boolean existsByIdPenjualan(int idPenjualan) {
+
+        String sql = "SELECT 1 FROM Pembayaran WHERE id_penjualan = ?";
+    
+        try (Connection c = DatabaseConnection.connection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+    
+            ps.setInt(1, idPenjualan);
+            return ps.executeQuery().next();
+    
+        } catch (SQLException e) {
+            return false;
+        }
+    }
 }

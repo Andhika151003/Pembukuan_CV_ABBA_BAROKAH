@@ -17,11 +17,9 @@ public class UtangUsaha {
     private BigDecimal jumlahDibayar;
     private StatusUtang statusUtang;
     private String keterangan;
+    private int idPembelian; // FK
 
-    // FK
-    private int idPembelian;
-
-    // Constructor SELECT
+    // SELECT
     public UtangUsaha(
             int id,
             String noUtang,
@@ -44,29 +42,22 @@ public class UtangUsaha {
         this.idPembelian = idPembelian;
     }
 
-    // Constructor INSERT
+    // INSERT
     public UtangUsaha(
             String noUtang,
             LocalDate tanggalUtang,
             LocalDate tanggalJatuhTempo,
             BigDecimal jumlahUtang,
             BigDecimal jumlahDibayar,
+            StatusUtang statusUtang,
             String keterangan,
             int idPembelian
     ) {
         this(0, noUtang, tanggalUtang, tanggalJatuhTempo,
                 jumlahUtang, jumlahDibayar,
-                hitungStatus(jumlahUtang, jumlahDibayar),
-                keterangan, idPembelian);
+                statusUtang, keterangan, idPembelian);
     }
 
-    private static StatusUtang hitungStatus(BigDecimal utang, BigDecimal bayar) {
-        return bayar.compareTo(utang) >= 0
-                ? StatusUtang.LUNAS
-                : StatusUtang.BELUM_LUNAS;
-    }
-
-    // Getter
     public int getId() { return id; }
     public String getNoUtang() { return noUtang; }
     public LocalDate getTanggalUtang() { return tanggalUtang; }

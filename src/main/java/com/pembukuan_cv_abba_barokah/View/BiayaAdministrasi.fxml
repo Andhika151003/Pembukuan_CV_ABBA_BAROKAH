@@ -58,12 +58,17 @@
             <HBox alignment="CENTER_RIGHT" spacing="12">
                 <Button text="Simpan"
                         onAction="#handleSimpan"/>
+                <Button text="Update"
+                        onAction="#handleUpdate"/>
+                <Button text="Hapus"
+                        onAction="#handleDelete"
+                        styleClass="button-danger"/>
             </HBox>
 
         </VBox>
     </StackPane>
 
-    <TableView fx:id="tableAdministrasi" prefHeight="300">
+    <TableView fx:id="tableAdministrasi" prefHeight="300" onMouseClicked="#handleTableClick">
         <columns>
             <TableColumn fx:id="colTanggal" text="Tanggal" prefWidth="120"/>
             <TableColumn fx:id="colJenis" text="Jenis Administrasi" prefWidth="120"/>

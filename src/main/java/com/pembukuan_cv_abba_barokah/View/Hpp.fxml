@@ -7,72 +7,32 @@
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.pembukuan_cv_abba_barokah.Controller.HppController"
       stylesheets="@Global.css"
-      spacing="24"
+      spacing="10"
       styleClass="content">
 
-    <HBox alignment="CENTER">
+    <!-- ===================== HEADER ===================== -->
+    <HBox alignment="CENTER_LEFT"
+          spacing="16"
+          style="-fx-padding: 0 8 4 8;">
+
         <Label text="Harga Pokok Penjualan"
-               style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+               style="-fx-font-size: 22px; -fx-font-weight: bold;" />
+
+        <Region HBox.hgrow="ALWAYS"/>
+
+        <Button text="Pembelian Langsung"
+                styleClass="btn-primary"
+                onAction="#openPembelianLangsung"/>
+
+        <Button text="Swakelola"
+                styleClass="btn-secondary"
+                onAction="#openSwakelola"/>
     </HBox>
 
-    <StackPane>
-        <VBox maxWidth="520" styleClass="card">
-
-            <GridPane styleClass="form-grid">
-                <columnConstraints>
-                    <ColumnConstraints prefWidth="150"/>
-                    <ColumnConstraints/>
-                </columnConstraints>
-
-                <children>
-                    <Label text="Tanggal"/>
-                    <DatePicker fx:id="tanggalField" GridPane.columnIndex="1"/>
-
-                    <Label text="Jenis HPP" GridPane.rowIndex="1"/>
-                    <ComboBox fx:id="cbJenis" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-
-                    <Label text="Sub Jenis" GridPane.rowIndex="2"/>
-                    <ComboBox fx:id="cbSubJenis" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-
-                    <Label text="Detail Biaya" GridPane.rowIndex="3"/>
-                    <ComboBox fx:id="cbDetail" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-
-                    <Label text="Nama Item" GridPane.rowIndex="4"/>
-                    <TextField fx:id="namaItemField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-
-                    <Label text="Kuantitas" GridPane.rowIndex="5"/>
-                    <TextField fx:id="kuantitasField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
-
-                    <Label text="Harga Satuan" GridPane.rowIndex="6"/>
-                    <TextField fx:id="hargaSatuanField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
-
-                    <Label text="Keterangan" GridPane.rowIndex="7"/>
-                    <TextField fx:id="keteranganField" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
-
-                    <Label text="ID Penjualan" GridPane.rowIndex="8"/>
-                    <ComboBox fx:id="cbIdPenjualan" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
-                </children>
-            </GridPane>
-
-            <!-- br -->
-
-            <HBox alignment="CENTER_RIGHT" spacing="12">
-                <Button text="Simpan" onAction="#handleSimpan"/>
-                <Button text="Update" onAction="#handleUpdate"/>
-                <Button text="Hapus" onAction="#handleDelete" styleClass="button-danger"/>
-            </HBox>
-
-        </VBox>
-    </StackPane>
-
-    <TableView fx:id="tableHpp" prefHeight="300">
-        <columns>
-            <TableColumn fx:id="colTanggal" text="Tanggal" prefWidth="120"/>
-            <TableColumn fx:id="colJenis" text="Jenis" prefWidth="140"/>
-            <TableColumn fx:id="colItem" text="Item" prefWidth="180"/>
-            <TableColumn fx:id="colTotal" text="Total" prefWidth="140"/>
-            <TableColumn fx:id="colIdPenjualan" text="ID Penjualan" prefWidth="120"/>
-        </columns>
-    </TableView>
+    <!-- ===================== SUB CONTENT ===================== -->
+    <StackPane fx:id="contentPane"
+               VBox.vgrow="ALWAYS"
+               styleClass="content-area"
+               style="-fx-padding: 0 0 0 0;"/>
 
 </VBox>

@@ -10,6 +10,23 @@ import java.util.List;
 
 public class ReturPenjualanDao {
 
+    /* ===== UNIQUE CHECK ===== */
+    public boolean existsByIdPenjualan(int idPenjualan) {
+
+        String sql = "SELECT 1 FROM ReturPenjualan WHERE id_penjualan = ?";
+
+        try (Connection c = DatabaseConnection.connection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+
+            ps.setInt(1, idPenjualan);
+            return ps.executeQuery().next();
+
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
+    /* ===== INSERT ===== */
     public boolean save(ReturPenjualan r) {
 
         String sql = """
@@ -17,8 +34,8 @@ public class ReturPenjualanDao {
             (no_retur, tanggal_retur, jumlah_retur,
              alasan_retur, keterangan_retur,
              status_retur, jenis_pengembalian,
-             tanggal_pengembalian, id_penjualan)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+             id_penjualan)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
         try (Connection c = DatabaseConnection.connection();
@@ -26,50 +43,62 @@ public class ReturPenjualanDao {
 
             map(ps, r);
             return ps.executeUpdate() > 0;
+
         } catch (SQLException e) {
-            e.printStackTrace();
             return false;
         }
     }
 
+    /* ===== UPDATE ===== */
     public boolean update(ReturPenjualan r) {
 
         String sql = """
             UPDATE ReturPenjualan SET
-            no_retur=?, tanggal_retur=?, jumlah_retur=?,
-            alasan_retur=?, keterangan_retur=?,
-            status_retur=?, jenis_pengembalian=?,
-            tanggal_pengembalian=?, id_penjualan=?
-            WHERE id=?
+                no_retur = ?,
+                tanggal_retur = ?,
+                jumlah_retur = ?,
+                alasan_retur = ?,
+                keterangan_retur = ?,
+                status_retur = ?,
+                jenis_pengembalian = ?
+            WHERE id = ?
         """;
 
         try (Connection c = DatabaseConnection.connection();
              PreparedStatement ps = c.prepareStatement(sql)) {
 
-            map(ps, r);
-            ps.setInt(10, r.getId());
+            ps.setString(1, r.getNoRetur());
+            ps.setString(2, r.getTanggalRetur().toString());
+            ps.setInt(3, r.getJumlahRetur());
+            ps.setString(4, r.getAlasanRetur());
+            ps.setString(5, r.getKeteranganRetur());
+            ps.setString(6, r.getStatusRetur().name());
+            ps.setString(7, r.getJenisPengembalian().name());
+            ps.setInt(8, r.getId());
+
             return ps.executeUpdate() > 0;
+
         } catch (SQLException e) {
-            e.printStackTrace();
             return false;
         }
     }
 
+    /* ===== DELETE ===== */
     public boolean delete(int id) {
 
-        String sql = "DELETE FROM ReturPenjualan WHERE id=?";
-
         try (Connection c = DatabaseConnection.connection();
-             PreparedStatement ps = c.prepareStatement(sql)) {
+             PreparedStatement ps =
+                     c.prepareStatement("DELETE FROM ReturPenjualan WHERE id = ?")) {
 
             ps.setInt(1, id);
             return ps.executeUpdate() > 0;
+
         } catch (SQLException e) {
-            e.printStackTrace();
             return false;
         }
     }
 
+    /* ===== SELECT ===== */
     public List<ReturPenjualan> getAll() {
 
         List<ReturPenjualan> list = new ArrayList<>();
@@ -91,7 +120,6 @@ public class ReturPenjualanDao {
                                 rs.getString("status_retur").toUpperCase()),
                         ReturPenjualan.JenisPengembalian.valueOf(
                                 rs.getString("jenis_pengembalian").toUpperCase()),
-                        LocalDate.parse(rs.getString("tanggal_pengembalian")),
                         rs.getInt("id_penjualan")
                 ));
             }
@@ -109,7 +137,6 @@ public class ReturPenjualanDao {
         ps.setString(5, r.getKeteranganRetur());
         ps.setString(6, r.getStatusRetur().name());
         ps.setString(7, r.getJenisPengembalian().name());
-        ps.setString(8, r.getTanggalPengembalian().toString());
-        ps.setInt(9, r.getIdPenjualan());
+        ps.setInt(8, r.getIdPenjualan());
     }
 }

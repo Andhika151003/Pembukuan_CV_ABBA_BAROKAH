@@ -11,8 +11,8 @@ import javafx.scene.control.*;
 
 public class ReturPembelianController {
 
-    @FXML private DatePicker tanggalReturField;
     @FXML private TextField noReturField;
+    @FXML private DatePicker tanggalReturField;
     @FXML private TextField jumlahReturField;
     @FXML private TextField alasanReturField;
     @FXML private TextField keteranganReturField;
@@ -26,8 +26,11 @@ public class ReturPembelianController {
     @FXML private TableColumn<ReturPembelian, Integer> colIdPembelian;
 
     private final ReturPembelianService service = new ReturPembelianService();
-    private final PembelianInventarisService pembelianService = new PembelianInventarisService();
-    private final ObservableList<ReturPembelian> data = FXCollections.observableArrayList();
+    private final PembelianInventarisService pembelianService =
+            new PembelianInventarisService();
+
+    private final ObservableList<ReturPembelian> data =
+            FXCollections.observableArrayList();
 
     private ReturPembelian selected;
 
@@ -35,14 +38,9 @@ public class ReturPembelianController {
     public void initialize() {
 
         cbStatus.setItems(FXCollections.observableArrayList(
-                ReturPembelian.StatusRetur.values()
-        ));
+                ReturPembelian.StatusRetur.values()));
 
-        cbIdPembelian.setItems(FXCollections.observableArrayList(
-                pembelianService.getAll().stream()
-                        .map(p -> p.getId())
-                        .toList()
-        ));
+        refreshComboIdPembelian();
 
         colNo.setCellValueFactory(c ->
                 new javafx.beans.property.SimpleObjectProperty<>(
@@ -72,8 +70,24 @@ public class ReturPembelianController {
         data.setAll(service.getAll());
     }
 
+    private void refreshComboIdPembelian() {
+        cbIdPembelian.setItems(FXCollections.observableArrayList(
+                pembelianService.getAll().stream()
+                        .map(p -> p.getId())
+                        .filter(id -> !service.sudahAdaUntukPembelian(id))
+                        .toList()
+        ));
+    }
+
     @FXML
     private void handleSimpan() {
+
+        int idPembelian = cbIdPembelian.getValue();
+
+        if (service.sudahAdaUntukPembelian(idPembelian)) {
+            alert("Duplikat", "Retur untuk pembelian ini sudah ada.");
+            return;
+        }
 
         ReturPembelian r = new ReturPembelian(
                 Integer.parseInt(noReturField.getText()),
@@ -82,11 +96,12 @@ public class ReturPembelianController {
                 alasanReturField.getText(),
                 keteranganReturField.getText(),
                 cbStatus.getValue(),
-                cbIdPembelian.getValue()
+                idPembelian
         );
 
         service.simpan(r);
         loadData();
+        refreshComboIdPembelian();
         clearForm();
     }
 
@@ -94,7 +109,7 @@ public class ReturPembelianController {
     private void handleUpdate() {
         if (selected == null) return;
 
-        ReturPembelian r = new ReturPembelian(
+        selected = new ReturPembelian(
                 selected.getId(),
                 Integer.parseInt(noReturField.getText()),
                 tanggalReturField.getValue(),
@@ -102,10 +117,10 @@ public class ReturPembelianController {
                 alasanReturField.getText(),
                 keteranganReturField.getText(),
                 cbStatus.getValue(),
-                cbIdPembelian.getValue()
+                selected.getIdPembelian() // FK TETAP
         );
 
-        service.update(r);
+        service.update(selected);
         loadData();
         clearForm();
     }
@@ -113,13 +128,16 @@ public class ReturPembelianController {
     @FXML
     private void handleHapus() {
         if (selected == null) return;
+
         service.hapus(selected.getId());
         loadData();
+        refreshComboIdPembelian();
         clearForm();
     }
 
     private void isiForm(ReturPembelian r) {
         if (r == null) return;
+
         selected = r;
 
         noReturField.setText(String.valueOf(r.getNoReturPembelian()));
@@ -129,6 +147,7 @@ public class ReturPembelianController {
         keteranganReturField.setText(r.getKeteranganRetur());
         cbStatus.setValue(r.getStatusRetur());
         cbIdPembelian.setValue(r.getIdPembelian());
+        cbIdPembelian.setDisable(true);
     }
 
     private void clearForm() {
@@ -139,6 +158,16 @@ public class ReturPembelianController {
         keteranganReturField.clear();
         tanggalReturField.setValue(null);
         cbStatus.getSelectionModel().clearSelection();
-        cbIdPembelian.getSelectionModel().clearSelection();
+        cbIdPembelian.setValue(null);
+        cbIdPembelian.setDisable(false);
+        tableRetur.getSelectionModel().clearSelection();
+    }
+
+    private void alert(String t, String m) {
+        Alert a = new Alert(Alert.AlertType.WARNING);
+        a.setTitle(t);
+        a.setHeaderText(null);
+        a.setContentText(m);
+        a.showAndWait();
     }
 }

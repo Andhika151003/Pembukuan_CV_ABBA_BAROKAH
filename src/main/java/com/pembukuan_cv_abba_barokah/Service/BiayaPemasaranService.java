@@ -13,6 +13,14 @@ public class BiayaPemasaranService {
         return dao.save(bp);
     }
 
+    public boolean update(BiayaPemasaran bp) {
+        return dao.update(bp);
+    }
+    
+    public boolean delete(int id) {
+        return dao.delete(id);
+    }    
+
     public List<BiayaPemasaran> getAll() {
         return dao.getAll();
     }

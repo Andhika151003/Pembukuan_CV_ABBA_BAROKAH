@@ -17,4 +17,12 @@ public class AdministrasiService{
     public List<Administrasi> getAll() {
         return dao.getAll();
     }
+
+    public boolean update(Administrasi ads) {
+        return dao.update(ads);
+    }
+    
+    public boolean delete(int id) {
+        return dao.delete(id);
+    }    
 }

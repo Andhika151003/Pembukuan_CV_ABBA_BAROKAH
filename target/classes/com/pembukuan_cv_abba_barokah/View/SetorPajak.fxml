@@ -10,11 +10,13 @@
       spacing="24"
       styleClass="content">
 
+    <!-- ================= TITLE ================= -->
     <HBox alignment="CENTER">
         <Label text="Setor Pajak"
                style="-fx-font-size: 24px; -fx-font-weight: bold;" />
     </HBox>
 
+    <!-- ================= FORM ================= -->
     <StackPane>
         <VBox maxWidth="600" styleClass="card">
 
@@ -25,7 +27,8 @@
                 </columnConstraints>
 
                 <children>
-                    <Label text="Tanggal"/>
+
+                    <Label text="Tanggal Setor"/>
                     <DatePicker fx:id="tanggalField"
                                 GridPane.columnIndex="1"/>
 
@@ -58,25 +61,56 @@
                     <ComboBox fx:id="cbIdPenjualan"
                               GridPane.rowIndex="5"
                               GridPane.columnIndex="1"/>
+
                 </children>
             </GridPane>
 
-            <HBox alignment="CENTER_RIGHT" spacing="12">
+            <!-- ================= BUTTON ================= -->
+            <HBox spacing="12"
+                  alignment="CENTER_RIGHT"
+                  style="-fx-padding: 18 0 0 0;">
+
                 <Button text="Simpan"
                         onAction="#handleSimpan"/>
+
+                <Button text="Update"
+                        onAction="#handleUpdate"/>
+
+                <Button text="Hapus"
+                        onAction="#handleDelete"
+                        styleClass="button-danger"/>
+
             </HBox>
 
         </VBox>
     </StackPane>
 
-    <TableView fx:id="tablePajak" prefHeight="300">
+    <!-- ================= TABLE ================= -->
+    <TableView fx:id="tablePajak"
+               prefHeight="320">
+
         <columns>
-            <TableColumn fx:id="colTanggal" text="Tanggal" prefWidth="120"/>
-            <TableColumn fx:id="colJenis" text="Jenis Pajak" prefWidth="140"/>
-            <TableColumn fx:id="colJumlah" text="Jumlah" prefWidth="120"/>
-            <TableColumn fx:id="colPeriode" text="Periode" prefWidth="120"/>
-            <TableColumn fx:id="colIdPenjualan" text="ID Penjualan" prefWidth="120"/>
+            <TableColumn fx:id="colTanggal"
+                         text="Tanggal"
+                         prefWidth="120"/>
+
+            <TableColumn fx:id="colJenis"
+                         text="Jenis Pajak"
+                         prefWidth="140"/>
+
+            <TableColumn fx:id="colJumlah"
+                         text="Jumlah Pajak"
+                         prefWidth="120"/>
+
+            <TableColumn fx:id="colPeriode"
+                         text="Periode"
+                         prefWidth="120"/>
+
+            <TableColumn fx:id="colIdPenjualan"
+                         text="ID Penjualan"
+                         prefWidth="120"/>
         </columns>
+
     </TableView>
 
 </VBox>

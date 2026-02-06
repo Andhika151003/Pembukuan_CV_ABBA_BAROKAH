@@ -1,8 +1,8 @@
 package com.pembukuan_cv_abba_barokah.Controller;
 
-import com.pembukuan_cv_abba_barokah.Model.LaporanLabaRugi;
-import com.pembukuan_cv_abba_barokah.Service.LaporanLabaRugiService;
+import com.pembukuan_cv_abba_barokah.Service.RekapTotalService;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
 import java.math.BigDecimal;
@@ -11,48 +11,98 @@ import java.util.Locale;
 
 public class LaporanLabaRugiController {
 
-    @FXML private Label lblTotalPenjualan;
-    @FXML private Label lblReturPenjualan;
-    @FXML private Label lblTotalPendapatan;
+    @FXML
+    private ComboBox<String> cbTahun;
 
-    @FXML private Label lblTotalHpp;
-    @FXML private Label lblLabaKotor;
+    @FXML
+    private Label lblTotalPenjualan;
+    @FXML
+    private Label lblReturPenjualan;
+    @FXML
+    private Label lblTotalPendapatan;
 
-    @FXML private Label lblBiayaAdministrasi;
-    @FXML private Label lblBiayaPemasaran;
-    @FXML private Label lblTotalPajak;
+    @FXML
+    private Label lblTotalHpp;
+    @FXML
+    private Label lblReturPembelian;
+    @FXML
+    private Label lblTotalPembelian;
 
-    @FXML private Label lblTotalBiayaOperasional;
-    @FXML private Label lblLabaBersih;
+    @FXML
+    private Label lblLabaRugi;
 
-    private final LaporanLabaRugiService service = new LaporanLabaRugiService();
+    @FXML
+    private Label lblBiayaAdministrasi;
+    @FXML
+    private Label lblBiayaOperasional;
+    @FXML
+    private Label lblBiayaPemasaran;
+    @FXML
+    private Label lblBiayaLain;
+
+    @FXML
+    private Label lblTotalBiayaOperasional;
+    @FXML
+    private Label lblLabaBersih;
+
+    private final RekapTotalService rekapService = new RekapTotalService();
 
     @FXML
     public void initialize() {
-        load(2026); // default
+        cbTahun.getItems().addAll("2024", "2025", "2026");
+        cbTahun.setValue("2026");
+        loadData();
     }
 
-    private void load(int tahun) {
-        LaporanLabaRugi d = service.getByTahun(tahun);
-        if (d == null) return;
+    @FXML
+    public void loadData() {
 
-        lblTotalPenjualan.setText(rp(d.getTotalPenjualan()));
-        lblReturPenjualan.setText(rp(d.getTotalReturPenjualan()));
-        lblTotalPendapatan.setText(rp(d.getTotalPendapatan()));
+        BigDecimal totalPenjualan = rekapService.totalPenjualan();
+        BigDecimal returPenjualan = BigDecimal.ZERO;
 
-        lblTotalHpp.setText(rp(d.getTotalHpp()));
-        lblLabaKotor.setText(rp(d.getLabaKotor()));
+        BigDecimal totalPendapatan = totalPenjualan.subtract(returPenjualan);
 
-        lblBiayaAdministrasi.setText(rp(d.getBiayaAdministrasi()));
-        lblBiayaPemasaran.setText(rp(d.getBiayaPemasaran()));
-        lblTotalPajak.setText(rp(d.getTotalPajak()));
+        BigDecimal totalHpp = rekapService.totalHPP();
+        BigDecimal returPembelian = BigDecimal.ZERO;
 
-        lblTotalBiayaOperasional.setText(rp(d.getTotalBiayaOperasional()));
-        lblLabaBersih.setText(rp(d.getLabaBersih()));
+        BigDecimal totalPembelian = totalHpp.subtract(returPembelian);
+
+        BigDecimal labaRugi = totalPendapatan.subtract(totalPembelian);
+
+        BigDecimal biayaAdministrasi = BigDecimal.ZERO;
+        BigDecimal biayaPemasaran = rekapService.totalBiayaPemasaran();
+        BigDecimal biayaOperasional = BigDecimal.ZERO;
+        BigDecimal biayaLain = BigDecimal.ZERO;
+
+        BigDecimal totalBiayaOperasional = biayaAdministrasi
+                .add(biayaPemasaran)
+                .add(biayaOperasional)
+                .add(biayaLain);
+
+        BigDecimal labaBersih = labaRugi.subtract(totalBiayaOperasional);
+
+        // ===== SET KE LABEL =====
+        lblTotalPenjualan.setText(rp(totalPenjualan));
+        lblReturPenjualan.setText(rp(returPenjualan));
+        lblTotalPendapatan.setText(rp(totalPendapatan));
+
+        lblTotalHpp.setText(rp(totalHpp));
+        lblReturPembelian.setText(rp(returPembelian));
+        lblTotalPembelian.setText(rp(totalPembelian));
+
+        lblLabaRugi.setText(rp(labaRugi));
+
+        lblBiayaAdministrasi.setText(rp(biayaAdministrasi));
+        lblBiayaOperasional.setText(rp(biayaOperasional));
+        lblBiayaPemasaran.setText(rp(biayaPemasaran));
+        lblBiayaLain.setText(rp(biayaLain));
+
+        lblTotalBiayaOperasional.setText(rp(totalBiayaOperasional));
+        lblLabaBersih.setText(rp(labaBersih));
     }
 
-    private String rp(BigDecimal v) {
-        if (v == null) v = BigDecimal.ZERO;
-        return NumberFormat.getCurrencyInstance(new Locale("id", "ID")).format(v);
+    private String rp(BigDecimal value) {
+        NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+        return format.format(value);
     }
 }

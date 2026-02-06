@@ -9,58 +9,98 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class JurnalPembukuanController {
 
-    @FXML private ComboBox<String> cbBulan;
-    @FXML private ComboBox<String> cbTahun;
+        @FXML
+        private ComboBox<String> cbBulan;
+        @FXML
+        private ComboBox<String> cbTahun;
 
-    @FXML private TableView<JurnalPembukuan> table;
-    @FXML private TableColumn<JurnalPembukuan, String> colTanggal;
-    @FXML private TableColumn<JurnalPembukuan, String> colKeterangan;
-    @FXML private TableColumn<JurnalPembukuan, BigDecimal> colDebit;
-    @FXML private TableColumn<JurnalPembukuan, BigDecimal> colKredit;
+        @FXML
+        private TableView<JurnalPembukuan> table;
+        @FXML
+        private TableColumn<JurnalPembukuan, String> colTanggal;
+        @FXML
+        private TableColumn<JurnalPembukuan, String> colMenu;
+        @FXML
+        private TableColumn<JurnalPembukuan, String> colKeterangan;
+        @FXML
+        private TableColumn<JurnalPembukuan, BigDecimal> colDebit;
+        @FXML
+        private TableColumn<JurnalPembukuan, BigDecimal> colKredit;
 
-    private final JurnalPembukuanService service = new JurnalPembukuanService();
-    private final ObservableList<JurnalPembukuan> data = FXCollections.observableArrayList();
+        /* ===== TOTAL LABEL ===== */
+        @FXML
+        private Label lblTotalDebit;
+        @FXML
+        private Label lblTotalKredit;
+        @FXML
+        private Label lblSaldo;
 
-    @FXML
-    public void initialize() {
+        private final JurnalPembukuanService service = new JurnalPembukuanService();
+        private final ObservableList<JurnalPembukuan> data = FXCollections.observableArrayList();
 
-        cbBulan.setItems(FXCollections.observableArrayList(
-                "01","02","03","04","05","06",
-                "07","08","09","10","11","12"
-        ));
-        cbTahun.setItems(FXCollections.observableArrayList("2025","2026","2027"));
+        private final NumberFormat rupiah = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
 
-        cbBulan.setValue("02");
-        cbTahun.setValue("2026");
+        @FXML
+        public void initialize() {
 
-        colTanggal.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleStringProperty(
-                        c.getValue().getTanggal().toString()));
+                cbBulan.setItems(FXCollections.observableArrayList(
+                                "01", "02", "03", "04", "05", "06",
+                                "07", "08", "09", "10", "11", "12"));
+                cbTahun.setItems(FXCollections.observableArrayList("2025", "2026", "2027"));
 
-        colKeterangan.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleStringProperty(
-                        c.getValue().getKeterangan()));
+                cbBulan.setValue("02");
+                cbTahun.setValue("2026");
 
-        colDebit.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleObjectProperty<>(
-                        c.getValue().getDebit()));
+                colTanggal.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(
+                                c.getValue().getTanggal().toString()));
 
-        colKredit.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleObjectProperty<>(
-                        c.getValue().getKredit()));
+                colMenu.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(
+                                c.getValue().getNamaMenu()));
 
-        table.setItems(data);
-        loadData();
-    }
+                colKeterangan.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(
+                                c.getValue().getKeterangan()));
 
-    @FXML
-    private void loadData() {
-        data.setAll(service.getByPeriode(
-                cbBulan.getValue(),
-                cbTahun.getValue()
-        ));
-    }
+                colDebit.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(
+                                c.getValue().getDebit()));
+
+                colKredit.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(
+                                c.getValue().getKredit()));
+
+                table.setItems(data);
+                loadData();
+        }
+
+        @FXML
+        private void loadData() {
+
+                data.setAll(service.getByPeriode(
+                                cbBulan.getValue(),
+                                cbTahun.getValue()));
+
+                hitungTotal();
+        }
+
+        /* ================= HITUNG TOTAL ================= */
+
+        private void hitungTotal() {
+
+                BigDecimal totalDebit = data.stream()
+                                .map(JurnalPembukuan::getDebit)
+                                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+                BigDecimal totalKredit = data.stream()
+                                .map(JurnalPembukuan::getKredit)
+                                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+                BigDecimal saldo = totalDebit.subtract(totalKredit);
+
+                lblTotalDebit.setText(rupiah.format(totalDebit));
+                lblTotalKredit.setText(rupiah.format(totalKredit));
+                lblSaldo.setText(rupiah.format(saldo));
+        }
 }

@@ -5,49 +5,56 @@ import java.time.LocalDate;
 
 public class CashflowPenjualan {
 
-    private LocalDate tanggal;
-    private String noFaktur;
-    private BigDecimal nominalPenjualan;
-    private BigDecimal nominalPembayaran;
-    private BigDecimal pph11;
+    private final LocalDate tanggal;
+    private final String noFaktur;
+    private final BigDecimal totalPenjualan;
+    private final BigDecimal pembayaran;
+    private final BigDecimal laba;
+    private final BigDecimal pph11;
+    private final int idPenjualan;
+
+    public CashflowPenjualan(
+            LocalDate tanggal,
+            String noFaktur,
+            BigDecimal totalPenjualan,
+            BigDecimal pembayaran,
+            BigDecimal laba,
+            BigDecimal pph11,
+            int idPenjualan) {
+        this.tanggal = tanggal;
+        this.noFaktur = noFaktur;
+        this.totalPenjualan = totalPenjualan;
+        this.pembayaran = pembayaran;
+        this.laba = laba;
+        this.pph11 = pph11;
+        this.idPenjualan = idPenjualan;
+    }
 
     public LocalDate getTanggal() {
         return tanggal;
-    }
-
-    public void setTanggal(LocalDate tanggal) {
-        this.tanggal = tanggal;
     }
 
     public String getNoFaktur() {
         return noFaktur;
     }
 
-    public void setNoFaktur(String noFaktur) {
-        this.noFaktur = noFaktur;
+    public BigDecimal getTotalPenjualan() {
+        return totalPenjualan;
     }
 
-    public BigDecimal getNominalPenjualan() {
-        return nominalPenjualan;
+    public BigDecimal getPembayaran() {
+        return pembayaran;
     }
 
-    public void setNominalPenjualan(BigDecimal nominalPenjualan) {
-        this.nominalPenjualan = nominalPenjualan;
-    }
-
-    public BigDecimal getNominalPembayaran() {
-        return nominalPembayaran;
-    }
-
-    public void setNominalPembayaran(BigDecimal nominalPembayaran) {
-        this.nominalPembayaran = nominalPembayaran;
+    public BigDecimal getLaba() {
+        return laba;
     }
 
     public BigDecimal getPph11() {
         return pph11;
     }
 
-    public void setPph11(BigDecimal pph11) {
-        this.pph11 = pph11;
+    public int getIdPenjualan() {
+        return idPenjualan;
     }
 }

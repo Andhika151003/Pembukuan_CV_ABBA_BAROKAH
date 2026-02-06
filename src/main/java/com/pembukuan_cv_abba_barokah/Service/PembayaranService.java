@@ -9,6 +9,10 @@ public class PembayaranService {
 
     private final PembayaranDao dao = new PembayaranDao();
 
+    public boolean sudahAdaUntukPenjualan(int idPenjualan) {
+        return dao.existsByIdPenjualan(idPenjualan);
+    }
+
     public boolean simpan(Pembayaran pembayaran) {
         return dao.save(pembayaran);
     }

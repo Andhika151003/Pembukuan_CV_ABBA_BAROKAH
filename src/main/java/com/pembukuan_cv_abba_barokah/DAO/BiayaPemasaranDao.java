@@ -60,4 +60,48 @@ public class BiayaPemasaranDao {
         }
         return list;
     }
+
+    public boolean update(BiayaPemasaran bp) {
+
+        String sql = """
+            UPDATE BiayaPemasaran
+            SET tanggal = ?,
+                deskripsi = ?,
+                jumlah_pemasaran = ?,
+                kategori = ?,
+                marketing_type = ?
+            WHERE id = ?
+        """;
+    
+        try (Connection c = DatabaseConnection.connection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+    
+            ps.setString(1, bp.getTanggal().toString());
+            ps.setString(2, bp.getDeskripsi());
+            ps.setBigDecimal(3, bp.getJumlahPemasaran());
+            ps.setString(4, bp.getKategori());
+            ps.setString(5, bp.getMarketingType().name());
+            ps.setInt(6, bp.getId());
+    
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean delete(int id) {
+    
+        String sql = "DELETE FROM BiayaPemasaran WHERE id = ?";
+    
+        try (Connection c = DatabaseConnection.connection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+    
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }    
 }

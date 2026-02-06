@@ -6,21 +6,17 @@ import java.math.BigDecimal;
 
 public class RekapTotalService {
 
-    private final HppService hppService = new HppService();
     private final PenjualanService penjualanService = new PenjualanService();
     private final PembayaranService pembayaranService = new PembayaranService();
     private final SetorPajakService setorPajakService = new SetorPajakService();
     private final BiayaPemasaranService biayaPemasaranService = new BiayaPemasaranService();
 
+    private final PembelianLangsungService pembelianLangsungService = new PembelianLangsungService();
+    private final SwakelolaService swakelolaService = new SwakelolaService();
+
     /* =========================
        TOTAL DASAR
        ========================= */
-
-    public BigDecimal totalHpp() {
-        return hppService.getAll().stream()
-                .map(HargaPokokPenjualan::getTotalHarga)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
 
     public BigDecimal totalPenjualan() {
         return penjualanService.getAll().stream()
@@ -47,40 +43,34 @@ public class RekapTotalService {
     }
 
     /* =========================
-       PERHITUNGAN LABA
+       HPP
        ========================= */
 
-    public BigDecimal labaKotor() {
-        return totalPenjualan().subtract(totalHpp());
+    public BigDecimal totalPembelianLangsung() {
+        return pembelianLangsungService.getAll().stream()
+                .map(p ->
+                        p.getHargaPerolehanLangsung()
+                                .add(p.getTransportasi())
+                                .add(p.getUpah())
+                )
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    // PPh Final 11% dari laba kotor
-    public BigDecimal pph11Persen() {
-        BigDecimal laba = labaKotor();
-        if (laba.compareTo(BigDecimal.ZERO) <= 0) {
-            return BigDecimal.ZERO;
-        }
-        return laba.multiply(new BigDecimal("0.11"));
+    public BigDecimal totalSwakelola() {
+        return swakelolaService.getAll().stream()
+                .map(s ->
+                        s.getBahan1()
+                                .add(s.getBahan2())
+                                .add(s.getBahan3())
+                                .add(s.getOngkosTukangPotong())
+                                .add(s.getOngkosTukangJahit())
+                                .add(s.getLainLain())
+                                .add(s.getTransportasi())
+                )
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    public BigDecimal pajakBelumDisetor() {
-        BigDecimal sisa = pph11Persen().subtract(totalSetorPajak());
-        return sisa.compareTo(BigDecimal.ZERO) < 0
-                ? BigDecimal.ZERO
-                : sisa;
-    }
-
-    /* =========================
-       BIAYA & LABA BERSIH
-       ========================= */
-
-    public BigDecimal totalBiayaOperasional() {
-        return totalBiayaPemasaran(); // siap ditambah biaya lain nanti
-    }
-
-    public BigDecimal labaBersih() {
-        return labaKotor()
-                .subtract(totalBiayaOperasional())
-                .subtract(pph11Persen());
+    public BigDecimal totalHPP() {
+        return totalPembelianLangsung().add(totalSwakelola());
     }
 }

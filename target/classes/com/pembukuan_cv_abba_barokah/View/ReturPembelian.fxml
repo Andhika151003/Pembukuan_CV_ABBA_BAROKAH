@@ -16,7 +16,7 @@
     </HBox>
 
     <StackPane>
-        <VBox maxWidth="650" styleClass="card">
+        <VBox maxWidth="700" styleClass="card">
 
             <GridPane styleClass="form-grid">
                 <columnConstraints>
@@ -25,12 +25,12 @@
                 </columnConstraints>
 
                 <children>
-                    <Label text="Tanggal Retur"/>
-                    <DatePicker fx:id="tanggalReturField" GridPane.columnIndex="1"/>
+                    <Label text="No Retur Pembelian"/>
+                    <TextField fx:id="noReturField" GridPane.columnIndex="1"/>
 
-                    <Label text="No Retur" GridPane.rowIndex="1"/>
-                    <TextField fx:id="noReturField"
-                               GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                    <Label text="Tanggal Retur" GridPane.rowIndex="1"/>
+                    <DatePicker fx:id="tanggalReturField"
+                                GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
                     <Label text="Jumlah Retur" GridPane.rowIndex="2"/>
                     <TextField fx:id="jumlahReturField"

@@ -10,6 +10,23 @@ import java.util.List;
 
 public class ReturPembelianDao {
 
+    /* ===== UNIQUE CHECK ===== */
+    public boolean existsByIdPembelian(int idPembelian) {
+
+        String sql = "SELECT 1 FROM ReturPembelian WHERE id_pembelian = ?";
+
+        try (Connection c = DatabaseConnection.connection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+
+            ps.setInt(1, idPembelian);
+            return ps.executeQuery().next();
+
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
+    /* ===== INSERT ===== */
     public boolean save(ReturPembelian r) {
 
         String sql = """
@@ -25,49 +42,60 @@ public class ReturPembelianDao {
 
             map(ps, r);
             return ps.executeUpdate() > 0;
+
         } catch (SQLException e) {
-            e.printStackTrace();
             return false;
         }
     }
 
+    /* ===== UPDATE ===== */
     public boolean update(ReturPembelian r) {
 
         String sql = """
             UPDATE ReturPembelian SET
-            no_retur_pembelian=?, tanggal_retur=?, jumlah_retur=?,
-            alasan_retur=?, keterangan_retur=?,
-            status_retur=?, id_pembelian=?
-            WHERE id=?
+                no_retur_pembelian = ?,
+                tanggal_retur = ?,
+                jumlah_retur = ?,
+                alasan_retur = ?,
+                keterangan_retur = ?,
+                status_retur = ?
+            WHERE id = ?
         """;
 
         try (Connection c = DatabaseConnection.connection();
              PreparedStatement ps = c.prepareStatement(sql)) {
 
-            map(ps, r);
-            ps.setInt(8, r.getId());
+            ps.setInt(1, r.getNoReturPembelian());
+            ps.setString(2, r.getTanggalRetur().toString());
+            ps.setInt(3, r.getJumlahRetur());
+            ps.setString(4, r.getAlasanRetur());
+            ps.setString(5, r.getKeteranganRetur());
+            ps.setString(6, r.getStatusRetur().name());
+            ps.setInt(7, r.getId());
+
             return ps.executeUpdate() > 0;
+
         } catch (SQLException e) {
-            e.printStackTrace();
             return false;
         }
     }
 
+    /* ===== DELETE ===== */
     public boolean delete(int id) {
 
-        String sql = "DELETE FROM ReturPembelian WHERE id=?";
-
         try (Connection c = DatabaseConnection.connection();
-             PreparedStatement ps = c.prepareStatement(sql)) {
+             PreparedStatement ps =
+                     c.prepareStatement("DELETE FROM ReturPembelian WHERE id = ?")) {
 
             ps.setInt(1, id);
             return ps.executeUpdate() > 0;
+
         } catch (SQLException e) {
-            e.printStackTrace();
             return false;
         }
     }
 
+    /* ===== SELECT ===== */
     public List<ReturPembelian> getAll() {
 
         List<ReturPembelian> list = new ArrayList<>();

@@ -13,6 +13,18 @@ public class SetorPajakService {
         return dao.save(sp);
     }
 
+    public boolean update(SetorPajak sp) {
+        return dao.update(sp);
+    }
+
+    public boolean hapus(int id) {
+        return dao.delete(id);
+    }
+
+    public boolean sudahAdaUntukPenjualan(int idPenjualan) {
+        return dao.existsByIdPenjualan(idPenjualan);
+    }
+
     public List<SetorPajak> getAll() {
         return dao.getAll();
     }

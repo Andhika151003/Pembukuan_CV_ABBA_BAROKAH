@@ -1,42 +1,81 @@
 package com.pembukuan_cv_abba_barokah.Service;
 
-import com.pembukuan_cv_abba_barokah.DAO.NeracaKeuanganDao;
-import com.pembukuan_cv_abba_barokah.Model.NeracaKeuangan;
-
 import java.math.BigDecimal;
 
 public class NeracaKeuanganService {
 
-    private final NeracaKeuanganDao dao = new NeracaKeuanganDao();
+    private final RekapTotalService rekap = new RekapTotalService();
+    private final UtangUsahaService utangUsahaService = new UtangUsahaService();
+    private final PembelianInventarisService inventarisService = new PembelianInventarisService();
 
-    public NeracaKeuangan get() {
-        return dao.getData();
+    /* =======================
+       ASET LANCAR
+       ======================= */
+
+    public BigDecimal bankSaldo() {
+        // kas = pembayaran masuk - setor pajak
+        return rekap.totalPembayaranMasuk()
+                .subtract(rekap.totalSetorPajak());
     }
 
-    public BigDecimal totalAsetLancar(NeracaKeuangan n) {
-        return n.getKasBank()
-                .add(n.getPiutangUsaha())
-                .add(n.getPersediaanBarang());
+    public BigDecimal piutangUsaha() {
+        return rekap.totalPenjualan()
+                .subtract(rekap.totalPembayaranMasuk());
     }
 
-    public BigDecimal jumlahAset(NeracaKeuangan n) {
-        return totalAsetLancar(n)
-                .add(n.getAsetTidakLancar());
+    public BigDecimal persediaanBarang() {
+        // persediaan = pembelian - HPP
+        return rekap.totalHPP().compareTo(BigDecimal.ZERO) == 0
+                ? BigDecimal.ZERO
+                : rekap.totalHPP();
     }
 
-    public BigDecimal labaDitahan(NeracaKeuangan n) {
-        return jumlahAset(n)
-                .subtract(n.getTotalUtang())
-                .subtract(n.getModalDisetor());
+    public BigDecimal totalAsetLancar() {
+        return bankSaldo()
+                .add(piutangUsaha())
+                .add(persediaanBarang());
     }
 
-    public BigDecimal jumlahEkuitas(NeracaKeuangan n) {
-        return n.getModalDisetor()
-                .add(labaDitahan(n));
+    /* =======================
+       ASET TIDAK LANCAR
+       ======================= */
+
+       public BigDecimal totalInventaris() {
+        return inventarisService.getAll().stream()
+                .map(i ->
+                        BigDecimal.valueOf(i.getJumlah())
+                                .multiply(i.getHargaSatuan())
+                )
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }    
+
+    public BigDecimal totalAsetTidakLancar() {
+        return totalInventaris();
     }
 
-    public BigDecimal totalKewajibanDanEkuitas(NeracaKeuangan n) {
-        return n.getTotalUtang()
-                .add(jumlahEkuitas(n));
+    /* =======================
+       TOTAL ASET
+       ======================= */
+
+    public BigDecimal totalAset() {
+        return totalAsetLancar().add(totalAsetTidakLancar());
+    }
+
+    /* =======================
+       KEWAJIBAN & EKUITAS
+       ======================= */
+
+    public BigDecimal totalUtangUsaha() {
+        return utangUsahaService.getAll().stream()
+                .map(u -> u.getJumlahUtang())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public BigDecimal ekuitas() {
+        return totalAset().subtract(totalUtangUsaha());
+    }
+
+    public BigDecimal jumlahKewajibanDanEkuitas() {
+        return totalUtangUsaha().add(ekuitas());
     }
 }

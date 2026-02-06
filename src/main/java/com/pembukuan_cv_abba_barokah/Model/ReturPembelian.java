@@ -15,14 +15,19 @@ public class ReturPembelian {
     private String alasanRetur;
     private String keteranganRetur;
     private StatusRetur statusRetur;
-    private int idPembelian; // FK ke PembelianInventaris
+    private int idPembelian; // FK
 
+    // SELECT
     public ReturPembelian(
-            int id, int noReturPembelian, LocalDate tanggalRetur,
-            int jumlahRetur, String alasanRetur,
-            String keteranganRetur, StatusRetur statusRetur,
-            int idPembelian) {
-
+            int id,
+            int noReturPembelian,
+            LocalDate tanggalRetur,
+            int jumlahRetur,
+            String alasanRetur,
+            String keteranganRetur,
+            StatusRetur statusRetur,
+            int idPembelian
+    ) {
         this.id = id;
         this.noReturPembelian = noReturPembelian;
         this.tanggalRetur = tanggalRetur;
@@ -33,12 +38,16 @@ public class ReturPembelian {
         this.idPembelian = idPembelian;
     }
 
+    // INSERT
     public ReturPembelian(
-            int noReturPembelian, LocalDate tanggalRetur,
-            int jumlahRetur, String alasanRetur,
-            String keteranganRetur, StatusRetur statusRetur,
-            int idPembelian) {
-
+            int noReturPembelian,
+            LocalDate tanggalRetur,
+            int jumlahRetur,
+            String alasanRetur,
+            String keteranganRetur,
+            StatusRetur statusRetur,
+            int idPembelian
+    ) {
         this(0, noReturPembelian, tanggalRetur,
                 jumlahRetur, alasanRetur,
                 keteranganRetur, statusRetur, idPembelian);

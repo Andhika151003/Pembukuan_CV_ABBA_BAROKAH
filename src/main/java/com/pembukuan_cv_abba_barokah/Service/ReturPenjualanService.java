@@ -21,6 +21,10 @@ public class ReturPenjualanService {
         return dao.delete(id);
     }
 
+    public boolean sudahAdaUntukPenjualan(int idPenjualan) {
+        return dao.existsByIdPenjualan(idPenjualan);
+    }
+
     public List<ReturPenjualan> getAll() {
         return dao.getAll();
     }

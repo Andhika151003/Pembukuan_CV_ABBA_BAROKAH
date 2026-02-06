@@ -94,6 +94,21 @@ public class SideBarController {
     }
 
     @FXML
+    private void openPph() {
+        loadContent("/com/pembukuan_cv_abba_barokah/View/Pph.fxml");
+    }
+
+    @FXML
+    private void openPajak() {
+        loadContent("/com/pembukuan_cv_abba_barokah/View/PajakBelumDisetor.fxml");
+    }
+
+    @FXML
+    private void openLabaRugi() {
+        loadContent("/com/pembukuan_cv_abba_barokah/View/LabaRugi.fxml");
+    }
+
+    @FXML
     private void openJurnal() {
         loadContent("/com/pembukuan_cv_abba_barokah/View/JurnalPembukuan.fxml");
     }

@@ -21,6 +21,10 @@ public class ReturPembelianService {
         return dao.delete(id);
     }
 
+    public boolean sudahAdaUntukPembelian(int idPembelian) {
+        return dao.existsByIdPembelian(idPembelian);
+    }
+
     public List<ReturPembelian> getAll() {
         return dao.getAll();
     }

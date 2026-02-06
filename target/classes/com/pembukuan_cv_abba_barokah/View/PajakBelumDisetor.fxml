@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.pembukuan_cv_abba_barokah.Controller.PajakBelumDisetorController"
+      stylesheets="@Global.css"
+      spacing="24"
+      alignment="TOP_CENTER"
+      styleClass="content">
+
+    <!-- ================= TITLE ================= -->
+    <HBox alignment="CENTER">
+        <Label text="Pajak yang Belum Disetor"
+               style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+    </HBox>
+
+    <!-- ================= CARD ================= -->
+    <VBox maxWidth="600" styleClass="card" spacing="16">
+
+        <GridPane hgap="24" vgap="12">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="65"/>
+                <ColumnConstraints percentWidth="35"/>
+            </columnConstraints>
+
+            <Label text="Total PPh 11%"/>
+            <Label fx:id="lblTotalPph" GridPane.columnIndex="1"/>
+
+            <Label text="Total Pajak Sudah Disetor" GridPane.rowIndex="1"/>
+            <Label fx:id="lblTotalSetor"
+                   GridPane.rowIndex="1"
+                   GridPane.columnIndex="1"/>
+
+            <Separator GridPane.rowIndex="2" GridPane.columnSpan="2"/>
+
+            <Label text="Pajak yang Belum Disetor"
+                   style="-fx-font-weight: bold;"
+                   GridPane.rowIndex="3"/>
+
+            <Label fx:id="lblBelumDisetor"
+                   style="-fx-font-weight: bold;"
+                   GridPane.rowIndex="3"
+                   GridPane.columnIndex="1"/>
+        </GridPane>
+
+    </VBox>
+
+</VBox>

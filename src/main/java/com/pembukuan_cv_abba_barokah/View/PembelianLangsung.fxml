@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.pembukuan_cv_abba_barokah.Controller.PembelianLangsungController"
+      stylesheets="@Global.css"
+      spacing="24"
+      styleClass="content">
+
+    <HBox alignment="CENTER">
+        <Label text="Pembelian Langsung"
+               style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+    </HBox>
+
+    <StackPane>
+        <VBox maxWidth="640" styleClass="card">
+
+            <GridPane styleClass="form-grid">
+                <columnConstraints>
+                    <ColumnConstraints prefWidth="180"/>
+                    <ColumnConstraints/>
+                </columnConstraints>
+
+                <children>
+                    <Label text="Tanggal"/>
+                    <DatePicker fx:id="tanggalField"
+                                GridPane.columnIndex="1"/>
+
+                    <Label text="Harga Perolehan"
+                           GridPane.rowIndex="1"/>
+                    <TextField fx:id="hargaField"
+                               GridPane.rowIndex="1"
+                               GridPane.columnIndex="1"/>
+
+                    <Label text="Transportasi"
+                           GridPane.rowIndex="2"/>
+                    <TextField fx:id="transportasiField"
+                               GridPane.rowIndex="2"
+                               GridPane.columnIndex="1"/>
+
+                    <Label text="Upah"
+                           GridPane.rowIndex="3"/>
+                    <TextField fx:id="upahField"
+                               GridPane.rowIndex="3"
+                               GridPane.columnIndex="1"/>
+
+                    <Label text="ID Penjualan"
+                           GridPane.rowIndex="4"/>
+                    <ComboBox fx:id="cbIdPenjualan"
+                              GridPane.rowIndex="4"
+                              GridPane.columnIndex="1"/>
+
+                    <Label text="Keterangan"
+                           GridPane.rowIndex="5"/>
+                    <TextField fx:id="keteranganField"
+                               GridPane.rowIndex="5"
+                               GridPane.columnIndex="1"/>
+                </children>
+            </GridPane>
+
+            <HBox alignment="CENTER_RIGHT" spacing="12">
+                <Button text="Simpan" onAction="#handleSimpan"/>
+                <Button text="Update" onAction="#handleUpdate"/>
+                <Button text="Hapus" onAction="#handleDelete"
+                        styleClass="button-danger"/>
+            </HBox>
+
+        </VBox>
+    </StackPane>
+
+    <TableView fx:id="table" prefHeight="320">
+        <columns>
+            <TableColumn fx:id="colTanggal" text="Tanggal" prefWidth="110"/>
+            <TableColumn fx:id="colHarga" text="Harga" prefWidth="120"/>
+            <TableColumn fx:id="colTransportasi" text="Transportasi" prefWidth="120"/>
+            <TableColumn fx:id="colUpah" text="Upah" prefWidth="100"/>
+            <TableColumn fx:id="colIdPenjualan" text="ID Penjualan" prefWidth="120"/>
+            <TableColumn fx:id="colKeterangan" text="Keterangan" prefWidth="180"/>
+            <TableColumn fx:id="colTotal" text="Total" prefWidth="140"/>
+        </columns>
+    </TableView>
+
+    <HBox alignment="CENTER_RIGHT">
+        <Label fx:id="lblTotal"
+               style="-fx-font-size: 16px; -fx-font-weight: bold;"
+               text="Total Pembelian Langsung : Rp 0"/>
+    </HBox>
+
+</VBox>

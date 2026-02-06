@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdministrasiDao {
-    
+
     public boolean save(Administrasi ads) {
 
         String sql = """
@@ -59,5 +59,49 @@ public class AdministrasiDao {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public boolean update(Administrasi ads) {
+
+        String sql = """
+                    UPDATE Administrasi
+                    SET tanggal = ?,
+                        jenis_administrasi = ?,
+                        deskripsi = ?,
+                        jumlah_administrasi = ?,
+                        keterangan = ?
+                    WHERE id = ?
+                """;
+
+        try (Connection c = DatabaseConnection.connection();
+                PreparedStatement ps = c.prepareStatement(sql)) {
+
+            ps.setString(1, ads.getTanggal().toString());
+            ps.setString(2, ads.getJenisAdministrasi().name());
+            ps.setString(3, ads.getDeskripsi());
+            ps.setBigDecimal(4, ads.getJumlahAdministrasi());
+            ps.setString(5, ads.getKeterangan());
+            ps.setInt(6, ads.getId());
+
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean delete(int id) {
+
+        String sql = "DELETE FROM Administrasi WHERE id = ?";
+
+        try (Connection c = DatabaseConnection.connection();
+                PreparedStatement ps = c.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

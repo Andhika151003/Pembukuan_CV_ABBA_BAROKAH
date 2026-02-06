@@ -3,7 +3,6 @@ package com.pembukuan_cv_abba_barokah.Service;
 import com.pembukuan_cv_abba_barokah.DAO.UtangUsahaDao;
 import com.pembukuan_cv_abba_barokah.Model.UtangUsaha;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class UtangUsahaService {
@@ -14,15 +13,19 @@ public class UtangUsahaService {
         return dao.save(u);
     }
 
+    public boolean update(UtangUsaha u) {
+        return dao.update(u);
+    }
+
     public boolean hapus(int id) {
         return dao.delete(id);
     }
 
-    public List<UtangUsaha> getAll() {
-        return dao.getAll();
+    public boolean sudahAdaUntukPembelian(int idPembelian) {
+        return dao.existsByIdPembelian(idPembelian);
     }
 
-    public BigDecimal hitungSisaUtang(UtangUsaha u) {
-        return u.getJumlahUtang().subtract(u.getJumlahDibayar());
+    public List<UtangUsaha> getAll() {
+        return dao.getAll();
     }
 }

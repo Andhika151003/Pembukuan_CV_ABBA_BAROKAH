@@ -15,9 +15,8 @@ public class PembelianInventarisDao {
             INSERT INTO PembelianInventaris
             (no_pembelian, jenis_inventaris, nama_barang,
              jumlah, satuan, harga_satuan, ongkos_kirim,
-             metode_pembayaran, status_pembelian,
              keterangan, tanggal_pembelian)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
         try (Connection c = DatabaseConnection.connection();
@@ -36,7 +35,6 @@ public class PembelianInventarisDao {
             UPDATE PembelianInventaris SET
             no_pembelian=?, jenis_inventaris=?, nama_barang=?,
             jumlah=?, satuan=?, harga_satuan=?, ongkos_kirim=?,
-            metode_pembayaran=?, status_pembelian=?,
             keterangan=?, tanggal_pembelian=?
             WHERE id=?
         """;
@@ -45,7 +43,7 @@ public class PembelianInventarisDao {
              PreparedStatement ps = c.prepareStatement(sql)) {
 
             mapStatement(ps, pi);
-            ps.setInt(12, pi.getId());
+            ps.setInt(10, pi.getId());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -78,17 +76,13 @@ public class PembelianInventarisDao {
             while (rs.next()) {
                 list.add(new PembelianInventaris(
                         rs.getInt("id"),
-                        rs.getInt("no_pembelian"),
+                        rs.getString("no_pembelian"),
                         rs.getString("jenis_inventaris"),
                         rs.getString("nama_barang"),
                         rs.getInt("jumlah"),
-                        rs.getInt("satuan"),
+                        rs.getString("satuan"),
                         rs.getBigDecimal("harga_satuan"),
                         rs.getBigDecimal("ongkos_kirim"),
-                        PembelianInventaris.MetodePembayaran.valueOf(
-                                rs.getString("metode_pembayaran").toUpperCase()),
-                        PembelianInventaris.StatusPembelian.valueOf(
-                                rs.getString("status_pembelian").toUpperCase()),
                         rs.getString("keterangan"),
                         LocalDate.parse(rs.getString("tanggal_pembelian"))
                 ));
@@ -99,17 +93,17 @@ public class PembelianInventarisDao {
         return list;
     }
 
-    private void mapStatement(PreparedStatement ps, PembelianInventaris pi) throws SQLException {
-        ps.setInt(1, pi.getNoPembelian());
+    private void mapStatement(PreparedStatement ps, PembelianInventaris pi)
+            throws SQLException {
+
+        ps.setString(1, pi.getNoPembelian());
         ps.setString(2, pi.getJenisInventaris());
         ps.setString(3, pi.getNamaBarang());
         ps.setInt(4, pi.getJumlah());
-        ps.setInt(5, pi.getSatuan());
+        ps.setString(5, pi.getSatuan());
         ps.setBigDecimal(6, pi.getHargaSatuan());
         ps.setBigDecimal(7, pi.getOngkosKirim());
-        ps.setString(8, pi.getMetodePembayaran().name());
-        ps.setString(9, pi.getStatusPembelian().name());
-        ps.setString(10, pi.getKeterangan());
-        ps.setString(11, pi.getTanggalPembelian().toString());
+        ps.setString(8, pi.getKeterangan());
+        ps.setString(9, pi.getTanggalPembelian().toString());
     }
 }

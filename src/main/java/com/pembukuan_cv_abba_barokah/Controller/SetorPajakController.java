@@ -38,9 +38,7 @@ public class SetorPajakController {
                 SetorPajak.JenisPajak.values()
         ));
 
-        cbIdPenjualan.setItems(FXCollections.observableArrayList(
-                penjualanService.getAll().stream().map(p -> p.getId()).toList()
-        ));
+        refreshComboIdPenjualan();
 
         colTanggal.setCellValueFactory(c ->
                 new javafx.beans.property.SimpleStringProperty(
@@ -63,6 +61,10 @@ public class SetorPajakController {
                         c.getValue().getIdPenjualan()));
 
         tablePajak.setItems(data);
+
+        tablePajak.getSelectionModel().selectedItemProperty().addListener(
+                (obs, oldVal, newVal) -> { if (newVal != null) fillForm(newVal); });
+
         loadData();
     }
 
@@ -70,8 +72,24 @@ public class SetorPajakController {
         data.setAll(service.getAll());
     }
 
+    private void refreshComboIdPenjualan() {
+        cbIdPenjualan.setItems(FXCollections.observableArrayList(
+                penjualanService.getAll().stream()
+                        .map(p -> p.getId())
+                        .filter(id -> !service.sudahAdaUntukPenjualan(id))
+                        .toList()
+        ));
+    }
+
     @FXML
     private void handleSimpan() {
+
+        int idPenjualan = cbIdPenjualan.getValue();
+
+        if (service.sudahAdaUntukPenjualan(idPenjualan)) {
+            alert("Duplikat", "Setor pajak untuk penjualan ini sudah ada.");
+            return;
+        }
 
         SetorPajak sp = new SetorPajak(
                 tanggalField.getValue(),
@@ -79,10 +97,68 @@ public class SetorPajakController {
                 new BigDecimal(jumlahField.getText()),
                 periodeField.getText(),
                 buktiField.getText(),
-                cbIdPenjualan.getValue()
+                idPenjualan
         );
 
         service.simpan(sp);
         loadData();
+        refreshComboIdPenjualan();
+        clearForm();
+    }
+
+    @FXML
+    private void handleUpdate() {
+        SetorPajak sp = tablePajak.getSelectionModel().getSelectedItem();
+        if (sp != null) {
+            sp.setTanggalSetor(tanggalField.getValue());
+            sp.setJenisPajak(cbJenisPajak.getValue());
+            sp.setJumlahPajak(new BigDecimal(jumlahField.getText()));
+            sp.setPeriode(periodeField.getText());
+            sp.setBuktiSetor(buktiField.getText());
+
+            service.update(sp);
+            loadData();
+            clearForm();
+        }
+    }
+
+    @FXML
+    private void handleDelete() {
+        SetorPajak sp = tablePajak.getSelectionModel().getSelectedItem();
+        if (sp != null) {
+            service.hapus(sp.getId());
+            loadData();
+            refreshComboIdPenjualan();
+            clearForm();
+        }
+    }
+
+    private void fillForm(SetorPajak sp) {
+        tanggalField.setValue(sp.getTanggalSetor());
+        cbJenisPajak.setValue(sp.getJenisPajak());
+        jumlahField.setText(sp.getJumlahPajak().toString());
+        periodeField.setText(sp.getPeriode());
+        buktiField.setText(sp.getBuktiSetor());
+        cbIdPenjualan.setValue(sp.getIdPenjualan());
+        cbIdPenjualan.setDisable(true);
+    }
+
+    private void clearForm() {
+        tanggalField.setValue(null);
+        cbJenisPajak.setValue(null);
+        jumlahField.clear();
+        periodeField.clear();
+        buktiField.clear();
+        cbIdPenjualan.setValue(null);
+        cbIdPenjualan.setDisable(false);
+        tablePajak.getSelectionModel().clearSelection();
+    }
+
+    private void alert(String t, String m) {
+        Alert a = new Alert(Alert.AlertType.WARNING);
+        a.setTitle(t);
+        a.setHeaderText(null);
+        a.setContentText(m);
+        a.showAndWait();
     }
 }

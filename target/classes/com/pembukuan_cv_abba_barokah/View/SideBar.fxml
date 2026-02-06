@@ -64,7 +64,10 @@
                             <!-- PERHITUNGAN -->
                             <Label text="PERHITUNGAN" styleClass="menu-section"/>
                             <VBox spacing="4">
-                                <Label text="Perhitungan Utama" styleClass="menu-item" onMouseClicked="#openRekap"/>
+                                <Label text="Jumlah Total" styleClass="menu-item" onMouseClicked="#openRekap"/>
+                                <Label text="Laba Rugi" styleClass="menu-item" onMouseClicked="#openLabaRugi"/>
+                                <Label text="Pph 11%" styleClass="menu-item" onMouseClicked="#openPph"/>
+                                <Label text="Pajak Belom Disetor" styleClass="menu-item" onMouseClicked="#openPajak"/>
                             </VBox>
 
                             <Separator/>
@@ -74,7 +77,7 @@
                             <VBox spacing="4">
                                 <Label text="Jurnal Pembukuan" styleClass="menu-item" onMouseClicked="#openJurnal"/>
                                 <Label text="Cashflow Penjualan Barang" styleClass="menu-item" onMouseClicked="#openCashflow"/>
-                                <Label text="Laporan Laba" styleClass="menu-item" onMouseClicked="#openLaporanLaba"/>
+                                <Label text="Laporan Laba Rugi" styleClass="menu-item" onMouseClicked="#openLaporanLaba"/>
                                 <Label text="Laporan Neraca Keuangan" styleClass="menu-item" onMouseClicked="#openNeraca"/>
                             </VBox>
 

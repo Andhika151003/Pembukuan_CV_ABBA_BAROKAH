@@ -20,16 +20,20 @@ public class ReturPenjualan {
     private String keteranganRetur;
     private StatusRetur statusRetur;
     private JenisPengembalian jenisPengembalian;
-    private LocalDate tanggalPengembalian;
-    private int idPenjualan; // FK
+    private int idPenjualan;
 
+    // SELECT
     public ReturPenjualan(
-            int id, String noRetur, LocalDate tanggalRetur,
-            int jumlahRetur, String alasanRetur,
-            String keteranganRetur, StatusRetur statusRetur,
+            int id,
+            String noRetur,
+            LocalDate tanggalRetur,
+            int jumlahRetur,
+            String alasanRetur,
+            String keteranganRetur,
+            StatusRetur statusRetur,
             JenisPengembalian jenisPengembalian,
-            LocalDate tanggalPengembalian, int idPenjualan) {
-
+            int idPenjualan
+    ) {
         this.id = id;
         this.noRetur = noRetur;
         this.tanggalRetur = tanggalRetur;
@@ -38,21 +42,23 @@ public class ReturPenjualan {
         this.keteranganRetur = keteranganRetur;
         this.statusRetur = statusRetur;
         this.jenisPengembalian = jenisPengembalian;
-        this.tanggalPengembalian = tanggalPengembalian;
         this.idPenjualan = idPenjualan;
     }
 
+    // INSERT
     public ReturPenjualan(
-            String noRetur, LocalDate tanggalRetur,
-            int jumlahRetur, String alasanRetur,
-            String keteranganRetur, StatusRetur statusRetur,
+            String noRetur,
+            LocalDate tanggalRetur,
+            int jumlahRetur,
+            String alasanRetur,
+            String keteranganRetur,
+            StatusRetur statusRetur,
             JenisPengembalian jenisPengembalian,
-            LocalDate tanggalPengembalian, int idPenjualan) {
-
+            int idPenjualan
+    ) {
         this(0, noRetur, tanggalRetur, jumlahRetur,
                 alasanRetur, keteranganRetur,
-                statusRetur, jenisPengembalian,
-                tanggalPengembalian, idPenjualan);
+                statusRetur, jenisPengembalian, idPenjualan);
     }
 
     public int getId() { return id; }
@@ -63,6 +69,5 @@ public class ReturPenjualan {
     public String getKeteranganRetur() { return keteranganRetur; }
     public StatusRetur getStatusRetur() { return statusRetur; }
     public JenisPengembalian getJenisPengembalian() { return jenisPengembalian; }
-    public LocalDate getTanggalPengembalian() { return tanggalPengembalian; }
     public int getIdPenjualan() { return idPenjualan; }
 }

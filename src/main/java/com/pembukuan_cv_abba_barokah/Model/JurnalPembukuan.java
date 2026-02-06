@@ -6,13 +6,20 @@ import java.time.LocalDate;
 public class JurnalPembukuan {
 
     private final LocalDate tanggal;
+    private final String namaMenu;
     private final String keterangan;
     private final BigDecimal debit;
     private final BigDecimal kredit;
 
-    public JurnalPembukuan(LocalDate tanggal, String keterangan,
-                           BigDecimal debit, BigDecimal kredit) {
+    public JurnalPembukuan(
+            LocalDate tanggal,
+            String namaMenu,
+            String keterangan,
+            BigDecimal debit,
+            BigDecimal kredit) {
+
         this.tanggal = tanggal;
+        this.namaMenu = namaMenu;
         this.keterangan = keterangan;
         this.debit = debit;
         this.kredit = kredit;
@@ -20,6 +27,10 @@ public class JurnalPembukuan {
 
     public LocalDate getTanggal() {
         return tanggal;
+    }
+
+    public String getNamaMenu() {
+        return namaMenu;
     }
 
     public String getKeterangan() {

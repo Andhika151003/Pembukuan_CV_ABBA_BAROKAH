@@ -2,94 +2,81 @@ package com.pembukuan_cv_abba_barokah.Controller;
 
 import com.pembukuan_cv_abba_barokah.Model.CashflowPenjualan;
 import com.pembukuan_cv_abba_barokah.Service.CashflowPenjualanService;
+
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import java.text.NumberFormat;
-import java.util.Locale;
+import java.math.BigDecimal;
 
 public class CashflowPenjualanController {
 
-    @FXML private ComboBox<String> cbBulan;
-    @FXML private ComboBox<String> cbTahun;
+        @FXML
+        private ComboBox<String> cbBulan;
+        @FXML
+        private ComboBox<String> cbTahun;
 
-    @FXML private TableView<CashflowPenjualan> table;
-    @FXML private TableColumn<CashflowPenjualan, String> colTanggal;
-    @FXML private TableColumn<CashflowPenjualan, String> colNoFaktur;
-    @FXML private TableColumn<CashflowPenjualan, Number> colPenjualan;
-    @FXML private TableColumn<CashflowPenjualan, Number> colPembayaran;
-    @FXML private TableColumn<CashflowPenjualan, Number> colPph;
+        @FXML
+        private TableView<CashflowPenjualan> table;
+        @FXML
+        private TableColumn<CashflowPenjualan, String> colTanggal;
+        @FXML
+        private TableColumn<CashflowPenjualan, String> colFaktur;
+        @FXML
+        private TableColumn<CashflowPenjualan, BigDecimal> colPenjualan;
+        @FXML
+        private TableColumn<CashflowPenjualan, BigDecimal> colPembayaran;
+        @FXML
+        private TableColumn<CashflowPenjualan, BigDecimal> colLaba;
+        @FXML
+        private TableColumn<CashflowPenjualan, BigDecimal> colPph;
+        @FXML
+        private TableColumn<CashflowPenjualan, Integer> colId;
 
-    private final CashflowPenjualanService service = new CashflowPenjualanService();
+        private final CashflowPenjualanService service = new CashflowPenjualanService();
+        private final ObservableList<CashflowPenjualan> data = FXCollections.observableArrayList();
 
-    @FXML
-    public void initialize() {
+        @FXML
+        public void initialize() {
 
-        cbBulan.setItems(FXCollections.observableArrayList(
-                "01","02","03","04","05","06","07","08","09","10","11","12"
-        ));
-        cbTahun.setItems(FXCollections.observableArrayList(
-                "2024","2025","2026","2027"
-        ));
+                cbBulan.setItems(FXCollections.observableArrayList(
+                                "01", "02", "03", "04", "05", "06",
+                                "07", "08", "09", "10", "11", "12"));
+                cbTahun.setItems(FXCollections.observableArrayList("2025", "2026", "2027"));
 
-        cbBulan.setValue("01");
-        cbTahun.setValue("2026");
+                cbBulan.setValue("02");
+                cbTahun.setValue("2026");
 
-        colTanggal.setCellValueFactory(d ->
-                new javafx.beans.property.SimpleStringProperty(
-                        d.getValue().getTanggal().toString()
-                )
-        );
+                colTanggal.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(
+                                c.getValue().getTanggal().toString()));
 
-        colNoFaktur.setCellValueFactory(d ->
-                new javafx.beans.property.SimpleStringProperty(
-                        d.getValue().getNoFaktur()
-                )
-        );
+                colFaktur.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(
+                                c.getValue().getNoFaktur()));
 
-        colPenjualan.setCellValueFactory(d ->
-                new javafx.beans.property.SimpleObjectProperty<>(
-                        d.getValue().getNominalPenjualan()
-                )
-        );
+                colPenjualan.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(
+                                c.getValue().getTotalPenjualan()));
 
-        colPembayaran.setCellValueFactory(d ->
-                new javafx.beans.property.SimpleObjectProperty<>(
-                        d.getValue().getNominalPembayaran()
-                )
-        );
+                colPembayaran.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(
+                                c.getValue().getPembayaran()));
 
-        colPph.setCellValueFactory(d ->
-                new javafx.beans.property.SimpleObjectProperty<>(
-                        d.getValue().getPph11()
-                )
-        );
+                colLaba.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(
+                                c.getValue().getLaba()));
 
-        formatRupiah(colPenjualan);
-        formatRupiah(colPembayaran);
-        formatRupiah(colPph);
+                colPph.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(
+                                c.getValue().getPph11()));
 
-        loadData();
-    }
+                colId.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(
+                                c.getValue().getIdPenjualan()));
 
-    @FXML
-    private void loadData() {
-        table.setItems(
-                FXCollections.observableArrayList(
-                        service.getByPeriode(cbBulan.getValue(), cbTahun.getValue())
-                )
-        );
-    }
+                table.setItems(data);
+                loadData();
+        }
 
-    private void formatRupiah(TableColumn<CashflowPenjualan, Number> col) {
-        NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
-        col.setCellFactory(tc -> new TableCell<>() {
-            @Override
-            protected void updateItem(Number value, boolean empty) {
-                super.updateItem(value, empty);
-                setText(empty || value == null ? "" : nf.format(value));
-            }
-        });
-    }
+        @FXML
+        private void loadData() {
+                data.setAll(service.getByPeriode(
+                                cbBulan.getValue(),
+                                cbTahun.getValue()));
+        }
 }

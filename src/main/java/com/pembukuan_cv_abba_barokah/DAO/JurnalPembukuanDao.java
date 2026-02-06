@@ -10,140 +10,168 @@ import java.util.List;
 
 public class JurnalPembukuanDao {
 
-    public List<JurnalPembukuan> getByPeriode(String bulan, String tahun) {
+       public List<JurnalPembukuan> getByPeriode(String bulan, String tahun) {
 
-        List<JurnalPembukuan> list = new ArrayList<>();
+              List<JurnalPembukuan> list = new ArrayList<>();
 
-        String sql = """
-            SELECT
-                x.tanggal,
-                m.nama_menu AS keterangan,
+              String sql = """
+                                SELECT
+                                    x.tanggal,
+                                    m.nama_menu,
+                                    x.keterangan,
 
-                CASE
-                    WHEN m.posisi = 'DEBIT' THEN x.total
-                    ELSE 0
-                END AS debit,
+                                    CASE
+                                        WHEN m.posisi = 'DEBIT' THEN x.total
+                                        ELSE 0
+                                    END AS debit,
 
-                CASE
-                    WHEN m.posisi = 'KREDIT' THEN x.total
-                    ELSE 0
-                END AS kredit
+                                    CASE
+                                        WHEN m.posisi = 'KREDIT' THEN x.total
+                                        ELSE 0
+                                    END AS kredit
 
-            FROM master_jurnal m
-            JOIN (
+                                FROM master_jurnal m
+                                JOIN (
 
-                -- 1. Penjualan
-                SELECT 'Penjualan' AS menu,
-                       tanggal_penjualan AS tanggal,
-                       total_penjualan AS total
-                FROM Penjualan
+                                    /* ===== HPP : Pembelian Langsung ===== */
+                                    SELECT
+                                        'Harga Pokok Penjualan' AS menu,
+                                        tanggal,
+                                        (harga_perolehan_langsung + transportasi + upah) AS total,
+                                        keterangan
+                                    FROM PembelianLangsung
 
-                UNION ALL
-                -- 2. Harga Pokok Penjualan
-                SELECT 'Harga Pokok Penjualan',
-                       tanggal,
-                       total_harga
-                FROM HargaPokokPenjualan
+                                    UNION ALL
 
-                UNION ALL
-                -- 3. Pembayaran Dari Pembeli
-                SELECT 'Pembayaran Dari Pembeli',
-                       tanggal_pembayaran,
-                       jumlah_pembayaran
-                FROM Pembayaran
+                                    /* ===== HPP : Swakelola ===== */
+                                    SELECT
+                                        'Harga Pokok Penjualan',
+                                        tanggal,
+                                        (bahan_1 + bahan_2 + bahan_3 +
+                                         ongkos_tukang_potong + ongkos_tukan_jahit +
+                                         lain_lain + transportasi),
+                                        keterangan
+                                    FROM Swakelola
 
-                UNION ALL
-                -- 4. Setor Pajak
-                SELECT 'Setor Pajak',
-                       tanggal_setor,
-                       jumlah_pajak
-                FROM SetorPajak
+                                    UNION ALL
 
-                UNION ALL
-                -- 5. Biaya Pemasaran
-                SELECT 'Biaya Pemasaran',
-                       tanggal,
-                       jumlah_pemasaran
-                FROM BiayaPemasaran
+                                    /* ===== Pembayaran ===== */
+                                    SELECT
+                                        'Pembayaran',
+                                        tanggal_pembayaran,
+                                        jumlah_pembayaran,
+                                        keterangan
+                                    FROM Pembayaran
 
-                UNION ALL
-                -- 6. Biaya Administrasi
-                SELECT 'Biaya Administrasi',
-                       tanggal,
-                       jumlah_administrasi
-                FROM Administrasi
+                                    UNION ALL
 
-                UNION ALL
-                -- 7. Pembelian Inventaris
-                SELECT 'Pembelian Inventaris',
-                       tanggal_pembelian,
-                       (jumlah * harga_satuan) + ongkos_kirim
-                FROM PembelianInventaris
+                                    /* ===== Setor Pajak ===== */
+                                    SELECT
+                                        'Setor Pajak',
+                                        tanggal_setor,
+                                        jumlah_pajak,
+                                        bukti_setor
+                                    FROM SetorPajak
 
-                UNION ALL
-                -- 8. Retur Penjualan
-                SELECT 'Retur Penjualan',
-                       tanggal_retur,
-                       jumlah_retur
-                FROM ReturPenjualan
+                                    UNION ALL
 
-                UNION ALL
-                -- 9. Retur Pembelian
-                SELECT 'Retur Pembelian',
-                       tanggal_retur,
-                       jumlah_retur
-                FROM ReturPembelian
+                                    /* ===== Biaya Administrasi ===== */
+                                    SELECT
+                                        'Biaya Administrasi',
+                                        tanggal,
+                                        jumlah_administrasi,
+                                        keterangan
+                                    FROM Administrasi
 
-                UNION ALL
-                -- 10. Persediaan Barang (Adjustment)
-                SELECT 'Persediaan Barang',
-                       tanggal,
-                       jumlah * harga_satuan
-                FROM PersediaanBarang
-                WHERE jenis_transaksi = 'ADJUSTMENT'
+                                    UNION ALL
 
-                UNION ALL
-                -- 11. Utang Usaha
-                SELECT 'Utang Usaha',
-                       tanggal_utang,
-                       jumlah_utang
-                FROM UtangUsaha
+                                    /* ===== Biaya Pemasaran ===== */
+                                    SELECT
+                                        'Biaya Pemasaran',
+                                        tanggal,
+                                        jumlah_pemasaran,
+                                        deskripsi
+                                    FROM BiayaPemasaran
 
-                UNION ALL
-                -- 12. Modal
-                SELECT 'Modal',
-                       tanggal,
-                       jumlah
-                FROM Modal
+                                    UNION ALL
 
-            ) x ON x.menu = m.nama_menu
+                                    /* ===== Pembelian Inventaris ===== */
+                                    SELECT
+                                        'Pembelian Inventaris',
+                                        tanggal_pembelian,
+                                        (jumlah * harga_satuan) + ongkos_kirim,
+                                        keterangan
+                                    FROM PembelianInventaris
 
-            WHERE strftime('%m', x.tanggal) = ?
-              AND strftime('%Y', x.tanggal) = ?
+                                    UNION ALL
 
-            ORDER BY x.tanggal
-        """;
+                                    /* ===== Retur Penjualan ===== */
+                                    SELECT
+                                        'Retur Penjualan',
+                                        tanggal_retur,
+                                        jumlah_retur,
+                                        keterangan_retur
+                                    FROM ReturPenjualan
 
-        try (Connection c = DatabaseConnection.connection();
-             PreparedStatement ps = c.prepareStatement(sql)) {
+                                    UNION ALL
 
-            ps.setString(1, bulan);
-            ps.setString(2, tahun);
+                                    /* ===== Retur Pembelian ===== */
+                                    SELECT
+                                        'Retur Pembelian',
+                                        tanggal_retur,
+                                        jumlah_retur,
+                                        keterangan_retur
+                                    FROM ReturPembelian
 
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(new JurnalPembukuan(
-                        LocalDate.parse(rs.getString("tanggal")),
-                        rs.getString("keterangan"),
-                        rs.getBigDecimal("debit"),
-                        rs.getBigDecimal("kredit")
-                ));
-            }
+                                    UNION ALL
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+                                    /* ===== Persediaan Barang ===== */
+                                    SELECT
+                                        'Persediaan Barang',
+                                        tanggal,
+                                        jumlah * harga_satuan,
+                                        keterangan
+                                    FROM PersediaanBarang
+                                    WHERE jenis_transaksi = 'ADJUSTMENT'
 
-        return list;
-    }
+                                    UNION ALL
+
+                                    /* ===== Utang Usaha ===== */
+                                    SELECT
+                                        'Utang Usaha',
+                                        tanggal_utang,
+                                        jumlah_utang,
+                                        keterangan
+                                    FROM UtangUsaha
+
+                                ) x ON x.menu = m.nama_menu
+
+                                WHERE substr(x.tanggal,1,4) = ?
+                                  AND substr(x.tanggal,6,2) = ?
+
+                                ORDER BY x.tanggal
+                            """;
+
+              try (Connection c = DatabaseConnection.connection();
+                            PreparedStatement ps = c.prepareStatement(sql)) {
+
+                     ps.setString(1, tahun);
+                     ps.setString(2, bulan);
+
+                     ResultSet rs = ps.executeQuery();
+                     while (rs.next()) {
+                            list.add(new JurnalPembukuan(
+                                          LocalDate.parse(rs.getString("tanggal")),
+                                          rs.getString("nama_menu"),
+                                          rs.getString("keterangan"),
+                                          rs.getBigDecimal("debit"),
+                                          rs.getBigDecimal("kredit")));
+                     }
+
+              } catch (SQLException e) {
+                     e.printStackTrace();
+              }
+
+              return list;
+       }
 }

@@ -6,32 +6,33 @@
 <VBox xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.pembukuan_cv_abba_barokah.Controller.CashflowPenjualanController"
-      spacing="20"
-      alignment="CENTER"
+      spacing="24"
       stylesheets="@Global.css"
       styleClass="content">
 
-    <Label text="Cashflow Penjualan Bulanan"
-           style="-fx-font-size: 22px; -fx-font-weight: bold"/>
+    <HBox alignment="CENTER">
+        <Label text="Cashflow Penjualan Barang Bulanan"
+               style="-fx-font-size: 24px; -fx-font-weight: bold"/>
+    </HBox>
 
-    <HBox spacing="10" alignment="CENTER">
+    <HBox spacing="12" alignment="CENTER">
         <Label text="Bulan"/>
-        <ComboBox fx:id="cbBulan" prefWidth="80"/>
+        <ComboBox fx:id="cbBulan"/>
         <Label text="Tahun"/>
-        <ComboBox fx:id="cbTahun" prefWidth="100"/>
+        <ComboBox fx:id="cbTahun"/>
         <Button text="Tampilkan" onAction="#loadData"/>
     </HBox>
 
-    <TableView fx:id="table" prefHeight="420" maxWidth="900">
-
+    <TableView fx:id="table" prefHeight="480">
         <columns>
             <TableColumn fx:id="colTanggal" text="Tanggal" prefWidth="120"/>
-            <TableColumn fx:id="colNoFaktur" text="No Faktur" prefWidth="150"/>
-            <TableColumn fx:id="colPenjualan" text="Nominal Penjualan" prefWidth="200"/>
-            <TableColumn fx:id="colPembayaran" text="Nominal Pembayaran" prefWidth="200"/>
-            <TableColumn fx:id="colPph" text="PPh 11%" prefWidth="150"/>
+            <TableColumn fx:id="colFaktur" text="No Faktur" prefWidth="140"/>
+            <TableColumn fx:id="colPenjualan" text="Nominal Penjualan" prefWidth="160"/>
+            <TableColumn fx:id="colPembayaran" text="Nominal Pembayaran" prefWidth="160"/>
+            <TableColumn fx:id="colLaba" text="Laba" prefWidth="140"/>
+            <TableColumn fx:id="colPph" text="PPh 11%" prefWidth="140"/>
+            <TableColumn fx:id="colId" text="ID Penjualan" prefWidth="120"/>
         </columns>
-
     </TableView>
 
 </VBox>

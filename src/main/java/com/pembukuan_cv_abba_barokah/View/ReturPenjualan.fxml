@@ -52,13 +52,9 @@
                     <ComboBox fx:id="cbJenis"
                               GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
-                    <Label text="Tanggal Pengembalian" GridPane.rowIndex="7"/>
-                    <DatePicker fx:id="tanggalPengembalianField"
-                                GridPane.rowIndex="7" GridPane.columnIndex="1"/>
-
-                    <Label text="ID Penjualan" GridPane.rowIndex="8"/>
+                    <Label text="ID Penjualan" GridPane.rowIndex="7"/>
                     <ComboBox fx:id="cbIdPenjualan"
-                              GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+                              GridPane.rowIndex="7" GridPane.columnIndex="1"/>
                 </children>
             </GridPane>
 

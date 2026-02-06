@@ -18,7 +18,6 @@ public class ReturPenjualanController {
     @FXML private TextField keteranganReturField;
     @FXML private ComboBox<ReturPenjualan.StatusRetur> cbStatus;
     @FXML private ComboBox<ReturPenjualan.JenisPengembalian> cbJenis;
-    @FXML private DatePicker tanggalPengembalianField;
     @FXML private ComboBox<Integer> cbIdPenjualan;
 
     @FXML private TableView<ReturPenjualan> tableRetur;
@@ -42,9 +41,7 @@ public class ReturPenjualanController {
         cbJenis.setItems(FXCollections.observableArrayList(
                 ReturPenjualan.JenisPengembalian.values()));
 
-        cbIdPenjualan.setItems(FXCollections.observableArrayList(
-                penjualanService.getAll().stream().map(p -> p.getId()).toList()
-        ));
+        refreshComboIdPenjualan();
 
         colNo.setCellValueFactory(c ->
                 new javafx.beans.property.SimpleStringProperty(c.getValue().getNoRetur()));
@@ -72,8 +69,24 @@ public class ReturPenjualanController {
         data.setAll(service.getAll());
     }
 
+    private void refreshComboIdPenjualan() {
+        cbIdPenjualan.setItems(FXCollections.observableArrayList(
+                penjualanService.getAll().stream()
+                        .map(p -> p.getId())
+                        .filter(id -> !service.sudahAdaUntukPenjualan(id))
+                        .toList()
+        ));
+    }
+
     @FXML
     private void handleSimpan() {
+
+        int idPenjualan = cbIdPenjualan.getValue();
+
+        if (service.sudahAdaUntukPenjualan(idPenjualan)) {
+            alert("Duplikat", "Retur untuk penjualan ini sudah ada.");
+            return;
+        }
 
         ReturPenjualan r = new ReturPenjualan(
                 noReturField.getText(),
@@ -83,12 +96,12 @@ public class ReturPenjualanController {
                 keteranganReturField.getText(),
                 cbStatus.getValue(),
                 cbJenis.getValue(),
-                tanggalPengembalianField.getValue(),
-                cbIdPenjualan.getValue()
+                idPenjualan
         );
 
         service.simpan(r);
         loadData();
+        refreshComboIdPenjualan();
         clearForm();
     }
 
@@ -96,7 +109,7 @@ public class ReturPenjualanController {
     private void handleUpdate() {
         if (selected == null) return;
 
-        ReturPenjualan r = new ReturPenjualan(
+        selected = new ReturPenjualan(
                 selected.getId(),
                 noReturField.getText(),
                 tanggalReturField.getValue(),
@@ -105,11 +118,10 @@ public class ReturPenjualanController {
                 keteranganReturField.getText(),
                 cbStatus.getValue(),
                 cbJenis.getValue(),
-                tanggalPengembalianField.getValue(),
-                cbIdPenjualan.getValue()
+                selected.getIdPenjualan() // FK TETAP
         );
 
-        service.update(r);
+        service.update(selected);
         loadData();
         clearForm();
     }
@@ -117,13 +129,16 @@ public class ReturPenjualanController {
     @FXML
     private void handleHapus() {
         if (selected == null) return;
+
         service.hapus(selected.getId());
         loadData();
+        refreshComboIdPenjualan();
         clearForm();
     }
 
     private void isiForm(ReturPenjualan r) {
         if (r == null) return;
+
         selected = r;
 
         noReturField.setText(r.getNoRetur());
@@ -133,8 +148,8 @@ public class ReturPenjualanController {
         keteranganReturField.setText(r.getKeteranganRetur());
         cbStatus.setValue(r.getStatusRetur());
         cbJenis.setValue(r.getJenisPengembalian());
-        tanggalPengembalianField.setValue(r.getTanggalPengembalian());
         cbIdPenjualan.setValue(r.getIdPenjualan());
+        cbIdPenjualan.setDisable(true);
     }
 
     private void clearForm() {
@@ -144,9 +159,18 @@ public class ReturPenjualanController {
         alasanReturField.clear();
         keteranganReturField.clear();
         tanggalReturField.setValue(null);
-        tanggalPengembalianField.setValue(null);
         cbStatus.getSelectionModel().clearSelection();
         cbJenis.getSelectionModel().clearSelection();
-        cbIdPenjualan.getSelectionModel().clearSelection();
+        cbIdPenjualan.setValue(null);
+        cbIdPenjualan.setDisable(false);
+        tableRetur.getSelectionModel().clearSelection();
+    }
+
+    private void alert(String t, String m) {
+        Alert a = new Alert(Alert.AlertType.WARNING);
+        a.setTitle(t);
+        a.setHeaderText(null);
+        a.setContentText(m);
+        a.showAndWait();
     }
 }

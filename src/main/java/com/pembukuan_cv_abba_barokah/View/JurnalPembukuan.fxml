@@ -6,15 +6,17 @@
 <VBox xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.pembukuan_cv_abba_barokah.Controller.JurnalPembukuanController"
-      spacing="24"
+      spacing="20"
       stylesheets="@Global.css"
       styleClass="content">
 
+    <!-- ===== TITLE ===== -->
     <HBox alignment="CENTER">
         <Label text="Jurnal Pembukuan Bulanan"
                style="-fx-font-size: 24px; -fx-font-weight: bold"/>
     </HBox>
 
+    <!-- ===== FILTER ===== -->
     <HBox spacing="12" alignment="CENTER">
         <Label text="Bulan"/>
         <ComboBox fx:id="cbBulan"/>
@@ -23,13 +25,38 @@
         <Button text="Tampilkan" onAction="#loadData"/>
     </HBox>
 
-    <TableView fx:id="table" prefHeight="460">
+    <!-- ===== TABLE ===== -->
+    <TableView fx:id="table" prefHeight="420">
         <columns>
-            <TableColumn fx:id="colTanggal" text="Tanggal" prefWidth="140"/>
-            <TableColumn fx:id="colKeterangan" text="Keterangan" prefWidth="260"/>
+            <TableColumn fx:id="colTanggal" text="Tanggal" prefWidth="120"/>
+            <TableColumn fx:id="colMenu" text="Akun" prefWidth="220"/>
+            <TableColumn fx:id="colKeterangan" text="Keterangan" prefWidth="300"/>
             <TableColumn fx:id="colDebit" text="Debit (Rp)" prefWidth="160"/>
             <TableColumn fx:id="colKredit" text="Kredit (Rp)" prefWidth="160"/>
         </columns>
     </TableView>
+
+    <!-- ===== TOTAL ===== -->
+    <HBox alignment="CENTER_RIGHT"
+          spacing="32"
+          style="-fx-padding: 10 4 0 4;">
+
+        <HBox spacing="8">
+            <Label text="Total Debit :" style="-fx-font-weight: bold"/>
+            <Label fx:id="lblTotalDebit"/>
+        </HBox>
+
+        <HBox spacing="8">
+            <Label text="Total Kredit :" style="-fx-font-weight: bold"/>
+            <Label fx:id="lblTotalKredit"/>
+        </HBox>
+
+        <HBox spacing="8">
+            <Label text="Saldo :" style="-fx-font-weight: bold"/>
+            <Label fx:id="lblSaldo"
+                   style="-fx-font-weight: bold; -fx-text-fill: #1e40af"/>
+        </HBox>
+
+    </HBox>
 
 </VBox>
