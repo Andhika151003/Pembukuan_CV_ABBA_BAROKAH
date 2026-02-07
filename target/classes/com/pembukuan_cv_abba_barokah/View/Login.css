@@ -69,15 +69,17 @@
 
 /* ================= BUTTON ================= */
 .login-button {
-    -fx-pref-width: 100%;
-    -fx-padding: 10;
-    -fx-margin: 10;
+    -fx-max-width: Infinity;
 
-    -fx-background-radius: 10;
+    -fx-padding: 6 12;      /* ⬅ kecilkan vertical padding */
+    -fx-min-height: 34;     /* ⬅ kontrol tinggi minimum */
+    -fx-pref-height: 34;    /* ⬅ paksa tinggi konsisten */
+
+    -fx-background-radius: 8;
     -fx-background-color: #4f46e5;
 
-    -fx-text-fill: #ffffff;
-    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
     -fx-font-weight: bold;
 
     -fx-cursor: hand;

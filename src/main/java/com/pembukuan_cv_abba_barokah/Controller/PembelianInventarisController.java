@@ -3,8 +3,7 @@ package com.pembukuan_cv_abba_barokah.Controller;
 import com.pembukuan_cv_abba_barokah.Model.PembelianInventaris;
 import com.pembukuan_cv_abba_barokah.Service.PembelianInventarisService;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.collections.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -14,7 +13,6 @@ public class PembelianInventarisController {
 
     @FXML private DatePicker tanggalField;
     @FXML private TextField noPembelianField;
-    @FXML private TextField jenisInventarisField;
     @FXML private TextField namaBarangField;
     @FXML private TextField jumlahField;
     @FXML private TextField satuanField;
@@ -23,36 +21,60 @@ public class PembelianInventarisController {
     @FXML private TextField keteranganField;
 
     @FXML private TableView<PembelianInventaris> tableInventaris;
-    @FXML private TableColumn<PembelianInventaris, String> colNoPembelian;
-    @FXML private TableColumn<PembelianInventaris, String> colNamaBarang;
-    @FXML private TableColumn<PembelianInventaris, Integer> colJumlah;
-    @FXML private TableColumn<PembelianInventaris, BigDecimal> colHarga;
 
-    private final PembelianInventarisService service = new PembelianInventarisService();
-    private final ObservableList<PembelianInventaris> data = FXCollections.observableArrayList();
+    @FXML private TableColumn<PembelianInventaris,String> colNo;
+    @FXML private TableColumn<PembelianInventaris,String> colNama;
+    @FXML private TableColumn<PembelianInventaris,Integer> colJumlah;
+    @FXML private TableColumn<PembelianInventaris,String> colSatuan;
+    @FXML private TableColumn<PembelianInventaris,BigDecimal> colHarga;
+    @FXML private TableColumn<PembelianInventaris,BigDecimal> colOngkir;
+    @FXML private TableColumn<PembelianInventaris,BigDecimal> colTotal;
+
+    private final PembelianInventarisService service =
+            new PembelianInventarisService();
+
+    private final ObservableList<PembelianInventaris> data =
+            FXCollections.observableArrayList();
 
     private PembelianInventaris selected;
 
     @FXML
     public void initialize() {
-        colNoPembelian.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleStringProperty(c.getValue().getNoPembelian()));
 
-        colNamaBarang.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleStringProperty(c.getValue().getNamaBarang()));
+        colNo.setCellValueFactory(c ->
+                new javafx.beans.property.SimpleStringProperty(
+                        c.getValue().getNoPembelian()));
+
+        colNama.setCellValueFactory(c ->
+                new javafx.beans.property.SimpleStringProperty(
+                        c.getValue().getNamaBarang()));
 
         colJumlah.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleObjectProperty<>(c.getValue().getJumlah()));
+                new javafx.beans.property.SimpleObjectProperty<>(
+                        c.getValue().getJumlah()));
+
+        colSatuan.setCellValueFactory(c ->
+                new javafx.beans.property.SimpleStringProperty(
+                        c.getValue().getSatuan()));
 
         colHarga.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleObjectProperty<>(c.getValue().getHargaSatuan()));
+                new javafx.beans.property.SimpleObjectProperty<>(
+                        c.getValue().getHargaSatuan()));
+
+        colOngkir.setCellValueFactory(c ->
+                new javafx.beans.property.SimpleObjectProperty<>(
+                        c.getValue().getOngkosKirim()));
+
+        colTotal.setCellValueFactory(c ->
+                new javafx.beans.property.SimpleObjectProperty<>(
+                        c.getValue().getTotal()));
 
         tableInventaris.setItems(data);
         loadData();
 
         tableInventaris.getSelectionModel()
                 .selectedItemProperty()
-                .addListener((obs, oldVal, newVal) -> isiForm(newVal));
+                .addListener((obs,o,n)-> isiForm(n));
     }
 
     private void loadData() {
@@ -61,9 +83,9 @@ public class PembelianInventarisController {
 
     @FXML
     private void handleSimpan() {
+
         PembelianInventaris pi = new PembelianInventaris(
                 noPembelianField.getText(),
-                jenisInventarisField.getText(),
                 namaBarangField.getText(),
                 Integer.parseInt(jumlahField.getText()),
                 satuanField.getText(),
@@ -80,12 +102,12 @@ public class PembelianInventarisController {
 
     @FXML
     private void handleUpdate() {
+
         if (selected == null) return;
 
-        PembelianInventaris pi = new PembelianInventaris(
+        selected = new PembelianInventaris(
                 selected.getId(),
                 noPembelianField.getText(),
-                jenisInventarisField.getText(),
                 namaBarangField.getText(),
                 Integer.parseInt(jumlahField.getText()),
                 satuanField.getText(),
@@ -95,14 +117,16 @@ public class PembelianInventarisController {
                 tanggalField.getValue()
         );
 
-        service.update(pi);
+        service.update(selected);
         loadData();
         clearForm();
     }
 
     @FXML
     private void handleHapus() {
+
         if (selected == null) return;
+
         service.hapus(selected.getId());
         loadData();
         clearForm();
@@ -110,10 +134,10 @@ public class PembelianInventarisController {
 
     private void isiForm(PembelianInventaris pi) {
         if (pi == null) return;
+
         selected = pi;
 
         noPembelianField.setText(pi.getNoPembelian());
-        jenisInventarisField.setText(pi.getJenisInventaris());
         namaBarangField.setText(pi.getNamaBarang());
         jumlahField.setText(String.valueOf(pi.getJumlah()));
         satuanField.setText(pi.getSatuan());
@@ -126,7 +150,6 @@ public class PembelianInventarisController {
     private void clearForm() {
         selected = null;
         noPembelianField.clear();
-        jenisInventarisField.clear();
         namaBarangField.clear();
         jumlahField.clear();
         satuanField.clear();

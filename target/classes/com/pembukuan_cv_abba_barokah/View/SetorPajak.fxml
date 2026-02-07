@@ -10,65 +10,72 @@
       spacing="24"
       styleClass="content">
 
-    <!-- ================= TITLE ================= -->
+    <!-- TITLE -->
     <HBox alignment="CENTER">
         <Label text="Setor Pajak"
                style="-fx-font-size: 24px; -fx-font-weight: bold;" />
     </HBox>
 
-    <!-- ================= FORM ================= -->
+    <!-- FORM -->
     <StackPane>
-        <VBox maxWidth="600" styleClass="card">
+        <VBox maxWidth="700"
+              spacing="18"
+              styleClass="card">
 
-            <GridPane styleClass="form-grid">
+            <GridPane hgap="15" vgap="12">
+
                 <columnConstraints>
                     <ColumnConstraints prefWidth="160"/>
                     <ColumnConstraints/>
                 </columnConstraints>
 
-                <children>
+                <Label text="Tanggal Setor"/>
+                <DatePicker fx:id="tanggalField"
+                            GridPane.columnIndex="1"/>
 
-                    <Label text="Tanggal Setor"/>
-                    <DatePicker fx:id="tanggalField"
-                                GridPane.columnIndex="1"/>
+                <Label text="Jenis Pajak"
+                       GridPane.rowIndex="1"/>
+                <ComboBox fx:id="cbJenisPajak"
+                          prefWidth="250"
+                          GridPane.rowIndex="1"
+                          GridPane.columnIndex="1"/>
 
-                    <Label text="Jenis Pajak"
-                           GridPane.rowIndex="1"/>
-                    <ComboBox fx:id="cbJenisPajak"
-                              GridPane.rowIndex="1"
-                              GridPane.columnIndex="1"/>
+                <Label text="Jumlah Pajak"
+                       GridPane.rowIndex="2"/>
+                <TextField fx:id="jumlahField"
+                           promptText="Masukkan jumlah pajak"
+                           GridPane.rowIndex="2"
+                           GridPane.columnIndex="1"/>
 
-                    <Label text="Jumlah Pajak"
-                           GridPane.rowIndex="2"/>
-                    <TextField fx:id="jumlahField"
-                               GridPane.rowIndex="2"
-                               GridPane.columnIndex="1"/>
+                <Label text="Keterangan"
+                       GridPane.rowIndex="3"/>
+                <TextArea fx:id="keteranganField"
+                          prefRowCount="3"
+                          wrapText="true"
+                          GridPane.rowIndex="3"
+                          GridPane.columnIndex="1"/>
 
-                    <Label text="Periode"
-                           GridPane.rowIndex="3"/>
-                    <TextField fx:id="periodeField"
-                               GridPane.rowIndex="3"
-                               GridPane.columnIndex="1"/>
+                <Label text="Bukti Setor"
+                       GridPane.rowIndex="4"/>
 
-                    <Label text="Bukti Setor"
-                           GridPane.rowIndex="4"/>
+                <HBox spacing="10"
+                      GridPane.rowIndex="4"
+                      GridPane.columnIndex="1">
+
                     <TextField fx:id="buktiField"
-                               GridPane.rowIndex="4"
-                               GridPane.columnIndex="1"/>
+                               editable="false"
+                               HBox.hgrow="ALWAYS"
+                               promptText="Belum ada file dipilih"/>
 
-                    <Label text="ID Penjualan"
-                           GridPane.rowIndex="5"/>
-                    <ComboBox fx:id="cbIdPenjualan"
-                              GridPane.rowIndex="5"
-                              GridPane.columnIndex="1"/>
+                    <Button text="Browse"
+                            onAction="#handleBrowse"/>
+                </HBox>
 
-                </children>
             </GridPane>
 
-            <!-- ================= BUTTON ================= -->
             <HBox spacing="12"
                   alignment="CENTER_RIGHT"
-                  style="-fx-padding: 18 0 0 0;">
+                  style="-fx-padding: 10 0 0 0;">
 
                 <Button text="Simpan"
                         onAction="#handleSimpan"/>
@@ -85,30 +92,32 @@
         </VBox>
     </StackPane>
 
-    <!-- ================= TABLE ================= -->
+    <!-- TABLE -->
     <TableView fx:id="tablePajak"
-               prefHeight="320">
+               prefHeight="380">
 
         <columns>
+
             <TableColumn fx:id="colTanggal"
                          text="Tanggal"
                          prefWidth="120"/>
 
             <TableColumn fx:id="colJenis"
                          text="Jenis Pajak"
-                         prefWidth="140"/>
+                         prefWidth="130"/>
 
             <TableColumn fx:id="colJumlah"
                          text="Jumlah Pajak"
-                         prefWidth="120"/>
+                         prefWidth="140"/>
 
-            <TableColumn fx:id="colPeriode"
-                         text="Periode"
-                         prefWidth="120"/>
+            <TableColumn fx:id="colKeterangan"
+                         text="Keterangan"
+                         prefWidth="200"/>
 
-            <TableColumn fx:id="colIdPenjualan"
-                         text="ID Penjualan"
-                         prefWidth="120"/>
+            <TableColumn fx:id="colBukti"
+                         text="Bukti"
+                         prefWidth="100"/>
+
         </columns>
 
     </TableView>

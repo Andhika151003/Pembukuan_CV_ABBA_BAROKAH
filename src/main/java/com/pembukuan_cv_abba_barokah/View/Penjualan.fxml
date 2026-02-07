@@ -10,106 +10,78 @@
       spacing="24"
       styleClass="content">
 
-    <!-- ===================== TITLE ===================== -->
     <HBox alignment="CENTER">
         <Label text="Data Penjualan"
                style="-fx-font-size: 24px; -fx-font-weight: bold;" />
     </HBox>
 
-    <!-- ===================== FORM ===================== -->
     <StackPane>
         <VBox maxWidth="800" styleClass="card">
 
-            <GridPane styleClass="form-grid">
+            <GridPane hgap="15" vgap="12">
                 <columnConstraints>
                     <ColumnConstraints prefWidth="160"/>
                     <ColumnConstraints/>
                 </columnConstraints>
 
-                <children>
-                    <!-- NO FAKTUR -->
-                    <Label text="No Faktur"/>
-                    <TextField fx:id="txtNoFaktur"
-                               GridPane.columnIndex="1"/>
+                <Label text="No Faktur"/>
+                <TextField fx:id="txtNoFaktur"
+                           GridPane.columnIndex="1"/>
 
-                    <!-- TANGGAL -->
-                    <Label text="Tanggal" GridPane.rowIndex="1"/>
-                    <DatePicker fx:id="dpTanggal"
-                                GridPane.rowIndex="1"
-                                GridPane.columnIndex="1"/>
+                <Label text="Tanggal" GridPane.rowIndex="1"/>
+                <DatePicker fx:id="dpTanggal"
+                            GridPane.rowIndex="1"
+                            GridPane.columnIndex="1"/>
 
-                    <!-- CUSTOMER -->
-                    <Label text="Nama Customer" GridPane.rowIndex="2"/>
-                    <TextField fx:id="txtNamaCustomer"
-                               GridPane.rowIndex="2"
-                               GridPane.columnIndex="1"/>
+                <Label text="Nama Customer" GridPane.rowIndex="2"/>
+                <TextField fx:id="txtNamaCustomer"
+                           GridPane.rowIndex="2"
+                           GridPane.columnIndex="1"/>
 
-                    <!-- ALAMAT -->
-                    <Label text="Alamat Customer" GridPane.rowIndex="3"/>
-                    <TextField fx:id="txtAlamatCustomer"
-                               GridPane.rowIndex="3"
-                               GridPane.columnIndex="1"/>
+                <Label text="Alamat Customer" GridPane.rowIndex="3"/>
+                <TextField fx:id="txtAlamatCustomer"
+                           GridPane.rowIndex="3"
+                           GridPane.columnIndex="1"/>
 
-                    <!-- TOTAL -->
-                    <Label text="Total Penjualan" GridPane.rowIndex="4"/>
-                    <TextField fx:id="txtTotal"
-                               GridPane.rowIndex="4"
-                               GridPane.columnIndex="1"/>
+                <Label text="Total Penjualan" GridPane.rowIndex="4"/>
+                <TextField fx:id="txtTotal"
+                           GridPane.rowIndex="4"
+                           GridPane.columnIndex="1"/>
 
-                    <!-- METODE -->
-                    <Label text="Metode Pembayaran" GridPane.rowIndex="5"/>
-                    <ComboBox fx:id="cbMetode"
-                              GridPane.rowIndex="5"
-                              GridPane.columnIndex="1"/>
-
-                    <!-- STATUS -->
-                    <Label text="Status Pembayaran" GridPane.rowIndex="6"/>
-                    <ComboBox fx:id="cbStatus"
-                              GridPane.rowIndex="6"
-                              GridPane.columnIndex="1"/>
-
-                    <!-- KETERANGAN -->
-                    <Label text="Keterangan" GridPane.rowIndex="7"/>
-                    <TextArea fx:id="txtKeterangan"
-                              prefRowCount="3"
-                              GridPane.rowIndex="7"
-                              GridPane.columnIndex="1"/>
-                </children>
+                <Label text="Keterangan" GridPane.rowIndex="5"/>
+                <TextArea fx:id="txtKeterangan"
+                          prefRowCount="3"
+                          GridPane.rowIndex="5"
+                          GridPane.columnIndex="1"/>
             </GridPane>
 
-            <!-- ===================== BUTTON ===================== -->
             <HBox spacing="12"
                   alignment="CENTER_RIGHT"
                   style="-fx-padding: 18 0 0 0;">
-                <Button text="Simpan"
-                        onAction="#handleSimpan"/>
-                <Button text="Update"
-                        onAction="#handleUpdate"/>
+                <Button text="Simpan" onAction="#handleSimpan"/>
+                <Button text="Update" onAction="#handleUpdate"/>
                 <Button text="Hapus"
-                        onAction="#handleDelete" styleClass="button-danger"/>
+                        onAction="#handleDelete"
+                        styleClass="button-danger"/>
             </HBox>
 
         </VBox>
     </StackPane>
 
-    <!-- ===================== TABLE ===================== -->
     <TableView fx:id="tablePenjualan" prefHeight="360">
         <columns>
             <TableColumn fx:id="colNoFaktur"
                          text="No Faktur"
-                         prefWidth="140"/>
-
+                         prefWidth="150"/>
             <TableColumn fx:id="colCustomer"
                          text="Customer"
                          prefWidth="200"/>
-
+            <TableColumn fx:id="colTanggal"
+                         text="Tanggal"
+                         prefWidth="130"/>
             <TableColumn fx:id="colTotal"
                          text="Total"
-                         prefWidth="140"/>
-
-            <TableColumn fx:id="colStatus"
-                         text="Status"
-                         prefWidth="140"/>
+                         prefWidth="150"/>
         </columns>
     </TableView>
 

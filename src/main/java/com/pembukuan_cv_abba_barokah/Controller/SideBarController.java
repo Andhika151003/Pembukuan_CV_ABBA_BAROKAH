@@ -54,6 +54,11 @@ public class SideBarController {
     }
 
     @FXML
+    private void openPemeliharaan() {
+        loadContent("/com/pembukuan_cv_abba_barokah/View/BiayaPemeliharaan.fxml");
+    }
+
+    @FXML
     private void openAdministrasi() {
         loadContent("/com/pembukuan_cv_abba_barokah/View/BiayaAdministrasi.fxml");
     }
@@ -84,6 +89,21 @@ public class SideBarController {
     }
 
     @FXML
+    private void openPelunasanUtang() {
+        loadContent("/com/pembukuan_cv_abba_barokah/View/PelunasanUtang.fxml");
+    }
+
+    @FXML
+    private void openPiutang() {
+        loadContent("/com/pembukuan_cv_abba_barokah/View/PiutangUsaha.fxml");
+    }
+
+    @FXML
+    private void openPelunasanPiutang() {
+        loadContent("/com/pembukuan_cv_abba_barokah/View/PelunasanPiutang.fxml");
+    }
+
+    @FXML
     private void openModal() {
         loadContent("/com/pembukuan_cv_abba_barokah/View/Modal.fxml");
     }
@@ -91,11 +111,6 @@ public class SideBarController {
     @FXML
     private void openRekap() {
         loadContent("/com/pembukuan_cv_abba_barokah/View/RekapTotal.fxml");
-    }
-
-    @FXML
-    private void openPph() {
-        loadContent("/com/pembukuan_cv_abba_barokah/View/Pph.fxml");
     }
 
     @FXML

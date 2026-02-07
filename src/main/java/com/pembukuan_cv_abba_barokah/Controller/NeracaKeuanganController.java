@@ -11,51 +11,79 @@ import java.util.Locale;
 
 public class NeracaKeuanganController {
 
-    @FXML private ComboBox<String> cbTahun;
+    @FXML
+    private ComboBox<String> cbTahun;
 
-    @FXML private Label lblBank;
-    @FXML private Label lblPiutang;
-    @FXML private Label lblPersediaan;
-    @FXML private Label lblTotalAsetLancar;
+    // ASET
+    @FXML
+    private Label lblBank;
+    @FXML
+    private Label lblPiutang;
+    @FXML
+    private Label lblPersediaan;
+    @FXML
+    private Label lblJumlahAsetLancar;
 
-    @FXML private Label lblInventaris;
-    @FXML private Label lblTotalAsetTidakLancar;
+    @FXML
+    private Label lblInventaris;
+    @FXML
+    private Label lblJumlahAsetTidakLancar;
+    @FXML
+    private Label lblTotalAset;
 
-    @FXML private Label lblJumlahAset;
-    @FXML private Label lblUtangUsaha;
-    @FXML private Label lblEkuitas;
-    @FXML private Label lblJumlahKewajibanEkuitas;
+    // KEWAJIBAN
+    @FXML
+    private Label lblUtang;
+    @FXML
+    private Label lblTotalKewajiban;
+
+    // EKUITAS
+    @FXML
+    private Label lblEkuitas;
+    @FXML
+    private Label lblModal;
+    @FXML
+    private Label lblTotalEkuitas;
+    @FXML
+    private Label lblJumlahKewajibanEkuitas;
 
     private final NeracaKeuanganService service = new NeracaKeuanganService();
-    private final NumberFormat rupiah =
-            NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
 
     @FXML
     public void initialize() {
-        cbTahun.getItems().addAll("2024", "2025", "2026");
+        cbTahun.getItems().addAll("2025", "2026", "2027");
         cbTahun.setValue("2026");
         loadData();
     }
 
     @FXML
-    private void loadData() {
+    public void loadData() {
 
-        lblBank.setText(format(service.bankSaldo()));
-        lblPiutang.setText(format(service.piutangUsaha()));
-        lblPersediaan.setText(format(service.persediaanBarang()));
-        lblTotalAsetLancar.setText(format(service.totalAsetLancar()));
+        String tahun = cbTahun.getValue();
 
-        lblInventaris.setText(format(service.totalInventaris()));
-        lblTotalAsetTidakLancar.setText(format(service.totalAsetTidakLancar()));
+        lblBank.setText(rp(service.bank(tahun)));
+        lblPiutang.setText(rp(service.piutang(tahun)));
+        lblPersediaan.setText(rp(service.persediaan(tahun)));
+        lblJumlahAsetLancar.setText(rp(service.asetLancar(tahun)));
 
-        lblJumlahAset.setText(format(service.totalAset()));
+        lblInventaris.setText(rp(service.inventaris(tahun)));
+        lblJumlahAsetTidakLancar.setText(rp(service.asetTidakLancar(tahun)));
+        lblTotalAset.setText(rp(service.totalAset(tahun)));
 
-        lblUtangUsaha.setText(format(service.totalUtangUsaha()));
-        lblEkuitas.setText(format(service.ekuitas()));
-        lblJumlahKewajibanEkuitas.setText(format(service.jumlahKewajibanDanEkuitas()));
+        lblUtang.setText(rp(service.utang(tahun)));
+        lblTotalKewajiban.setText(rp(service.totalKewajiban(tahun)));
+
+        lblEkuitas.setText(rp(service.ekuitas(tahun)));
+        lblModal.setText(rp(service.modal(tahun)));
+        lblTotalEkuitas.setText(rp(service.totalEkuitas(tahun)));
+        lblJumlahKewajibanEkuitas.setText(
+                rp(service.jumlahKewajibanDanEkuitas(tahun)));
+
     }
 
-    private String format(BigDecimal nilai) {
-        return rupiah.format(nilai);
+    private String rp(BigDecimal value) {
+        return NumberFormat
+                .getCurrencyInstance(new Locale("id", "ID"))
+                .format(value);
     }
 }

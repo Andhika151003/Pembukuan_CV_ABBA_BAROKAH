@@ -21,10 +21,6 @@ public class SetorPajakService {
         return dao.delete(id);
     }
 
-    public boolean sudahAdaUntukPenjualan(int idPenjualan) {
-        return dao.existsByIdPenjualan(idPenjualan);
-    }
-
     public List<SetorPajak> getAll() {
         return dao.getAll();
     }

@@ -12,68 +12,65 @@
 
     <HBox alignment="CENTER">
         <Label text="Utang Usaha"
-               style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+               style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
     </HBox>
 
     <StackPane>
-        <VBox maxWidth="700" styleClass="card">
+        <VBox maxWidth="800" spacing="20" styleClass="card">
 
-            <GridPane styleClass="form-grid">
+            <GridPane hgap="16" vgap="14">
                 <columnConstraints>
-                    <ColumnConstraints prefWidth="180"/>
-                    <ColumnConstraints/>
+                    <ColumnConstraints prefWidth="200"/>
+                    <ColumnConstraints prefWidth="480"/>
                 </columnConstraints>
 
-                <children>
-                    <Label text="No Utang"/>
-                    <TextField fx:id="noUtangField" GridPane.columnIndex="1"/>
+                <Label text="No Utang"/>
+                <TextField fx:id="noUtangField"
+                           GridPane.columnIndex="1"/>
 
-                    <Label text="Tanggal Utang" GridPane.rowIndex="1"/>
-                    <DatePicker fx:id="tanggalUtangField"
-                                GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <Label text="Tanggal Utang"
+                       GridPane.rowIndex="1"/>
+                <DatePicker fx:id="tanggalUtangField"
+                            GridPane.rowIndex="1"
+                            GridPane.columnIndex="1"/>
 
-                    <Label text="Tanggal Jatuh Tempo" GridPane.rowIndex="2"/>
-                    <DatePicker fx:id="tanggalJatuhTempoField"
-                                GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <Label text="Jumlah Utang"
+                       GridPane.rowIndex="2"/>
+                <TextField fx:id="jumlahUtangField"
+                           GridPane.rowIndex="2"
+                           GridPane.columnIndex="1"/>
 
-                    <Label text="Jumlah Utang" GridPane.rowIndex="3"/>
-                    <TextField fx:id="jumlahUtangField"
-                               GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                <Label text="Pemberi Utang"
+                       GridPane.rowIndex="3"/>
+                <TextField fx:id="pemberiUtangField"
+                           GridPane.rowIndex="3"
+                           GridPane.columnIndex="1"/>
 
-                    <Label text="Jumlah Dibayar" GridPane.rowIndex="4"/>
-                    <TextField fx:id="jumlahDibayarField"
-                               GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-
-                    <Label text="Status Utang" GridPane.rowIndex="5"/>
-                    <ComboBox fx:id="cbStatus"
-                              GridPane.rowIndex="5" GridPane.columnIndex="1"/>
-
-                    <Label text="Keterangan" GridPane.rowIndex="6"/>
-                    <TextField fx:id="keteranganField"
-                               GridPane.rowIndex="6" GridPane.columnIndex="1"/>
-
-                    <Label text="ID Pembelian" GridPane.rowIndex="7"/>
-                    <ComboBox fx:id="cbIdPembelian"
-                              GridPane.rowIndex="7" GridPane.columnIndex="1"/>
-                </children>
+                <Label text="Keterangan"
+                       GridPane.rowIndex="4"/>
+                <TextField fx:id="keteranganField"
+                           GridPane.rowIndex="4"
+                           GridPane.columnIndex="1"/>
             </GridPane>
 
-            <HBox spacing="12" alignment="CENTER_RIGHT"
-                  style="-fx-padding: 18 0 0 0;">
+            <HBox spacing="12" alignment="CENTER_RIGHT">
                 <Button text="Simpan" onAction="#handleSimpan"/>
                 <Button text="Update" onAction="#handleUpdate"/>
-                <Button text="Hapus" styleClass="button-danger"
+                <Button text="Hapus"
+                        styleClass="button-danger"
                         onAction="#handleHapus"/>
             </HBox>
 
         </VBox>
     </StackPane>
 
-    <TableView fx:id="tableUtang" prefHeight="360">
+    <TableView fx:id="tableUtang" prefHeight="380">
         <columns>
-            <TableColumn fx:id="colNo" text="No Utang" prefWidth="160"/>
-            <TableColumn fx:id="colStatus" text="Status" prefWidth="120"/>
-            <TableColumn fx:id="colIdPembelian" text="ID Pembelian" prefWidth="160"/>
+            <TableColumn fx:id="colNo" text="No Utang" prefWidth="150"/>
+            <TableColumn fx:id="colTanggal" text="Tanggal" prefWidth="120"/>
+            <TableColumn fx:id="colJumlah" text="Jumlah" prefWidth="150"/>
+            <TableColumn fx:id="colPemberi" text="Pemberi Utang" prefWidth="180"/>
+            <TableColumn fx:id="colKeterangan" text="Keterangan" prefWidth="200"/>
         </columns>
     </TableView>
 

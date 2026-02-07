@@ -2,24 +2,29 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
 <VBox xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.pembukuan_cv_abba_barokah.Controller.NeracaKeuanganController"
       spacing="25"
-      styleClass="content"
       stylesheets="@Global.css"
+      styleClass="content"
       alignment="TOP_CENTER">
 
-    <Label text="LAPORAN NERACA KEUANGAN"
-           style="-fx-font-size:22px;-fx-font-weight:bold" alignment="CENTER"/>
+    <!-- ================= JUDUL ================= -->
+    <Label text="NERACA KEUANGAN"
+           style="-fx-font-size:22px; -fx-font-weight:bold;"
+           alignment="CENTER"/>
 
+    <!-- ================= FILTER ================= -->
     <HBox spacing="10" alignment="CENTER">
-        <Label text="Tahun:"/>
-        <ComboBox fx:id="cbTahun"/>
+        <Label text="Tahun"/>
+        <ComboBox fx:id="cbTahun" prefWidth="120"/>
         <Button text="Tampilkan" onAction="#loadData"/>
     </HBox>
 
+    <!-- ================= IDENTITAS ================= -->
     <VBox spacing="4" alignment="CENTER_LEFT">
         <Label text="Nama   : CV. ABBA BAROKAH"/>
         <Label text="NPWP   : 92.357.426.3-612.000"/>
@@ -28,106 +33,97 @@
 
     <Separator/>
 
-    <GridPane alignment="CENTER" vgap="18">
-
-    <!-- ================= ASET LANCAR ================= -->
-    <Label text="ASET LANCAR"
-           GridPane.rowIndex="0"
-           style="-fx-font-weight:bold"/>
-
-    <GridPane GridPane.rowIndex="1"
-              hgap="40" vgap="8"
-              alignment="CENTER">
+    <!-- ================= ISI NERACA ================= -->
+    <GridPane alignment="CENTER" hgap="80" vgap="8">
 
         <columnConstraints>
-            <ColumnConstraints prefWidth="220"/>
+            <ColumnConstraints prefWidth="420"/>
+            <ColumnConstraints prefWidth="180" halignment="RIGHT"/>
+            <ColumnConstraints prefWidth="60"/>
+            <ColumnConstraints prefWidth="420"/>
             <ColumnConstraints prefWidth="180" halignment="RIGHT"/>
         </columnConstraints>
 
-        <Label text="Bank (Saldo Jurnal)"/>
-        <Label fx:id="lblBank" GridPane.columnIndex="1"/>
+        <!-- ================= ASET ================= -->
+        <Label text="ASET"
+               style="-fx-font-weight:bold;"
+               GridPane.rowIndex="0"
+               GridPane.columnSpan="2"
+               GridPane.halignment="CENTER">
+            <GridPane.margin>
+                <Insets bottom="12"/>
+            </GridPane.margin>
+        </Label>
 
-        <Label text="Piutang Usaha" GridPane.rowIndex="1"/>
-        <Label fx:id="lblPiutang" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        <Label text="Bank" GridPane.rowIndex="1"/>
+        <Label fx:id="lblBank" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-        <Label text="Persediaan Barang" GridPane.rowIndex="2"/>
-        <Label fx:id="lblPersediaan" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        <Label text="Piutang Usaha" GridPane.rowIndex="2"/>
+        <Label fx:id="lblPiutang" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-        <Label text="TOTAL ASET LANCAR"
-               GridPane.rowIndex="3"
-               style="-fx-font-weight:bold"/>
-        <Label fx:id="lblTotalAsetLancar"
-               GridPane.rowIndex="3"
-               GridPane.columnIndex="1"
-               style="-fx-font-weight:bold"/>
-    </GridPane>
+        <Label text="Persediaan Barang" GridPane.rowIndex="3"/>
+        <Label fx:id="lblPersediaan" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-    <Separator GridPane.rowIndex="2"/>
+        <Label text="Jumlah Aset Lancar" GridPane.rowIndex="4"/>
+        <Label fx:id="lblJumlahAsetLancar" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
-    <!-- ================= ASET TIDAK LANCAR ================= -->
-    <Label text="ASET TIDAK LANCAR"
-           GridPane.rowIndex="3"
-           style="-fx-font-weight:bold"/>
+        <Label text="Pembelian Inventaris" GridPane.rowIndex="5"/>
+        <Label fx:id="lblInventaris" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 
-    <GridPane GridPane.rowIndex="4"
-              hgap="40" vgap="8"
-              alignment="CENTER">
+        <Label text="Jumlah Aset Tidak Lancar" GridPane.rowIndex="6"/>
+        <Label fx:id="lblJumlahAsetTidakLancar" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
-        <columnConstraints>
-            <ColumnConstraints prefWidth="220"/>
-            <ColumnConstraints prefWidth="180" halignment="RIGHT"/>
-        </columnConstraints>
-
-        <Label text="Inventaris"/>
-        <Label fx:id="lblInventaris" GridPane.columnIndex="1"/>
-
-        <Label text="TOTAL ASET TIDAK LANCAR"
-               GridPane.rowIndex="1"
-               style="-fx-font-weight:bold"/>
-        <Label fx:id="lblTotalAsetTidakLancar"
-               GridPane.rowIndex="1"
-               GridPane.columnIndex="1"
-               style="-fx-font-weight:bold"/>
-    </GridPane>
-
-    <Separator GridPane.rowIndex="5"/>
-
-    <!-- ================= TOTAL ================= -->
-    <GridPane GridPane.rowIndex="6"
-              hgap="40" vgap="8"
-              alignment="CENTER">
-
-        <columnConstraints>
-            <ColumnConstraints prefWidth="220"/>
-            <ColumnConstraints prefWidth="180" halignment="RIGHT"/>
-        </columnConstraints>
-
-        <Label text="JUMLAH ASET"
-               style="-fx-font-weight:bold"/>
-        <Label fx:id="lblJumlahAset"
-               GridPane.columnIndex="1"
-               style="-fx-font-weight:bold"/>
-
-        <Label text="Utang Usaha" GridPane.rowIndex="1"/>
-        <Label fx:id="lblUtangUsaha"
-               GridPane.rowIndex="1"
+        <Label text="TOTAL ASET"
+               style="-fx-font-weight:bold;"
+               GridPane.rowIndex="7"/>
+        <Label fx:id="lblTotalAset"
+               style="-fx-font-weight:bold;"
+               GridPane.rowIndex="7"
                GridPane.columnIndex="1"/>
 
-        <Label text="Ekuitas" GridPane.rowIndex="2"/>
-        <Label fx:id="lblEkuitas"
-               GridPane.rowIndex="2"
-               GridPane.columnIndex="1"/>
+        <!-- ================= KEWAJIBAN & EKUITAS ================= -->
+        <Label text="KEWAJIBAN DAN EKUITAS"
+               style="-fx-font-weight:bold;"
+               GridPane.rowIndex="0"
+               GridPane.columnIndex="3"
+               GridPane.columnSpan="2"
+               GridPane.halignment="CENTER">
+            <GridPane.margin>
+                <Insets bottom="12"/>
+            </GridPane.margin>
+        </Label>
 
-        <Label text="Jumlah Kewajiban dan Ekuitas"
-               GridPane.rowIndex="3"
-               style="-fx-font-weight:bold"/>
+        <Label text="Utang Usaha" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+        <Label fx:id="lblUtang" GridPane.rowIndex="1" GridPane.columnIndex="4"/>
+
+        <Label text="TOTAL KEWAJIBAN" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+        <Label fx:id="lblTotalKewajiban" GridPane.rowIndex="2" GridPane.columnIndex="4"/>
+
+        <Label text="Ekuitas" GridPane.rowIndex="3" GridPane.columnIndex="3"/>
+        <Label fx:id="lblEkuitas" GridPane.rowIndex="3" GridPane.columnIndex="4"/>
+
+        <Label text="Modal" GridPane.rowIndex="4" GridPane.columnIndex="3"/>
+        <Label fx:id="lblModal" GridPane.rowIndex="4" GridPane.columnIndex="4"/>
+
+        <Label text="TOTAL EKUITAS"
+               style="-fx-font-weight:bold;"
+               GridPane.rowIndex="5"
+               GridPane.columnIndex="3"/>
+        <Label fx:id="lblTotalEkuitas"
+               style="-fx-font-weight:bold;"
+               GridPane.rowIndex="5"
+               GridPane.columnIndex="4"/>
+
+        <Label text="JUMLAH KEWAJIBAN DAN EKUITAS"
+               style="-fx-font-weight:bold;"
+               GridPane.rowIndex="6"
+               GridPane.columnIndex="3"/>
+
         <Label fx:id="lblJumlahKewajibanEkuitas"
-               GridPane.rowIndex="3"
-               GridPane.columnIndex="1"
-               style="-fx-font-weight:bold"/>
+               style="-fx-font-weight:bold;"
+               GridPane.rowIndex="6"
+               GridPane.columnIndex="4"/>
+
     </GridPane>
-
-</GridPane>
-
 
 </VBox>

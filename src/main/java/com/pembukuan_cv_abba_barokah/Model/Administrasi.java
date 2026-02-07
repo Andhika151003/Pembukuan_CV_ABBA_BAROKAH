@@ -6,40 +6,37 @@ import java.time.LocalDate;
 public class Administrasi {
 
     public enum JenisAdministrasi {
-        GAJI_PEGAWAI, LAIN_LAIN
+        GAJI_PEGAWAI,
+        LAIN_LAIN
     }
 
     private int id;
     private LocalDate tanggal;
     private JenisAdministrasi jenisAdministrasi;
-    private String deskripsi;
     private BigDecimal jumlahAdministrasi;
     private String keterangan;
 
-    public Administrasi(
-            int id,
+    // SELECT
+    public Administrasi(int id,
             LocalDate tanggal,
             JenisAdministrasi jenisAdministrasi,
-            String deskripsi,
             BigDecimal jumlahAdministrasi,
             String keterangan) {
 
         this.id = id;
         this.tanggal = tanggal;
         this.jenisAdministrasi = jenisAdministrasi;
-        this.deskripsi = deskripsi;
         this.jumlahAdministrasi = jumlahAdministrasi;
         this.keterangan = keterangan;
     }
 
-    public Administrasi(
-            LocalDate tanggal,
+    // INSERT
+    public Administrasi(LocalDate tanggal,
             JenisAdministrasi jenisAdministrasi,
-            String deskripsi,
             BigDecimal jumlahAdministrasi,
             String keterangan) {
 
-        this(0, tanggal, jenisAdministrasi, deskripsi, jumlahAdministrasi, keterangan);
+        this(0, tanggal, jenisAdministrasi, jumlahAdministrasi, keterangan);
     }
 
     public int getId() {
@@ -54,15 +51,27 @@ public class Administrasi {
         return jenisAdministrasi;
     }
 
-    public String getDeskripsi() {
-        return deskripsi;
-    }
-
     public BigDecimal getJumlahAdministrasi() {
         return jumlahAdministrasi;
     }
 
     public String getKeterangan() {
         return keterangan;
+    }
+
+    public void setTanggal(LocalDate v) {
+        this.tanggal = v;
+    }
+
+    public void setJenisAdministrasi(JenisAdministrasi v) {
+        this.jenisAdministrasi = v;
+    }
+
+    public void setJumlahAdministrasi(BigDecimal v) {
+        this.jumlahAdministrasi = v;
+    }
+
+    public void setKeterangan(String v) {
+        this.keterangan = v;
     }
 }

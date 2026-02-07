@@ -10,13 +10,14 @@ import java.util.List;
 
 public class AdministrasiDao {
 
+    /* ================= INSERT ================= */
     public boolean save(Administrasi ads) {
 
         String sql = """
                     INSERT INTO Administrasi
-                    (tanggal, jenis_administrasi, deskripsi,
-                    jumlah_administrasi, keterangan)
-                    VALUES (?, ?, ?, ?, ?)
+                    (tanggal, jenis_administrasi,
+                     jumlah_administrasi, keterangan)
+                    VALUES (?, ?, ?, ?)
                 """;
 
         try (Connection c = DatabaseConnection.connection();
@@ -24,21 +25,22 @@ public class AdministrasiDao {
 
             ps.setString(1, ads.getTanggal().toString());
             ps.setString(2, ads.getJenisAdministrasi().name());
-            ps.setString(3, ads.getDeskripsi());
-            ps.setBigDecimal(4, ads.getJumlahAdministrasi());
-            ps.setString(5, ads.getKeterangan());
+            ps.setBigDecimal(3, ads.getJumlahAdministrasi());
+            ps.setString(4, ads.getKeterangan());
 
             return ps.executeUpdate() > 0;
+
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
 
+    /* ================= SELECT ================= */
     public List<Administrasi> getAll() {
 
         List<Administrasi> list = new ArrayList<>();
-        String sql = "SELECT * FROM Administrasi";
+        String sql = "SELECT * FROM Administrasi ORDER BY tanggal DESC";
 
         try (Connection c = DatabaseConnection.connection();
                 PreparedStatement ps = c.prepareStatement(sql);
@@ -50,7 +52,6 @@ public class AdministrasiDao {
                         LocalDate.parse(rs.getString("tanggal")),
                         Administrasi.JenisAdministrasi.valueOf(
                                 rs.getString("jenis_administrasi").toUpperCase()),
-                        rs.getString("deskripsi"),
                         rs.getBigDecimal("jumlah_administrasi"),
                         rs.getString("keterangan")));
             }
@@ -58,16 +59,17 @@ public class AdministrasiDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return list;
     }
 
+    /* ================= UPDATE ================= */
     public boolean update(Administrasi ads) {
 
         String sql = """
-                    UPDATE Administrasi
-                    SET tanggal = ?,
+                    UPDATE Administrasi SET
+                        tanggal = ?,
                         jenis_administrasi = ?,
-                        deskripsi = ?,
                         jumlah_administrasi = ?,
                         keterangan = ?
                     WHERE id = ?
@@ -78,18 +80,19 @@ public class AdministrasiDao {
 
             ps.setString(1, ads.getTanggal().toString());
             ps.setString(2, ads.getJenisAdministrasi().name());
-            ps.setString(3, ads.getDeskripsi());
-            ps.setBigDecimal(4, ads.getJumlahAdministrasi());
-            ps.setString(5, ads.getKeterangan());
-            ps.setInt(6, ads.getId());
+            ps.setBigDecimal(3, ads.getJumlahAdministrasi());
+            ps.setString(4, ads.getKeterangan());
+            ps.setInt(5, ads.getId());
 
             return ps.executeUpdate() > 0;
+
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
 
+    /* ================= DELETE ================= */
     public boolean delete(int id) {
 
         String sql = "DELETE FROM Administrasi WHERE id = ?";
@@ -99,6 +102,7 @@ public class AdministrasiDao {
 
             ps.setInt(1, id);
             return ps.executeUpdate() > 0;
+
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

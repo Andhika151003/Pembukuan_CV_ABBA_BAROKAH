@@ -106,6 +106,51 @@ public class UserController {
         }
     }
 
+    /* ================= DELETE ALL USER ================= */
+    @FXML
+    private void handleDeleteAllUsers() {
+
+        // Cek apakah ada user
+        if (userService.getAllUsers().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Informasi");
+            alert.setHeaderText(null);
+            alert.setContentText("Tidak ada data user untuk dihapus!");
+            alert.showAndWait();
+            return;
+        }
+
+        // Konfirmasi hapus
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Konfirmasi");
+        confirm.setHeaderText("Hapus Semua User");
+        confirm.setContentText("Apakah Anda yakin ingin menghapus semua data user?");
+
+        if (confirm.showAndWait().get() == ButtonType.OK) {
+
+            boolean berhasil = true;
+
+            for (User user : userService.getAllUsers()) {
+                if (!userService.deleteUser(user.getId())) {
+                    berhasil = false;
+                    break;
+                }
+            }
+
+            Alert result = new Alert(Alert.AlertType.INFORMATION);
+            result.setTitle("Hasil");
+            result.setHeaderText(null);
+
+            if (berhasil) {
+                result.setContentText("Semua data user berhasil dihapus!");
+            } else {
+                result.setContentText("Terjadi kesalahan saat menghapus user.");
+            }
+
+            result.showAndWait();
+        }
+    }
+
     /* ================= NAVIGATION ================= */
     @FXML
     private void goToLogin(ActionEvent event) {

@@ -10,12 +10,16 @@ import java.util.Locale;
 
 public class PajakBelumDisetorController {
 
-    @FXML private Label lblTotalPph;
-    @FXML private Label lblTotalSetor;
-    @FXML private Label lblBelumDisetor;
+    @FXML
+    private Label lblTotalPph;
+    @FXML
+    private Label lblTotalSetor;
+    @FXML
+    private Label lblBelumDisetor;
 
-    private final PajakBelumDisetorService service =
-            new PajakBelumDisetorService();
+    private final PajakBelumDisetorService service = new PajakBelumDisetorService();
+
+    private final NumberFormat rupiah = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
 
     @FXML
     public void initialize() {
@@ -28,14 +32,8 @@ public class PajakBelumDisetorController {
         BigDecimal totalSetor = service.totalSetorPajak();
         BigDecimal belumDisetor = service.pajakBelumDisetor();
 
-        lblTotalPph.setText(rupiah(totalPph));
-        lblTotalSetor.setText(rupiah(totalSetor));
-        lblBelumDisetor.setText(rupiah(belumDisetor));
-    }
-
-    private String rupiah(BigDecimal value) {
-        NumberFormat format =
-                NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
-        return format.format(value);
+        lblTotalPph.setText(rupiah.format(totalPph));
+        lblTotalSetor.setText(rupiah.format(totalSetor));
+        lblBelumDisetor.setText(rupiah.format(belumDisetor));
     }
 }

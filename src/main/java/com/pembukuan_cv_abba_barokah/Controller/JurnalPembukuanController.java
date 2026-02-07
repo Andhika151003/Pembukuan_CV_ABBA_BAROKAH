@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -32,7 +33,6 @@ public class JurnalPembukuanController {
         @FXML
         private TableColumn<JurnalPembukuan, BigDecimal> colKredit;
 
-        /* ===== TOTAL LABEL ===== */
         @FXML
         private Label lblTotalDebit;
         @FXML
@@ -51,6 +51,7 @@ public class JurnalPembukuanController {
                 cbBulan.setItems(FXCollections.observableArrayList(
                                 "01", "02", "03", "04", "05", "06",
                                 "07", "08", "09", "10", "11", "12"));
+
                 cbTahun.setItems(FXCollections.observableArrayList("2025", "2026", "2027"));
 
                 cbBulan.setValue("02");
@@ -71,6 +72,32 @@ public class JurnalPembukuanController {
                 colKredit.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(
                                 c.getValue().getKredit()));
 
+                /* ================= FORMAT RUPIAH DI TABLE ================= */
+
+                colDebit.setCellFactory(column -> new TableCell<>() {
+                        @Override
+                        protected void updateItem(BigDecimal item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty || item == null) {
+                                        setText(null);
+                                } else {
+                                        setText(rupiah.format(item));
+                                }
+                        }
+                });
+
+                colKredit.setCellFactory(column -> new TableCell<>() {
+                        @Override
+                        protected void updateItem(BigDecimal item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty || item == null) {
+                                        setText(null);
+                                } else {
+                                        setText(rupiah.format(item));
+                                }
+                        }
+                });
+
                 table.setItems(data);
                 loadData();
         }
@@ -84,8 +111,6 @@ public class JurnalPembukuanController {
 
                 hitungTotal();
         }
-
-        /* ================= HITUNG TOTAL ================= */
 
         private void hitungTotal() {
 

@@ -9,6 +9,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class CashflowPenjualanController {
 
@@ -37,12 +39,15 @@ public class CashflowPenjualanController {
         private final CashflowPenjualanService service = new CashflowPenjualanService();
         private final ObservableList<CashflowPenjualan> data = FXCollections.observableArrayList();
 
+        private final NumberFormat rupiah = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+
         @FXML
         public void initialize() {
 
                 cbBulan.setItems(FXCollections.observableArrayList(
                                 "01", "02", "03", "04", "05", "06",
                                 "07", "08", "09", "10", "11", "12"));
+
                 cbTahun.setItems(FXCollections.observableArrayList("2025", "2026", "2027"));
 
                 cbBulan.setValue("02");
@@ -69,8 +74,29 @@ public class CashflowPenjualanController {
                 colId.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(
                                 c.getValue().getIdPenjualan()));
 
+                /* ================= FORMAT RUPIAH ================= */
+
+                colPenjualan.setCellFactory(column -> createRupiahCell());
+                colPembayaran.setCellFactory(column -> createRupiahCell());
+                colLaba.setCellFactory(column -> createRupiahCell());
+                colPph.setCellFactory(column -> createRupiahCell());
+
                 table.setItems(data);
                 loadData();
+        }
+
+        private TableCell<CashflowPenjualan, BigDecimal> createRupiahCell() {
+                return new TableCell<>() {
+                        @Override
+                        protected void updateItem(BigDecimal item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty || item == null) {
+                                        setText(null);
+                                } else {
+                                        setText(rupiah.format(item));
+                                }
+                        }
+                };
         }
 
         @FXML

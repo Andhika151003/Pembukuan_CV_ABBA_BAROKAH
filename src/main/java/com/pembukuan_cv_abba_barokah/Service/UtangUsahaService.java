@@ -21,10 +21,6 @@ public class UtangUsahaService {
         return dao.delete(id);
     }
 
-    public boolean sudahAdaUntukPembelian(int idPembelian) {
-        return dao.existsByIdPembelian(idPembelian);
-    }
-
     public List<UtangUsaha> getAll() {
         return dao.getAll();
     }

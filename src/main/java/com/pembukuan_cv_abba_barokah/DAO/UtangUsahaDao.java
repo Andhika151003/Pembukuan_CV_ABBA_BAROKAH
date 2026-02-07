@@ -10,70 +10,23 @@ import java.util.List;
 
 public class UtangUsahaDao {
 
-    /* ===== UNIQUE CHECK ===== */
-    public boolean existsByIdPembelian(int idPembelian) {
-
-        String sql = "SELECT 1 FROM UtangUsaha WHERE id_pembelian = ?";
-
-        try (Connection c = DatabaseConnection.connection();
-             PreparedStatement ps = c.prepareStatement(sql)) {
-
-            ps.setInt(1, idPembelian);
-            return ps.executeQuery().next();
-
-        } catch (SQLException e) {
-            return false;
-        }
-    }
-
-    /* ===== INSERT ===== */
     public boolean save(UtangUsaha u) {
 
         String sql = """
-            INSERT INTO UtangUsaha
-            (no_utang, tanggal_utang, tanggal_jatuh_tempo,
-             jumlah_utang, jumlah_dibayar,
-             status_utang, keterangan, id_pembelian)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        """;
+                    INSERT INTO UtangUsaha
+                    (no_utang, tanggal_utang, jumlah_utang,
+                     pemberi_utang, keterangan)
+                    VALUES (?, ?, ?, ?, ?)
+                """;
 
         try (Connection c = DatabaseConnection.connection();
-             PreparedStatement ps = c.prepareStatement(sql)) {
-
-            map(ps, u);
-            return ps.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            return false;
-        }
-    }
-
-    /* ===== UPDATE ===== */
-    public boolean update(UtangUsaha u) {
-
-        String sql = """
-            UPDATE UtangUsaha SET
-                no_utang = ?,
-                tanggal_utang = ?,
-                tanggal_jatuh_tempo = ?,
-                jumlah_utang = ?,
-                jumlah_dibayar = ?,
-                status_utang = ?,
-                keterangan = ?
-            WHERE id = ?
-        """;
-
-        try (Connection c = DatabaseConnection.connection();
-             PreparedStatement ps = c.prepareStatement(sql)) {
+                PreparedStatement ps = c.prepareStatement(sql)) {
 
             ps.setString(1, u.getNoUtang());
             ps.setString(2, u.getTanggalUtang().toString());
-            ps.setString(3, u.getTanggalJatuhTempo().toString());
-            ps.setBigDecimal(4, u.getJumlahUtang());
-            ps.setBigDecimal(5, u.getJumlahDibayar());
-            ps.setString(6, u.getStatusUtang().name());
-            ps.setString(7, u.getKeterangan());
-            ps.setInt(8, u.getId());
+            ps.setBigDecimal(3, u.getJumlahUtang());
+            ps.setString(4, u.getPemberiUtang());
+            ps.setString(5, u.getKeterangan());
 
             return ps.executeUpdate() > 0;
 
@@ -82,12 +35,39 @@ public class UtangUsahaDao {
         }
     }
 
-    /* ===== DELETE ===== */
+    public boolean update(UtangUsaha u) {
+
+        String sql = """
+                    UPDATE UtangUsaha SET
+                        no_utang = ?,
+                        tanggal_utang = ?,
+                        jumlah_utang = ?,
+                        pemberi_utang = ?,
+                        keterangan = ?
+                    WHERE id = ?
+                """;
+
+        try (Connection c = DatabaseConnection.connection();
+                PreparedStatement ps = c.prepareStatement(sql)) {
+
+            ps.setString(1, u.getNoUtang());
+            ps.setString(2, u.getTanggalUtang().toString());
+            ps.setBigDecimal(3, u.getJumlahUtang());
+            ps.setString(4, u.getPemberiUtang());
+            ps.setString(5, u.getKeterangan());
+            ps.setInt(6, u.getId());
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
     public boolean delete(int id) {
 
         try (Connection c = DatabaseConnection.connection();
-             PreparedStatement ps =
-                     c.prepareStatement("DELETE FROM UtangUsaha WHERE id = ?")) {
+                PreparedStatement ps = c.prepareStatement("DELETE FROM UtangUsaha WHERE id=?")) {
 
             ps.setInt(1, id);
             return ps.executeUpdate() > 0;
@@ -97,44 +77,29 @@ public class UtangUsahaDao {
         }
     }
 
-    /* ===== SELECT ===== */
     public List<UtangUsaha> getAll() {
 
         List<UtangUsaha> list = new ArrayList<>();
         String sql = "SELECT * FROM UtangUsaha";
 
         try (Connection c = DatabaseConnection.connection();
-             PreparedStatement ps = c.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+                PreparedStatement ps = c.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 list.add(new UtangUsaha(
                         rs.getInt("id"),
                         rs.getString("no_utang"),
                         LocalDate.parse(rs.getString("tanggal_utang")),
-                        LocalDate.parse(rs.getString("tanggal_jatuh_tempo")),
                         rs.getBigDecimal("jumlah_utang"),
-                        rs.getBigDecimal("jumlah_dibayar"),
-                        UtangUsaha.StatusUtang.valueOf(
-                                rs.getString("status_utang").toUpperCase().replace(" ", "_")),
-                        rs.getString("keterangan"),
-                        rs.getInt("id_pembelian")
-                ));
+                        rs.getString("pemberi_utang"),
+                        rs.getString("keterangan")));
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return list;
-    }
 
-    private void map(PreparedStatement ps, UtangUsaha u) throws SQLException {
-        ps.setString(1, u.getNoUtang());
-        ps.setString(2, u.getTanggalUtang().toString());
-        ps.setString(3, u.getTanggalJatuhTempo().toString());
-        ps.setBigDecimal(4, u.getJumlahUtang());
-        ps.setBigDecimal(5, u.getJumlahDibayar());
-        ps.setString(6, u.getStatusUtang().name());
-        ps.setString(7, u.getKeterangan());
-        ps.setInt(8, u.getIdPembelian());
+        return list;
     }
 }

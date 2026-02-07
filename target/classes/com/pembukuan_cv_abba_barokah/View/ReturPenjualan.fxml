@@ -10,72 +10,111 @@
       spacing="24"
       styleClass="content">
 
+    <!-- ================= TITLE ================= -->
     <HBox alignment="CENTER">
         <Label text="Retur Penjualan"
-               style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+               style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
     </HBox>
 
+    <!-- ================= FORM ================= -->
     <StackPane>
-        <VBox maxWidth="700" styleClass="card">
+        <VBox maxWidth="800"
+              spacing="20"
+              styleClass="card">
 
-            <GridPane styleClass="form-grid">
+            <GridPane hgap="16"
+                      vgap="14">
+
                 <columnConstraints>
-                    <ColumnConstraints prefWidth="180"/>
-                    <ColumnConstraints/>
+                    <ColumnConstraints prefWidth="200"/>
+                    <ColumnConstraints prefWidth="480"/>
                 </columnConstraints>
 
-                <children>
-                    <Label text="No Retur"/>
-                    <TextField fx:id="noReturField" GridPane.columnIndex="1"/>
+                <!-- No Retur -->
+                <Label text="No Retur"/>
+                <TextField fx:id="noReturField"
+                           promptText="Contoh: RT-001"
+                           GridPane.columnIndex="1"/>
 
-                    <Label text="Tanggal Retur" GridPane.rowIndex="1"/>
-                    <DatePicker fx:id="tanggalReturField"
-                                GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <!-- Tanggal Retur -->
+                <Label text="Tanggal Retur"
+                       GridPane.rowIndex="1"/>
+                <DatePicker fx:id="tanggalReturField"
+                            GridPane.rowIndex="1"
+                            GridPane.columnIndex="1"/>
 
-                    <Label text="Jumlah Retur" GridPane.rowIndex="2"/>
-                    <TextField fx:id="jumlahReturField"
-                               GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <!-- Jumlah Retur -->
+                <Label text="Jumlah Retur"
+                       GridPane.rowIndex="2"/>
+                <TextField fx:id="jumlahReturField"
+                           promptText="Masukkan angka"
+                           GridPane.rowIndex="2"
+                           GridPane.columnIndex="1"/>
 
-                    <Label text="Alasan Retur" GridPane.rowIndex="3"/>
-                    <TextField fx:id="alasanReturField"
-                               GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                <!-- Keterangan -->
+                <Label text="Keterangan Retur"
+                       GridPane.rowIndex="3"/>
+                <TextField fx:id="keteranganReturField"
+                           GridPane.rowIndex="3"
+                           GridPane.columnIndex="1"/>
 
-                    <Label text="Keterangan" GridPane.rowIndex="4"/>
-                    <TextField fx:id="keteranganReturField"
-                               GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                <!-- ID Penjualan -->
+                <Label text="ID Penjualan"
+                       GridPane.rowIndex="4"/>
+                <ComboBox fx:id="cbIdPenjualan"
+                          GridPane.rowIndex="4"
+                          GridPane.columnIndex="1"/>
 
-                    <Label text="Status Retur" GridPane.rowIndex="5"/>
-                    <ComboBox fx:id="cbStatus"
-                              GridPane.rowIndex="5" GridPane.columnIndex="1"/>
-
-                    <Label text="Jenis Pengembalian" GridPane.rowIndex="6"/>
-                    <ComboBox fx:id="cbJenis"
-                              GridPane.rowIndex="6" GridPane.columnIndex="1"/>
-
-                    <Label text="ID Penjualan" GridPane.rowIndex="7"/>
-                    <ComboBox fx:id="cbIdPenjualan"
-                              GridPane.rowIndex="7" GridPane.columnIndex="1"/>
-                </children>
             </GridPane>
 
-            <HBox spacing="12" alignment="CENTER_RIGHT"
-                  style="-fx-padding: 18 0 0 0;">
-                <Button text="Simpan" onAction="#handleSimpan"/>
-                <Button text="Update" onAction="#handleUpdate"/>
-                <Button text="Hapus" styleClass="button-danger"
+            <!-- ================= BUTTON ================= -->
+            <HBox spacing="12"
+                  alignment="CENTER_RIGHT">
+
+                <Button text="Simpan"
+                        styleClass="button-primary"
+                        onAction="#handleSimpan"/>
+
+                <Button text="Update"
+                        onAction="#handleUpdate"/>
+
+                <Button text="Hapus"
+                        styleClass="button-danger"
                         onAction="#handleHapus"/>
+
             </HBox>
 
         </VBox>
     </StackPane>
 
-    <TableView fx:id="tableRetur" prefHeight="360">
+    <!-- ================= TABLE ================= -->
+    <TableView fx:id="tableRetur"
+               prefHeight="400">
+
         <columns>
-            <TableColumn fx:id="colNo" text="No Retur" prefWidth="160"/>
-            <TableColumn fx:id="colJumlah" text="Jumlah" prefWidth="100"/>
-            <TableColumn fx:id="colStatus" text="Status" prefWidth="120"/>
-            <TableColumn fx:id="colIdPenjualan" text="ID Penjualan" prefWidth="140"/>
+
+            <TableColumn fx:id="colNo"
+                         text="No Retur"
+                         prefWidth="150"/>
+
+            <TableColumn fx:id="colTanggal"
+                         text="Tanggal Retur"
+                         prefWidth="130"/>
+
+            <TableColumn fx:id="colJumlah"
+                         text="Jumlah Retur"
+                         prefWidth="120"/>
+
+            <TableColumn fx:id="colKeterangan"
+                         text="Keterangan"
+                         prefWidth="220"/>
+
+            <TableColumn fx:id="colIdPenjualan"
+                         text="ID Penjualan"
+                         prefWidth="140"/>
+
         </columns>
+
     </TableView>
 
 </VBox>

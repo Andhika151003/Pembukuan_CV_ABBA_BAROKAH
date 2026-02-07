@@ -11,13 +11,11 @@
       alignment="TOP_CENTER"
       styleClass="content">
 
-    <!-- ================= TITLE ================= -->
     <HBox alignment="CENTER">
-        <Label text="Pajak yang Belum Disetor"
+        <Label text="Pajak yang Belum Disetor 2026"
                style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
     </HBox>
 
-    <!-- ================= CARD ================= -->
     <VBox maxWidth="600" styleClass="card" spacing="16">
 
         <GridPane hgap="24" vgap="12">

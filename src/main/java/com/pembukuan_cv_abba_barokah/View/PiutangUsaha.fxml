@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.pembukuan_cv_abba_barokah.Controller.PiutangUsahaController"
+      stylesheets="@Global.css"
+      spacing="24"
+      styleClass="content">
+
+    <HBox alignment="CENTER">
+        <Label text="Piutang Usaha"
+               style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+    </HBox>
+
+    <StackPane>
+        <VBox maxWidth="800" spacing="20" styleClass="card">
+
+            <GridPane hgap="16" vgap="14">
+                <columnConstraints>
+                    <ColumnConstraints prefWidth="200"/>
+                    <ColumnConstraints prefWidth="480"/>
+                </columnConstraints>
+
+                <Label text="Tanggal"/>
+                <DatePicker fx:id="tanggalField"
+                            GridPane.columnIndex="1"/>
+
+                <Label text="Nomor Piutang"
+                       GridPane.rowIndex="1"/>
+                <TextField fx:id="nomorPiutangField"
+                           GridPane.rowIndex="1"
+                           GridPane.columnIndex="1"/>
+
+                <Label text="Jumlah Piutang"
+                       GridPane.rowIndex="2"/>
+                <TextField fx:id="jumlahField"
+                           GridPane.rowIndex="2"
+                           GridPane.columnIndex="1"/>
+
+                <Label text="Nama Penerima"
+                       GridPane.rowIndex="3"/>
+                <TextField fx:id="namaPenerimaField"
+                           GridPane.rowIndex="3"
+                           GridPane.columnIndex="1"/>
+
+                <Label text="Keterangan"
+                       GridPane.rowIndex="4"/>
+                <TextField fx:id="keteranganField"
+                           GridPane.rowIndex="4"
+                           GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <HBox spacing="12" alignment="CENTER_RIGHT">
+                <Button text="Simpan" onAction="#handleSimpan"/>
+                <Button text="Update" onAction="#handleUpdate"/>
+                <Button text="Hapus"
+                        styleClass="button-danger"
+                        onAction="#handleHapus"/>
+            </HBox>
+
+        </VBox>
+    </StackPane>
+
+    <TableView fx:id="tablePiutang" prefHeight="380">
+        <columns>
+            <TableColumn fx:id="colTanggal" text="Tanggal" prefWidth="120"/>
+            <TableColumn fx:id="colNomor" text="Nomor Piutang" prefWidth="150"/>
+            <TableColumn fx:id="colJumlah" text="Jumlah" prefWidth="150"/>
+            <TableColumn fx:id="colNama" text="Nama Penerima" prefWidth="200"/>
+            <TableColumn fx:id="colKeterangan" text="Keterangan" prefWidth="200"/>
+        </columns>
+    </TableView>
+
+</VBox>

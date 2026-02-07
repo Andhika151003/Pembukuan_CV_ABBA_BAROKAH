@@ -7,7 +7,7 @@
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.pembukuan_cv_abba_barokah.Controller.PembelianInventarisController"
       stylesheets="@Global.css"
-      spacing="28"
+      spacing="24"
       styleClass="content">
 
     <!-- ================= TITLE ================= -->
@@ -18,76 +18,87 @@
 
     <!-- ================= FORM ================= -->
     <StackPane>
-        <VBox maxWidth="720" styleClass="card" spacing="20">
+        <VBox maxWidth="850" spacing="20" styleClass="card">
 
-            <GridPane hgap="16" vgap="14" alignment="CENTER">
+            <GridPane hgap="16" vgap="14">
+
                 <columnConstraints>
                     <ColumnConstraints prefWidth="200"/>
-                    <ColumnConstraints prefWidth="420"/>
+                    <ColumnConstraints prefWidth="450"/>
                 </columnConstraints>
 
-                <!-- Tanggal -->
+                <!-- TANGGAL -->
                 <Label text="Tanggal Pembelian"/>
                 <DatePicker fx:id="tanggalField"
                             GridPane.columnIndex="1"/>
 
-                <!-- No Pembelian -->
-                <Label text="No Pembelian" GridPane.rowIndex="1"/>
+                <!-- NO PEMBELIAN -->
+                <Label text="No Pembelian"
+                       GridPane.rowIndex="1"/>
                 <TextField fx:id="noPembelianField"
+                           promptText="Contoh: PB-001"
                            GridPane.rowIndex="1"
                            GridPane.columnIndex="1"/>
 
-                <!-- Jenis Inventaris -->
-                <Label text="Jenis Inventaris" GridPane.rowIndex="2"/>
-                <TextField fx:id="jenisInventarisField"
+                <!-- NAMA BARANG -->
+                <Label text="Nama Barang"
+                       GridPane.rowIndex="2"/>
+                <TextField fx:id="namaBarangField"
                            GridPane.rowIndex="2"
                            GridPane.columnIndex="1"/>
 
-                <!-- Nama Barang -->
-                <Label text="Nama Barang" GridPane.rowIndex="3"/>
-                <TextField fx:id="namaBarangField"
+                <!-- JUMLAH -->
+                <Label text="Jumlah"
+                       GridPane.rowIndex="3"/>
+                <TextField fx:id="jumlahField"
+                           promptText="Masukkan angka"
                            GridPane.rowIndex="3"
                            GridPane.columnIndex="1"/>
 
-                <!-- Jumlah -->
-                <Label text="Jumlah" GridPane.rowIndex="4"/>
-                <TextField fx:id="jumlahField"
+                <!-- SATUAN -->
+                <Label text="Satuan"
+                       GridPane.rowIndex="4"/>
+                <TextField fx:id="satuanField"
+                           promptText="pcs / unit / set"
                            GridPane.rowIndex="4"
                            GridPane.columnIndex="1"/>
 
-                <!-- Satuan -->
-                <Label text="Satuan" GridPane.rowIndex="5"/>
-                <TextField fx:id="satuanField"
-                           promptText="pcs / unit / set"
+                <!-- HARGA SATUAN -->
+                <Label text="Harga Satuan"
+                       GridPane.rowIndex="5"/>
+                <TextField fx:id="hargaSatuanField"
+                           promptText="Masukkan nominal"
                            GridPane.rowIndex="5"
                            GridPane.columnIndex="1"/>
 
-                <!-- Harga Satuan -->
-                <Label text="Harga Satuan" GridPane.rowIndex="6"/>
-                <TextField fx:id="hargaSatuanField"
+                <!-- ONGKOS KIRIM -->
+                <Label text="Ongkos Kirim"
+                       GridPane.rowIndex="6"/>
+                <TextField fx:id="ongkosKirimField"
+                           promptText="0 jika tidak ada"
                            GridPane.rowIndex="6"
                            GridPane.columnIndex="1"/>
 
-                <!-- Ongkos Kirim -->
-                <Label text="Ongkos Kirim" GridPane.rowIndex="7"/>
-                <TextField fx:id="ongkosKirimField"
+                <!-- KETERANGAN -->
+                <Label text="Keterangan"
+                       GridPane.rowIndex="7"/>
+                <TextField fx:id="keteranganField"
                            GridPane.rowIndex="7"
                            GridPane.columnIndex="1"/>
 
-                <!-- Keterangan -->
-                <Label text="Keterangan" GridPane.rowIndex="8"/>
-                <TextField fx:id="keteranganField"
-                           GridPane.rowIndex="8"
-                           GridPane.columnIndex="1"/>
             </GridPane>
 
             <!-- ================= BUTTON ================= -->
-            <HBox spacing="12" alignment="CENTER_RIGHT">
+            <HBox spacing="12"
+                  alignment="CENTER_RIGHT">
+
                 <Button text="Simpan"
                         styleClass="button-primary"
                         onAction="#handleSimpan"/>
+
                 <Button text="Update"
                         onAction="#handleUpdate"/>
+
                 <Button text="Hapus"
                         styleClass="button-danger"
                         onAction="#handleHapus"/>
@@ -98,25 +109,38 @@
 
     <!-- ================= TABLE ================= -->
     <TableView fx:id="tableInventaris"
-               prefHeight="380"
-               styleClass="table-view">
+               prefHeight="400">
 
         <columns>
-            <TableColumn fx:id="colNoPembelian"
-                         text="No Pembelian"
-                         prefWidth="160"/>
 
-            <TableColumn fx:id="colNamaBarang"
+            <TableColumn fx:id="colNo"
+                         text="No Pembelian"
+                         prefWidth="140"/>
+
+            <TableColumn fx:id="colNama"
                          text="Nama Barang"
-                         prefWidth="260"/>
+                         prefWidth="220"/>
 
             <TableColumn fx:id="colJumlah"
                          text="Jumlah"
+                         prefWidth="80"/>
+
+            <TableColumn fx:id="colSatuan"
+                         text="Satuan"
                          prefWidth="100"/>
 
             <TableColumn fx:id="colHarga"
                          text="Harga Satuan"
-                         prefWidth="160"/>
+                         prefWidth="130"/>
+
+            <TableColumn fx:id="colOngkir"
+                         text="Ongkos Kirim"
+                         prefWidth="130"/>
+
+            <TableColumn fx:id="colTotal"
+                         text="Total"
+                         prefWidth="150"/>
+
         </columns>
 
     </TableView>

@@ -11,25 +11,29 @@
       styleClass="content">
 
     <HBox alignment="CENTER">
-        <Label text="Laporan Laba Rugi"
+        <Label text="Laba Rugi dan Pph 11%"
                style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
     </HBox>
 
     <TableView fx:id="table" VBox.vgrow="ALWAYS">
         <columns>
-            <TableColumn fx:id="colFaktur"
-                         text="No Faktur"
-                         prefWidth="180"/>
-            <TableColumn fx:id="colPenjualan"
-                         text="Total Penjualan"
-                         prefWidth="160"/>
-            <TableColumn fx:id="colHpp"
-                         text="Total HPP"
-                         prefWidth="160"/>
-            <TableColumn fx:id="colLaba"
-                         text="Laba / Rugi"
-                         prefWidth="160"/>
+        <TableColumn fx:id="colFaktur"
+                     text="No Faktur"
+                     prefWidth="150"/>
+        <TableColumn fx:id="colPenjualan"
+                     text="Total Penjualan"
+                     prefWidth="150"/>
+        <TableColumn fx:id="colHpp"
+                     text="Total HPP"
+                     prefWidth="150"/>
+        <TableColumn fx:id="colLaba"
+                     text="Laba / Rugi"
+                     prefWidth="150"/>
+        <TableColumn fx:id="colPph"
+                     text="PPh 11%"
+                     prefWidth="150"/>
         </columns>
     </TableView>
+
 
 </VBox>

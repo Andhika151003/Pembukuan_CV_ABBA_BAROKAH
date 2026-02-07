@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
 <StackPane xmlns="http://javafx.com/javafx/21"
            xmlns:fx="http://javafx.com/fxml"
@@ -10,12 +11,16 @@
            styleClass="root">
 
     <VBox alignment="CENTER"
-          spacing="14"
+          spacing="10"
           maxWidth="380"
           maxHeight="360"
           styleClass="login-card">
 
-        <Label text="Registrasi Akun" styleClass="title"/>
+        <Label text="Registrasi Akun" styleClass="title">
+                <VBox.margin>
+                   <Insets bottom="20"/>
+                </VBox.margin>
+        </Label>
 
         <TextField fx:id="regUsernameField"
                    promptText="Username"
@@ -25,11 +30,20 @@
                        promptText="Password"
                        styleClass="input"/>
 
-        <Button text="REGISTER"
+        <Button text="Registrasi"
                 onAction="#handleRegister"
-                styleClass="login-button"/>
+                styleClass="login-button"
+                maxWidth="Infinity">
+                <VBox.margin>
+                   <Insets top="20"/>
+                </VBox.margin>
+        </Button>
 
         <Label fx:id="regMessageLabel" styleClass="message"/>
+
+        <Hyperlink text="Hapus Semua User"
+           onAction="#handleDeleteAllUsers"
+           style="-fx-text-fill: red; -fx-underline: true;"/>
 
         <Button text="Kembali ke Login"
                 onAction="#goToLogin"

@@ -12,82 +12,140 @@ import java.math.BigDecimal;
 
 public class PersediaanBarangController {
 
-    @FXML private DatePicker tanggalField;
-    @FXML private TextField namaBarangField;
-    @FXML private TextField satuanField;
-    @FXML private ComboBox<PersediaanBarang.JenisTransaksi> cbJenis;
-    @FXML private TextField jumlahField;
-    @FXML private TextField hargaSatuanField;
-    @FXML private TextField keteranganField;
+        @FXML
+        private DatePicker tanggalField;
+        @FXML
+        private TextField namaBarangField;
+        @FXML
+        private TextField jumlahField;
+        @FXML
+        private TextField hargaSatuanField;
+        @FXML
+        private TextField keteranganField;
 
-    @FXML private TableView<PersediaanBarang> table;
-    @FXML private TableColumn<PersediaanBarang, String> colTanggal;
-    @FXML private TableColumn<PersediaanBarang, String> colNama;
-    @FXML private TableColumn<PersediaanBarang, String> colJenis;
-    @FXML private TableColumn<PersediaanBarang, Integer> colJumlah;
-    @FXML private TableColumn<PersediaanBarang, BigDecimal> colHarga;
+        @FXML
+        private TableView<PersediaanBarang> tablePersediaan;
+        @FXML
+        private TableColumn<PersediaanBarang, String> colTanggal;
+        @FXML
+        private TableColumn<PersediaanBarang, String> colNama;
+        @FXML
+        private TableColumn<PersediaanBarang, Integer> colJumlah;
+        @FXML
+        private TableColumn<PersediaanBarang, BigDecimal> colHarga;
+        @FXML
+        private TableColumn<PersediaanBarang, BigDecimal> colTotal;
+        @FXML
+        private TableColumn<PersediaanBarang, String> colKeterangan;
 
-    private final PersediaanBarangService service = new PersediaanBarangService();
-    private final ObservableList<PersediaanBarang> data = FXCollections.observableArrayList();
+        private final PersediaanBarangService service = new PersediaanBarangService();
+        private final ObservableList<PersediaanBarang> data = FXCollections.observableArrayList();
 
-    @FXML
-    public void initialize() {
+        private PersediaanBarang selected;
 
-        cbJenis.setItems(FXCollections.observableArrayList(
-                PersediaanBarang.JenisTransaksi.values()
-        ));
+        @FXML
+        public void initialize() {
 
-        colTanggal.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleStringProperty(
-                        c.getValue().getTanggal().toString()));
+                colTanggal.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(
+                                c.getValue().getTanggal().toString()));
 
-        colNama.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleStringProperty(
-                        c.getValue().getNamaBarang()));
+                colNama.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(
+                                c.getValue().getNamaBarang()));
 
-        colJenis.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleStringProperty(
-                        c.getValue().getJenisTransaksi().name()));
+                colJumlah.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(
+                                c.getValue().getJumlah()));
 
-        colJumlah.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleObjectProperty<>(
-                        c.getValue().getJumlah()));
+                colHarga.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(
+                                c.getValue().getHargaSatuan()));
 
-        colHarga.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleObjectProperty<>(
-                        c.getValue().getHargaSatuan()));
+                colTotal.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(
+                                c.getValue().getHargaSatuan()
+                                                .multiply(BigDecimal.valueOf(
+                                                                c.getValue().getJumlah()))));
 
-        table.setItems(data);
-        loadData();
-    }
+                colKeterangan.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(
+                                c.getValue().getKeterangan()));
 
-    private void loadData() {
-        data.setAll(service.getAll());
-    }
+                tablePersediaan.setItems(data);
+                loadData();
 
-    @FXML
-    private void handleSimpan() {
-
-        PersediaanBarang p = new PersediaanBarang(
-                tanggalField.getValue(),
-                namaBarangField.getText(),
-                satuanField.getText(),
-                cbJenis.getValue(),
-                Integer.parseInt(jumlahField.getText()),
-                new BigDecimal(hargaSatuanField.getText()),
-                keteranganField.getText()
-        );
-
-        service.simpan(p);
-        loadData();
-    }
-
-    @FXML
-    private void handleHapus() {
-        PersediaanBarang selected = table.getSelectionModel().getSelectedItem();
-        if (selected != null) {
-            service.hapus(selected.getId());
-            loadData();
+                tablePersediaan.getSelectionModel()
+                                .selectedItemProperty()
+                                .addListener((obs, o, n) -> isiForm(n));
         }
-    }
+
+        private void loadData() {
+                data.setAll(service.getAll());
+        }
+
+        @FXML
+        private void handleSimpan() {
+
+                PersediaanBarang p = new PersediaanBarang(
+                                tanggalField.getValue(),
+                                namaBarangField.getText(),
+                                Integer.parseInt(jumlahField.getText()),
+                                new BigDecimal(hargaSatuanField.getText()),
+                                keteranganField.getText());
+
+                service.simpan(p);
+                loadData();
+                clearForm();
+        }
+
+        @FXML
+        private void handleUpdate() {
+
+                if (selected == null)
+                        return;
+
+                PersediaanBarang p = new PersediaanBarang(
+                                selected.getId(),
+                                tanggalField.getValue(),
+                                namaBarangField.getText(),
+                                Integer.parseInt(jumlahField.getText()),
+                                new BigDecimal(hargaSatuanField.getText()),
+                                keteranganField.getText());
+
+                service.update(p);
+                loadData();
+                clearForm();
+        }
+
+        @FXML
+        private void handleHapus() {
+
+                if (selected == null)
+                        return;
+
+                service.hapus(selected.getId());
+                loadData();
+                clearForm();
+        }
+
+        private void isiForm(PersediaanBarang p) {
+
+                if (p == null)
+                        return;
+
+                selected = p;
+
+                tanggalField.setValue(p.getTanggal());
+                namaBarangField.setText(p.getNamaBarang());
+                jumlahField.setText(String.valueOf(p.getJumlah()));
+                hargaSatuanField.setText(p.getHargaSatuan().toString());
+                keteranganField.setText(p.getKeterangan());
+        }
+
+        private void clearForm() {
+
+                selected = null;
+
+                tanggalField.setValue(null);
+                namaBarangField.clear();
+                jumlahField.clear();
+                hargaSatuanField.clear();
+                keteranganField.clear();
+                tablePersediaan.getSelectionModel().clearSelection();
+        }
 }

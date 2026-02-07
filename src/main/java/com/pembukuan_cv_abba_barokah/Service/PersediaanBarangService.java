@@ -13,6 +13,10 @@ public class PersediaanBarangService {
         return dao.save(p);
     }
 
+    public boolean update(PersediaanBarang p) {
+        return dao.update(p);
+    }
+
     public boolean hapus(int id) {
         return dao.delete(id);
     }

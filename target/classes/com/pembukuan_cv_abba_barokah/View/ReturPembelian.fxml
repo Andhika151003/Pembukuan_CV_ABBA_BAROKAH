@@ -12,65 +12,81 @@
 
     <HBox alignment="CENTER">
         <Label text="Retur Pembelian"
-               style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+               style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
     </HBox>
 
     <StackPane>
-        <VBox maxWidth="700" styleClass="card">
+        <VBox maxWidth="750" spacing="20" styleClass="card">
 
-            <GridPane styleClass="form-grid">
+            <GridPane hgap="16" vgap="14">
                 <columnConstraints>
-                    <ColumnConstraints prefWidth="180"/>
-                    <ColumnConstraints/>
+                    <ColumnConstraints prefWidth="200"/>
+                    <ColumnConstraints prefWidth="450"/>
                 </columnConstraints>
 
-                <children>
-                    <Label text="No Retur Pembelian"/>
-                    <TextField fx:id="noReturField" GridPane.columnIndex="1"/>
+                <Label text="No Retur Pembelian"/>
+                <TextField fx:id="noReturField"
+                           GridPane.columnIndex="1"/>
 
-                    <Label text="Tanggal Retur" GridPane.rowIndex="1"/>
-                    <DatePicker fx:id="tanggalReturField"
-                                GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <Label text="Tanggal Retur"
+                       GridPane.rowIndex="1"/>
+                <DatePicker fx:id="tanggalReturField"
+                            GridPane.rowIndex="1"
+                            GridPane.columnIndex="1"/>
 
-                    <Label text="Jumlah Retur" GridPane.rowIndex="2"/>
-                    <TextField fx:id="jumlahReturField"
-                               GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <Label text="Jumlah Retur"
+                       GridPane.rowIndex="2"/>
+                <TextField fx:id="jumlahReturField"
+                           GridPane.rowIndex="2"
+                           GridPane.columnIndex="1"/>
 
-                    <Label text="Alasan Retur" GridPane.rowIndex="3"/>
-                    <TextField fx:id="alasanReturField"
-                               GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                <Label text="Keterangan Retur"
+                       GridPane.rowIndex="3"/>
+                <TextField fx:id="keteranganReturField"
+                           GridPane.rowIndex="3"
+                           GridPane.columnIndex="1"/>
 
-                    <Label text="Keterangan" GridPane.rowIndex="4"/>
-                    <TextField fx:id="keteranganReturField"
-                               GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-
-                    <Label text="Status Retur" GridPane.rowIndex="5"/>
-                    <ComboBox fx:id="cbStatus"
-                              GridPane.rowIndex="5" GridPane.columnIndex="1"/>
-
-                    <Label text="ID Pembelian" GridPane.rowIndex="6"/>
-                    <ComboBox fx:id="cbIdPembelian"
-                              GridPane.rowIndex="6" GridPane.columnIndex="1"/>
-                </children>
+                <Label text="ID Pembelian"
+                       GridPane.rowIndex="4"/>
+                <ComboBox fx:id="cbIdPembelian"
+                          GridPane.rowIndex="4"
+                          GridPane.columnIndex="1"/>
             </GridPane>
 
-            <HBox spacing="12" alignment="CENTER_RIGHT"
-                  style="-fx-padding: 18 0 0 0;">
+            <HBox spacing="12" alignment="CENTER_RIGHT">
                 <Button text="Simpan" onAction="#handleSimpan"/>
                 <Button text="Update" onAction="#handleUpdate"/>
-                <Button text="Hapus" styleClass="button-danger"
+                <Button text="Hapus"
+                        styleClass="button-danger"
                         onAction="#handleHapus"/>
             </HBox>
 
         </VBox>
     </StackPane>
 
-    <TableView fx:id="tableRetur" prefHeight="360">
+    <TableView fx:id="tableRetur" prefHeight="380">
         <columns>
-            <TableColumn fx:id="colNo" text="No Retur" prefWidth="140"/>
-            <TableColumn fx:id="colJumlah" text="Jumlah" prefWidth="100"/>
-            <TableColumn fx:id="colStatus" text="Status" prefWidth="120"/>
-            <TableColumn fx:id="colIdPembelian" text="ID Pembelian" prefWidth="140"/>
+
+            <TableColumn fx:id="colNo"
+                         text="No Retur"
+                         prefWidth="130"/>
+
+            <TableColumn fx:id="colTanggal"
+                         text="Tanggal"
+                         prefWidth="130"/>
+
+            <TableColumn fx:id="colJumlah"
+                         text="Jumlah"
+                         prefWidth="100"/>
+
+            <TableColumn fx:id="colKeterangan"
+                         text="Keterangan"
+                         prefWidth="200"/>
+
+            <TableColumn fx:id="colIdPembelian"
+                         text="ID Pembelian"
+                         prefWidth="130"/>
+
         </columns>
     </TableView>
 

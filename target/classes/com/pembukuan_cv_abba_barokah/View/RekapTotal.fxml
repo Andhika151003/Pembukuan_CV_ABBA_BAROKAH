@@ -13,7 +13,7 @@
 
     <!-- ================= TITLE ================= -->
     <HBox alignment="CENTER">
-        <Label text="Jumlah Total"
+        <Label text="Jumlah Total 2026"
                style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
     </HBox>
 

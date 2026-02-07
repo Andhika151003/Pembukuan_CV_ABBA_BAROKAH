@@ -1,81 +1,101 @@
 package com.pembukuan_cv_abba_barokah.Service;
 
+import com.pembukuan_cv_abba_barokah.DAO.NeracaKeuanganDao;
+import com.pembukuan_cv_abba_barokah.Model.JurnalPembukuan;
+
 import java.math.BigDecimal;
+import java.util.List;
 
 public class NeracaKeuanganService {
 
-    private final RekapTotalService rekap = new RekapTotalService();
-    private final UtangUsahaService utangUsahaService = new UtangUsahaService();
-    private final PembelianInventarisService inventarisService = new PembelianInventarisService();
+    private final NeracaKeuanganDao dao = new NeracaKeuanganDao();
+    private final JurnalPembukuanService jurnalService = new JurnalPembukuanService();
 
-    /* =======================
-       ASET LANCAR
-       ======================= */
+    /* ================= BANK ================= */
 
-    public BigDecimal bankSaldo() {
-        // kas = pembayaran masuk - setor pajak
-        return rekap.totalPembayaranMasuk()
-                .subtract(rekap.totalSetorPajak());
+    public BigDecimal bank(String tahun) {
+
+        BigDecimal totalDebit = BigDecimal.ZERO;
+        BigDecimal totalKredit = BigDecimal.ZERO;
+
+        for (int bulan = 1; bulan <= 12; bulan++) {
+
+            String bln = String.format("%02d", bulan);
+
+            List<JurnalPembukuan> list = jurnalService.getByPeriode(bln, tahun);
+
+            for (JurnalPembukuan j : list) {
+
+                if (j.getDebit() != null)
+                    totalDebit = totalDebit.add(j.getDebit());
+
+                if (j.getKredit() != null)
+                    totalKredit = totalKredit.add(j.getKredit());
+            }
+        }
+
+        return totalDebit.subtract(totalKredit);
     }
 
-    public BigDecimal piutangUsaha() {
-        return rekap.totalPenjualan()
-                .subtract(rekap.totalPembayaranMasuk());
+    /* ================= ASET LANCAR ================= */
+
+    public BigDecimal piutang(String tahun) {
+        return dao.totalPiutang(tahun);
     }
 
-    public BigDecimal persediaanBarang() {
-        // persediaan = pembelian - HPP
-        return rekap.totalHPP().compareTo(BigDecimal.ZERO) == 0
-                ? BigDecimal.ZERO
-                : rekap.totalHPP();
+    public BigDecimal persediaan(String tahun) {
+        return dao.totalPersediaan(tahun);
     }
 
-    public BigDecimal totalAsetLancar() {
-        return bankSaldo()
-                .add(piutangUsaha())
-                .add(persediaanBarang());
+    public BigDecimal asetLancar(String tahun) {
+        return bank(tahun)
+                .add(piutang(tahun))
+                .add(persediaan(tahun));
     }
 
-    /* =======================
-       ASET TIDAK LANCAR
-       ======================= */
+    /* ================= ASET TIDAK LANCAR ================= */
 
-       public BigDecimal totalInventaris() {
-        return inventarisService.getAll().stream()
-                .map(i ->
-                        BigDecimal.valueOf(i.getJumlah())
-                                .multiply(i.getHargaSatuan())
-                )
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    public BigDecimal inventaris(String tahun) {
+        return dao.totalInventaris(tahun);
+    }
+
+    public BigDecimal asetTidakLancar(String tahun) {
+        return inventaris(tahun);
+    }
+
+    public BigDecimal totalAset(String tahun) {
+        return asetLancar(tahun)
+                .add(asetTidakLancar(tahun));
+    }
+
+    /* ================= KEWAJIBAN ================= */
+
+    public BigDecimal utang(String tahun) {
+        return dao.totalUtang(tahun);
+    }
+
+    public BigDecimal totalKewajiban(String tahun) {
+        return utang(tahun);
+    }
+
+    /* ================= EKUITAS ================= */
+
+    public BigDecimal ekuitas(String tahun) {
+        return totalAset(tahun)
+                .subtract(totalKewajiban(tahun));
+    }
+
+    public BigDecimal modal(String tahun) {
+        return dao.totalModal(tahun);
+    }
+
+    public BigDecimal totalEkuitas(String tahun) {
+        return ekuitas(tahun)
+                .add(modal(tahun));
+    }
+
+    public BigDecimal jumlahKewajibanDanEkuitas(String tahun) {
+        return totalKewajiban(tahun)
+                .add(totalEkuitas(tahun));
     }    
-
-    public BigDecimal totalAsetTidakLancar() {
-        return totalInventaris();
-    }
-
-    /* =======================
-       TOTAL ASET
-       ======================= */
-
-    public BigDecimal totalAset() {
-        return totalAsetLancar().add(totalAsetTidakLancar());
-    }
-
-    /* =======================
-       KEWAJIBAN & EKUITAS
-       ======================= */
-
-    public BigDecimal totalUtangUsaha() {
-        return utangUsahaService.getAll().stream()
-                .map(u -> u.getJumlahUtang())
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    public BigDecimal ekuitas() {
-        return totalAset().subtract(totalUtangUsaha());
-    }
-
-    public BigDecimal jumlahKewajibanDanEkuitas() {
-        return totalUtangUsaha().add(ekuitas());
-    }
 }

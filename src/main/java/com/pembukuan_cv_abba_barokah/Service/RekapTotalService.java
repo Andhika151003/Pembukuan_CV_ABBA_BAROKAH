@@ -14,9 +14,11 @@ public class RekapTotalService {
     private final PembelianLangsungService pembelianLangsungService = new PembelianLangsungService();
     private final SwakelolaService swakelolaService = new SwakelolaService();
 
-    /* =========================
-       TOTAL DASAR
-       ========================= */
+    /*
+     * =========================
+     * TOTAL DASAR
+     * =========================
+     */
 
     public BigDecimal totalPenjualan() {
         return penjualanService.getAll().stream()
@@ -42,31 +44,29 @@ public class RekapTotalService {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    /* =========================
-       HPP
-       ========================= */
+    /*
+     * =========================
+     * HPP
+     * =========================
+     */
 
     public BigDecimal totalPembelianLangsung() {
         return pembelianLangsungService.getAll().stream()
-                .map(p ->
-                        p.getHargaPerolehanLangsung()
-                                .add(p.getTransportasi())
-                                .add(p.getUpah())
-                )
+                .map(p -> p.getHargaPerolehanLangsung()
+                        .add(p.getTransportasi())
+                        .add(p.getUpah()))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public BigDecimal totalSwakelola() {
         return swakelolaService.getAll().stream()
-                .map(s ->
-                        s.getBahan1()
-                                .add(s.getBahan2())
-                                .add(s.getBahan3())
-                                .add(s.getOngkosTukangPotong())
-                                .add(s.getOngkosTukangJahit())
-                                .add(s.getLainLain())
-                                .add(s.getTransportasi())
-                )
+                .map(s -> s.getBahan1()
+                        .add(s.getBahan2())
+                        .add(s.getBahan3())
+                        .add(s.getOngkosTukangPotong())
+                        .add(s.getOngkosTukangJahit())
+                        .add(s.getLainLain())
+                        .add(s.getTransportasi()))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 

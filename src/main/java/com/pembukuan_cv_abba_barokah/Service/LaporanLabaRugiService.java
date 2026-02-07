@@ -1,59 +1,69 @@
 package com.pembukuan_cv_abba_barokah.Service;
 
 import com.pembukuan_cv_abba_barokah.DAO.LaporanLabaRugiDao;
-import com.pembukuan_cv_abba_barokah.Model.LaporanLabaRugiItem;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 public class LaporanLabaRugiService {
 
     private final LaporanLabaRugiDao dao = new LaporanLabaRugiDao();
 
-    public List<LaporanLabaRugiItem> generate(String tahun) {
+    public BigDecimal totalPenjualan(String tahun) {
+        return dao.totalPenjualan(tahun);
+    }
 
-        List<LaporanLabaRugiItem> list = new ArrayList<>();
+    public BigDecimal totalReturPenjualan(String tahun) {
+        return dao.totalReturPenjualan(tahun);
+    }
 
-        BigDecimal penjualan = dao.totalPenjualan(tahun);
-        BigDecimal returPenjualan = BigDecimal.ZERO;
-        BigDecimal totalPendapatan = penjualan.subtract(returPenjualan);
+    public BigDecimal totalPendapatan(String tahun) {
+        return totalPenjualan(tahun)
+                .subtract(totalReturPenjualan(tahun));
+    }
 
-        BigDecimal hpp = dao.totalHpp(tahun);
-        BigDecimal returPembelian = BigDecimal.ZERO;
-        BigDecimal totalPembelian = hpp.subtract(returPembelian);
+    public BigDecimal totalHpp(String tahun) {
+        return dao.totalHpp(tahun);
+    }
 
-        BigDecimal labaKotor = totalPendapatan.subtract(totalPembelian);
+    public BigDecimal totalReturPembelian(String tahun) {
+        return dao.totalReturPembelian(tahun);
+    }
 
-        BigDecimal biayaAdmin = dao.totalBiayaAdministrasi(tahun);
-        BigDecimal biayaPemasaran = dao.totalBiayaPemasaran(tahun);
-        BigDecimal biayaLain = BigDecimal.ZERO;
+    public BigDecimal totalPembelian(String tahun) {
+        return totalHpp(tahun)
+                .subtract(totalReturPembelian(tahun));
+    }
 
-        BigDecimal totalBiayaOperasional =
-                biayaAdmin.add(biayaPemasaran).add(biayaLain);
+    public BigDecimal labaKotor(String tahun) {
+        return totalPendapatan(tahun)
+                .subtract(totalPembelian(tahun));
+    }
 
-        BigDecimal labaBersih =
-                labaKotor.subtract(totalBiayaOperasional);
+    public BigDecimal totalBiayaAdministrasi(String tahun) {
+        return dao.totalBiayaAdministrasi(tahun);
+    }
 
-        // ===== ISI SESUAI DRAFT =====
-        list.add(new LaporanLabaRugiItem("1.1","Total Penjualan",penjualan));
-        list.add(new LaporanLabaRugiItem("1.2","Total Retur Penjualan",returPenjualan));
-        list.add(new LaporanLabaRugiItem("","TOTAL PENDAPATAN",totalPendapatan));
+    public BigDecimal totalBiayaOperasional(String tahun) {
+        return dao.totalBiayaOperasional(tahun);
+    }
 
-        list.add(new LaporanLabaRugiItem("2.1","Total Pembelian (HPP)",hpp));
-        list.add(new LaporanLabaRugiItem("2.2","Total Retur Pembelian",returPembelian));
-        list.add(new LaporanLabaRugiItem("","TOTAL PEMBELIAN",totalPembelian));
+    public BigDecimal totalBiayaPemasaran(String tahun) {
+        return dao.totalBiayaPemasaran(tahun);
+    }
 
-        list.add(new LaporanLabaRugiItem("","TOTAL LABA / RUGI",labaKotor));
+    public BigDecimal totalBiayaPemeliharaan(String tahun) {
+        return dao.totalBiayaPemeliharaan(tahun);
+    }
 
-        list.add(new LaporanLabaRugiItem("3.1","Total Biaya Administrasi",biayaAdmin));
-        list.add(new LaporanLabaRugiItem("3.2","Total Biaya Operasional",BigDecimal.ZERO));
-        list.add(new LaporanLabaRugiItem("3.3","Total Biaya Pemasaran",biayaPemasaran));
-        list.add(new LaporanLabaRugiItem("3.4","Total Biaya Lain-lain",biayaLain));
+    public BigDecimal totalBiaya(String tahun) {
+        return totalBiayaAdministrasi(tahun)
+                .add(totalBiayaOperasional(tahun))
+                .add(totalBiayaPemasaran(tahun))
+                .add(totalBiayaPemeliharaan(tahun));
+    }
 
-        list.add(new LaporanLabaRugiItem("","TOTAL BIAYA OPERASIONAL",totalBiayaOperasional));
-        list.add(new LaporanLabaRugiItem("","TOTAL LABA BERSIH",labaBersih));
-
-        return list;
+    public BigDecimal labaBersih(String tahun) {
+        return labaKotor(tahun)
+                .subtract(totalBiaya(tahun));
     }
 }

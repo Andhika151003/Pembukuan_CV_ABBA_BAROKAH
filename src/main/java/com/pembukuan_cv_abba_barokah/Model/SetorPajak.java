@@ -13,41 +13,74 @@ public class SetorPajak {
     private LocalDate tanggalSetor;
     private JenisPajak jenisPajak;
     private BigDecimal jumlahPajak;
-    private String periode;
-    private String buktiSetor;
-    private int idPenjualan;
+    private byte[] buktiSetor; // karena BLOB
+    private String keterangan;
 
     // SELECT
-    public SetorPajak(int id, LocalDate tanggalSetor, JenisPajak jenisPajak,
-                      BigDecimal jumlahPajak, String periode,
-                      String buktiSetor, int idPenjualan) {
+    public SetorPajak(int id,
+            LocalDate tanggalSetor,
+            JenisPajak jenisPajak,
+            BigDecimal jumlahPajak,
+            byte[] buktiSetor,
+            String keterangan) {
         this.id = id;
         this.tanggalSetor = tanggalSetor;
         this.jenisPajak = jenisPajak;
         this.jumlahPajak = jumlahPajak;
-        this.periode = periode;
         this.buktiSetor = buktiSetor;
-        this.idPenjualan = idPenjualan;
+        this.keterangan = keterangan;
     }
 
     // INSERT
-    public SetorPajak(LocalDate tanggalSetor, JenisPajak jenisPajak,
-                      BigDecimal jumlahPajak, String periode,
-                      String buktiSetor, int idPenjualan) {
-        this(0, tanggalSetor, jenisPajak, jumlahPajak, periode, buktiSetor, idPenjualan);
+    public SetorPajak(LocalDate tanggalSetor,
+            JenisPajak jenisPajak,
+            BigDecimal jumlahPajak,
+            byte[] buktiSetor,
+            String keterangan) {
+        this(0, tanggalSetor, jenisPajak, jumlahPajak, buktiSetor, keterangan);
     }
 
-    public int getId() { return id; }
-    public LocalDate getTanggalSetor() { return tanggalSetor; }
-    public JenisPajak getJenisPajak() { return jenisPajak; }
-    public BigDecimal getJumlahPajak() { return jumlahPajak; }
-    public String getPeriode() { return periode; }
-    public String getBuktiSetor() { return buktiSetor; }
-    public int getIdPenjualan() { return idPenjualan; }
+    public int getId() {
+        return id;
+    }
 
-    public void setTanggalSetor(LocalDate v) { this.tanggalSetor = v; }
-    public void setJenisPajak(JenisPajak v) { this.jenisPajak = v; }
-    public void setJumlahPajak(BigDecimal v) { this.jumlahPajak = v; }
-    public void setPeriode(String v) { this.periode = v; }
-    public void setBuktiSetor(String v) { this.buktiSetor = v; }
+    public LocalDate getTanggalSetor() {
+        return tanggalSetor;
+    }
+
+    public JenisPajak getJenisPajak() {
+        return jenisPajak;
+    }
+
+    public BigDecimal getJumlahPajak() {
+        return jumlahPajak;
+    }
+
+    public byte[] getBuktiSetor() {
+        return buktiSetor;
+    }
+
+    public String getKeterangan() {
+        return keterangan;
+    }
+
+    public void setTanggalSetor(LocalDate v) {
+        this.tanggalSetor = v;
+    }
+
+    public void setJenisPajak(JenisPajak v) {
+        this.jenisPajak = v;
+    }
+
+    public void setJumlahPajak(BigDecimal v) {
+        this.jumlahPajak = v;
+    }
+
+    public void setBuktiSetor(byte[] v) {
+        this.buktiSetor = v;
+    }
+
+    public void setKeterangan(String v) {
+        this.keterangan = v;
+    }
 }

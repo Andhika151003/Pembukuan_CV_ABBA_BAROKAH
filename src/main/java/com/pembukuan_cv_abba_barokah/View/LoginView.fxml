@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
 <StackPane xmlns="http://javafx.com/javafx/21"
            xmlns:fx="http://javafx.com/fxml"
@@ -10,13 +11,17 @@
            styleClass="root">
 
     <VBox alignment="CENTER"
-          spacing="14"
+          spacing="10"
           maxWidth="380"
           maxHeight="360"
           styleClass="login-card">
 
         <Label text="Login Sistem" styleClass="title"/>
-        <Label text="CV Abba Barokah" styleClass="subtitle"/>
+        <Label text="SiKeu - ABBA" styleClass="subtitle">
+            <VBox.margin>
+                   <Insets bottom="20"/>
+            </VBox.margin>
+        </Label>
 
         <TextField fx:id="usernameField"
                    promptText="Username"
@@ -26,9 +31,14 @@
                        promptText="Password"
                        styleClass="input"/>
 
-        <Button text="LOGIN"
+        <Button text="Login"
                 onAction="#handleLogin"
-                styleClass="login-button"/>
+                styleClass="login-button"
+                maxWidth="Infinity">
+                <VBox.margin>
+                    <Insets top="20"/>
+                </VBox.margin>
+        </Button>
 
         <Label fx:id="messageLabel" styleClass="message"/>
 
