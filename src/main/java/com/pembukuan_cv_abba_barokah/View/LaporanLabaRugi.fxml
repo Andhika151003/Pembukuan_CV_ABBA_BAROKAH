@@ -164,4 +164,26 @@
         </GridPane>
 
     </GridPane>
+
+    <Separator/>
+
+       <VBox alignment="CENTER_RIGHT" spacing="5">
+
+       <Label text="Gresik,......2026"/>
+
+       <Label text="Direktur,"
+              style="-fx-font-weight:bold;"/>
+
+       <Region prefHeight="60"/>
+
+       <Label text="Bambang Sugiarto"
+           style="-fx-font-weight:bold;"/>
+
+       </VBox>
+
+    <Separator/>
+
+    <Button text="Simpan"
+        onAction="#handleExportWord"
+        style="-fx-font-weight:bold; -fx-padding:10 25 10 25;"/>
 </VBox>

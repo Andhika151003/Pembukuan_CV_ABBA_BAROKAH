@@ -16,7 +16,7 @@
     </HBox>
 
     <StackPane>
-        <VBox maxWidth="650" styleClass="card">
+        <VBox maxWidth="700" styleClass="card">
 
             <GridPane hgap="15" vgap="12">
                 <columnConstraints>

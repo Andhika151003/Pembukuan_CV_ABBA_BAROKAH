@@ -1,7 +1,6 @@
 package com.pembukuan_cv_abba_barokah.Service;
 
 import com.pembukuan_cv_abba_barokah.DAO.LaporanLabaRugiDao;
-
 import java.math.BigDecimal;
 
 public class LaporanLabaRugiService {
@@ -43,6 +42,7 @@ public class LaporanLabaRugiService {
         return dao.totalBiayaAdministrasi(tahun);
     }
 
+    // ⬅ otomatis pakai logic DAO terbaru
     public BigDecimal totalBiayaOperasional(String tahun) {
         return dao.totalBiayaOperasional(tahun);
     }

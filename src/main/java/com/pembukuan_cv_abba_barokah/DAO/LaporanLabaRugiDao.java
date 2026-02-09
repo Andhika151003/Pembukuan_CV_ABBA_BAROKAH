@@ -142,11 +142,17 @@ public class LaporanLabaRugiDao {
 
     public BigDecimal totalBiayaOperasional(String tahun) {
 
-        BigDecimal transportLangsung = querySum("""
+        // Transportasi = PembelianLangsung + Swakelola
+        BigDecimal transportasi = querySum("""
                     SELECT COALESCE(SUM(transportasi),0)
                     FROM PembelianLangsung
                     WHERE strftime('%Y', tanggal)=?
-                """, tahun);
+                """, tahun).add(
+                querySum("""
+                            SELECT COALESCE(SUM(transportasi),0)
+                            FROM Swakelola
+                            WHERE strftime('%Y', tanggal)=?
+                        """, tahun));
 
         BigDecimal upahLangsung = querySum("""
                     SELECT COALESCE(SUM(upah),0)
@@ -160,7 +166,7 @@ public class LaporanLabaRugiDao {
                     WHERE strftime('%Y', tanggal)=?
                 """, tahun);
 
-        return transportLangsung
+        return transportasi
                 .add(upahLangsung)
                 .add(lainSwakelola);
     }

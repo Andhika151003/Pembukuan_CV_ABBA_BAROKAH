@@ -25,12 +25,21 @@ public class NeracaKeuanganDao {
     }
 
     public BigDecimal totalPiutang(String tahun) {
-        return querySum("""
+
+        BigDecimal totalPiutang = querySum("""
                     SELECT COALESCE(SUM(jumlah_piutang),0)
                     FROM PiutangUsaha
                     WHERE strftime('%Y', tanggal)=?
                 """, tahun);
-    }
+    
+        BigDecimal totalPelunasan = querySum("""
+                    SELECT COALESCE(SUM(jumlah_pelunasan_piutang),0)
+                    FROM PelunasanPiutang
+                    WHERE strftime('%Y', tanggal)=?
+                """, tahun);
+    
+        return totalPiutang.subtract(totalPelunasan);
+    }    
 
     public BigDecimal totalPersediaan(String tahun) {
         return querySum("""

@@ -4,10 +4,14 @@ import com.pembukuan_cv_abba_barokah.Service.LaporanLabaRugiService;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.Locale;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import java.io.File;
+import java.io.IOException;
+import com.pembukuan_cv_abba_barokah.Service.LaporanLabaRugiWordExporter;
 
 public class LaporanLabaRugiController {
 
@@ -77,7 +81,6 @@ public class LaporanLabaRugiController {
         BigDecimal totalBiaya = service.totalBiaya(tahun);
         BigDecimal labaBersih = service.labaBersih(tahun);
 
-        // SET LABEL
         lblTotalPenjualan.setText(rp(penjualan));
         lblReturPenjualan.setText(rp(returPenjualan));
         lblTotalPendapatan.setText(rp(totalPendapatan));
@@ -100,5 +103,28 @@ public class LaporanLabaRugiController {
     private String rp(BigDecimal value) {
         NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
         return format.format(value);
+    }
+
+    @FXML
+    private void handleExportWord() {
+
+        String tahun = cbTahun.getValue();
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Simpan Laporan Laba Rugi");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Word Files", "*.docx"));
+        fileChooser.setInitialFileName("Laporan_Laba_Rugi_" + tahun + ".docx");
+
+        Stage stage = (Stage) cbTahun.getScene().getWindow();
+        File file = fileChooser.showSaveDialog(stage);
+
+        if (file != null) {
+            try {
+                new LaporanLabaRugiWordExporter().export(file, tahun, service);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -71,7 +71,9 @@ com\pembukuan_cv_abba_barokah\Model\Modal.class
 com\pembukuan_cv_abba_barokah\Service\SwakelolaService.class
 com\pembukuan_cv_abba_barokah\Service\ReturPembelianService.class
 com\pembukuan_cv_abba_barokah\DAO\PiutangUsahaDao.class
+com\pembukuan_cv_abba_barokah\Service\LaporanLabaRugiWordExporter.class
 com\pembukuan_cv_abba_barokah\Service\PembayaranService.class
+com\pembukuan_cv_abba_barokah\Service\NeracaKeuanganWordExporter.class
 com\pembukuan_cv_abba_barokah\Model\UtangUsaha.class
 com\pembukuan_cv_abba_barokah\Service\JurnalPembukuanService.class
 com\pembukuan_cv_abba_barokah\Model\Administrasi.class

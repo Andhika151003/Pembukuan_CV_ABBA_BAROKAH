@@ -1,13 +1,17 @@
 package com.pembukuan_cv_abba_barokah.Controller;
 
 import com.pembukuan_cv_abba_barokah.Service.NeracaKeuanganService;
+import com.pembukuan_cv_abba_barokah.Service.NeracaKeuanganWordExporter;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.Locale;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import java.io.File;
 
 public class NeracaKeuanganController {
 
@@ -86,4 +90,47 @@ public class NeracaKeuanganController {
                 .getCurrencyInstance(new Locale("id", "ID"))
                 .format(value);
     }
+
+    @FXML
+    private void handleExportWord() {
+
+        String tahun = cbTahun.getValue();
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Simpan Neraca Keuangan");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Word Files", "*.docx"));
+        fileChooser.setInitialFileName("Neraca_Keuangan_" + tahun + ".docx");
+
+        Stage stage = (Stage) cbTahun.getScene().getWindow();
+        File file = fileChooser.showSaveDialog(stage);
+
+        if (file != null) {
+            try {
+
+                NeracaKeuanganWordExporter.export(
+                        file,
+                        tahun,
+
+                        lblBank.getText(),
+                        lblPiutang.getText(),
+                        lblPersediaan.getText(),
+                        lblJumlahAsetLancar.getText(),
+                        lblInventaris.getText(),
+                        lblJumlahAsetTidakLancar.getText(),
+                        lblTotalAset.getText(),
+
+                        lblUtang.getText(),
+                        lblTotalKewajiban.getText(),
+                        lblEkuitas.getText(),
+                        lblModal.getText(),
+                        lblTotalEkuitas.getText(),
+                        lblJumlahKewajibanEkuitas.getText());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }
