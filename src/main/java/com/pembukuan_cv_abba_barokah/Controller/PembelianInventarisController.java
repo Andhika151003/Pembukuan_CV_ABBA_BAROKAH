@@ -11,151 +11,173 @@ import java.math.BigDecimal;
 
 public class PembelianInventarisController {
 
-    @FXML private DatePicker tanggalField;
-    @FXML private TextField noPembelianField;
-    @FXML private TextField namaBarangField;
-    @FXML private TextField jumlahField;
-    @FXML private TextField satuanField;
-    @FXML private TextField hargaSatuanField;
-    @FXML private TextField ongkosKirimField;
-    @FXML private TextField keteranganField;
+        @FXML
+        private DatePicker tanggalField;
+        @FXML
+        private TextField noPembelianField;
+        @FXML
+        private TextField namaBarangField;
+        @FXML
+        private TextField jumlahField;
+        @FXML
+        private TextField satuanField;
+        @FXML
+        private TextField hargaSatuanField;
+        @FXML
+        private TextField ongkosKirimField;
+        @FXML
+        private TextField keteranganField;
+        @FXML
+        private TableColumn<PembelianInventaris, Integer> colId;
+        @FXML
+        private TableColumn<PembelianInventaris, java.time.LocalDate> colTanggal;
+        @FXML
+        private TableColumn<PembelianInventaris, String> colKeterangan;
 
-    @FXML private TableView<PembelianInventaris> tableInventaris;
+        @FXML
+        private TableView<PembelianInventaris> tableInventaris;
+        @FXML
+        private TableColumn<PembelianInventaris, String> colNo;
+        @FXML
+        private TableColumn<PembelianInventaris, String> colNama;
+        @FXML
+        private TableColumn<PembelianInventaris, Integer> colJumlah;
+        @FXML
+        private TableColumn<PembelianInventaris, String> colSatuan;
+        @FXML
+        private TableColumn<PembelianInventaris, BigDecimal> colHarga;
+        @FXML
+        private TableColumn<PembelianInventaris, BigDecimal> colOngkir;
+        @FXML
+        private TableColumn<PembelianInventaris, BigDecimal> colTotal;
 
-    @FXML private TableColumn<PembelianInventaris,String> colNo;
-    @FXML private TableColumn<PembelianInventaris,String> colNama;
-    @FXML private TableColumn<PembelianInventaris,Integer> colJumlah;
-    @FXML private TableColumn<PembelianInventaris,String> colSatuan;
-    @FXML private TableColumn<PembelianInventaris,BigDecimal> colHarga;
-    @FXML private TableColumn<PembelianInventaris,BigDecimal> colOngkir;
-    @FXML private TableColumn<PembelianInventaris,BigDecimal> colTotal;
+        private final PembelianInventarisService service = new PembelianInventarisService();
 
-    private final PembelianInventarisService service =
-            new PembelianInventarisService();
+        private final ObservableList<PembelianInventaris> data = FXCollections.observableArrayList();
 
-    private final ObservableList<PembelianInventaris> data =
-            FXCollections.observableArrayList();
+        private PembelianInventaris selected;
 
-    private PembelianInventaris selected;
+        @FXML
+        public void initialize() {
 
-    @FXML
-    public void initialize() {
+                colId.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(
+                                c.getValue().getId()));
 
-        colNo.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleStringProperty(
-                        c.getValue().getNoPembelian()));
+                colNo.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(
+                                c.getValue().getNoPembelian()));
 
-        colNama.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleStringProperty(
-                        c.getValue().getNamaBarang()));
+                colTanggal.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(
+                                c.getValue().getTanggalPembelian()));
 
-        colJumlah.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleObjectProperty<>(
-                        c.getValue().getJumlah()));
+                colNama.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(
+                                c.getValue().getNamaBarang()));
 
-        colSatuan.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleStringProperty(
-                        c.getValue().getSatuan()));
+                colJumlah.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(
+                                c.getValue().getJumlah()));
 
-        colHarga.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleObjectProperty<>(
-                        c.getValue().getHargaSatuan()));
+                colSatuan.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(
+                                c.getValue().getSatuan()));
 
-        colOngkir.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleObjectProperty<>(
-                        c.getValue().getOngkosKirim()));
+                colHarga.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(
+                                c.getValue().getHargaSatuan()));
 
-        colTotal.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleObjectProperty<>(
-                        c.getValue().getTotal()));
+                colOngkir.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(
+                                c.getValue().getOngkosKirim()));
 
-        tableInventaris.setItems(data);
-        loadData();
+                colTotal.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(
+                                c.getValue().getTotal()));
 
-        tableInventaris.getSelectionModel()
-                .selectedItemProperty()
-                .addListener((obs,o,n)-> isiForm(n));
-    }
+                colKeterangan.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(
+                                c.getValue().getKeterangan()));
 
-    private void loadData() {
-        data.setAll(service.getAll());
-    }
+                tableInventaris.setItems(data);
+                loadData();
 
-    @FXML
-    private void handleSimpan() {
+                tableInventaris.getSelectionModel()
+                                .selectedItemProperty()
+                                .addListener((obs, o, n) -> isiForm(n));
+        }
 
-        PembelianInventaris pi = new PembelianInventaris(
-                noPembelianField.getText(),
-                namaBarangField.getText(),
-                Integer.parseInt(jumlahField.getText()),
-                satuanField.getText(),
-                new BigDecimal(hargaSatuanField.getText()),
-                new BigDecimal(ongkosKirimField.getText()),
-                keteranganField.getText(),
-                tanggalField.getValue()
-        );
+        private void loadData() {
+                data.setAll(service.getAll());
+        }
 
-        service.simpan(pi);
-        loadData();
-        clearForm();
-    }
+        @FXML
+        private void handleSimpan() {
 
-    @FXML
-    private void handleUpdate() {
+                PembelianInventaris pi = new PembelianInventaris(
+                                noPembelianField.getText(),
+                                namaBarangField.getText(),
+                                Integer.parseInt(jumlahField.getText()),
+                                satuanField.getText(),
+                                new BigDecimal(hargaSatuanField.getText()),
+                                new BigDecimal(ongkosKirimField.getText()),
+                                keteranganField.getText(),
+                                tanggalField.getValue());
 
-        if (selected == null) return;
+                service.simpan(pi);
+                loadData();
+                clearForm();
+        }
 
-        selected = new PembelianInventaris(
-                selected.getId(),
-                noPembelianField.getText(),
-                namaBarangField.getText(),
-                Integer.parseInt(jumlahField.getText()),
-                satuanField.getText(),
-                new BigDecimal(hargaSatuanField.getText()),
-                new BigDecimal(ongkosKirimField.getText()),
-                keteranganField.getText(),
-                tanggalField.getValue()
-        );
+        @FXML
+        private void handleUpdate() {
 
-        service.update(selected);
-        loadData();
-        clearForm();
-    }
+                if (selected == null)
+                        return;
 
-    @FXML
-    private void handleHapus() {
+                selected = new PembelianInventaris(
+                                selected.getId(),
+                                noPembelianField.getText(),
+                                namaBarangField.getText(),
+                                Integer.parseInt(jumlahField.getText()),
+                                satuanField.getText(),
+                                new BigDecimal(hargaSatuanField.getText()),
+                                new BigDecimal(ongkosKirimField.getText()),
+                                keteranganField.getText(),
+                                tanggalField.getValue());
 
-        if (selected == null) return;
+                service.update(selected);
+                loadData();
+                clearForm();
+        }
 
-        service.hapus(selected.getId());
-        loadData();
-        clearForm();
-    }
+        @FXML
+        private void handleHapus() {
 
-    private void isiForm(PembelianInventaris pi) {
-        if (pi == null) return;
+                if (selected == null)
+                        return;
 
-        selected = pi;
+                service.hapus(selected.getId());
+                loadData();
+                clearForm();
+        }
 
-        noPembelianField.setText(pi.getNoPembelian());
-        namaBarangField.setText(pi.getNamaBarang());
-        jumlahField.setText(String.valueOf(pi.getJumlah()));
-        satuanField.setText(pi.getSatuan());
-        hargaSatuanField.setText(pi.getHargaSatuan().toString());
-        ongkosKirimField.setText(pi.getOngkosKirim().toString());
-        keteranganField.setText(pi.getKeterangan());
-        tanggalField.setValue(pi.getTanggalPembelian());
-    }
+        private void isiForm(PembelianInventaris pi) {
+                if (pi == null)
+                        return;
 
-    private void clearForm() {
-        selected = null;
-        noPembelianField.clear();
-        namaBarangField.clear();
-        jumlahField.clear();
-        satuanField.clear();
-        hargaSatuanField.clear();
-        ongkosKirimField.clear();
-        keteranganField.clear();
-        tanggalField.setValue(null);
-    }
+                selected = pi;
+
+                noPembelianField.setText(pi.getNoPembelian());
+                namaBarangField.setText(pi.getNamaBarang());
+                jumlahField.setText(String.valueOf(pi.getJumlah()));
+                satuanField.setText(pi.getSatuan());
+                hargaSatuanField.setText(pi.getHargaSatuan().toString());
+                ongkosKirimField.setText(pi.getOngkosKirim().toString());
+                keteranganField.setText(pi.getKeterangan());
+                tanggalField.setValue(pi.getTanggalPembelian());
+        }
+
+        private void clearForm() {
+                selected = null;
+                noPembelianField.clear();
+                namaBarangField.clear();
+                jumlahField.clear();
+                satuanField.clear();
+                hargaSatuanField.clear();
+                ongkosKirimField.clear();
+                keteranganField.clear();
+                tanggalField.setValue(null);
+        }
 }

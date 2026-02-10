@@ -108,41 +108,53 @@
     </StackPane>
 
     <!-- ================= TABLE ================= -->
-    <TableView fx:id="tableInventaris"
-               prefHeight="400">
+    <TableView fx:id="tableInventaris" prefHeight="400">
 
-        <columns>
+    <columns>
 
-            <TableColumn fx:id="colNo"
-                         text="No Pembelian"
-                         prefWidth="140"/>
+        <TableColumn fx:id="colId"
+                     text="ID"
+                     prefWidth="70"/>
 
-            <TableColumn fx:id="colNama"
-                         text="Nama Barang"
-                         prefWidth="220"/>
+        <TableColumn fx:id="colNo"
+                     text="No Pembelian"
+                     prefWidth="130"/>
 
-            <TableColumn fx:id="colJumlah"
-                         text="Jumlah"
-                         prefWidth="80"/>
+        <TableColumn fx:id="colNama"
+                     text="Nama Barang"
+                     prefWidth="200"/>
 
-            <TableColumn fx:id="colSatuan"
-                         text="Satuan"
-                         prefWidth="100"/>
+        <TableColumn fx:id="colJumlah"
+                     text="Jumlah"
+                     prefWidth="80"/>
 
-            <TableColumn fx:id="colHarga"
-                         text="Harga Satuan"
-                         prefWidth="130"/>
+        <TableColumn fx:id="colSatuan"
+                     text="Satuan"
+                     prefWidth="90"/>
 
-            <TableColumn fx:id="colOngkir"
-                         text="Ongkos Kirim"
-                         prefWidth="130"/>
+        <TableColumn fx:id="colHarga"
+                     text="Harga Satuan"
+                     prefWidth="120"/>
 
-            <TableColumn fx:id="colTotal"
-                         text="Total"
-                         prefWidth="150"/>
+        <TableColumn fx:id="colOngkir"
+                     text="Ongkos Kirim"
+                     prefWidth="120"/>
 
-        </columns>
+        <TableColumn fx:id="colTotal"
+                     text="Total"
+                     prefWidth="140"/>
 
-    </TableView>
+        <TableColumn fx:id="colTanggal"
+                     text="Tanggal"
+                     prefWidth="120"/>
+
+        <TableColumn fx:id="colKeterangan"
+                     text="Keterangan"
+                     prefWidth="180"/>
+
+    </columns>
+
+</TableView>
+
 
 </VBox>

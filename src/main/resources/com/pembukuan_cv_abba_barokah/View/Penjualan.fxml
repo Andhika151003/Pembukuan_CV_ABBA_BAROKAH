@@ -68,21 +68,39 @@
         </VBox>
     </StackPane>
 
-    <TableView fx:id="tablePenjualan" prefHeight="360">
-        <columns>
-            <TableColumn fx:id="colNoFaktur"
-                         text="No Faktur"
-                         prefWidth="150"/>
-            <TableColumn fx:id="colCustomer"
-                         text="Customer"
-                         prefWidth="200"/>
-            <TableColumn fx:id="colTanggal"
-                         text="Tanggal"
-                         prefWidth="130"/>
-            <TableColumn fx:id="colTotal"
-                         text="Total"
-                         prefWidth="150"/>
-        </columns>
-    </TableView>
+   <TableView fx:id="tablePenjualan" prefHeight="360">
+    <columns>
+
+        <TableColumn fx:id="colId"
+                     text="ID"
+                     prefWidth="70"/>
+
+        <TableColumn fx:id="colNoFaktur"
+                     text="No Faktur"
+                     prefWidth="150"/>
+
+        <TableColumn fx:id="colCustomer"
+                     text="Customer"
+                     prefWidth="180"/>
+
+        <TableColumn fx:id="colTanggal"
+                     text="Tanggal"
+                     prefWidth="130"/>
+
+        <TableColumn fx:id="colAlamat"
+                     text="Alamat"
+                     prefWidth="200"/>
+
+        <TableColumn fx:id="colTotal"
+                     text="Total"
+                     prefWidth="130"/>
+
+        <TableColumn fx:id="colKeterangan"
+                     text="Keterangan"
+                     prefWidth="200"/>
+
+    </columns>
+</TableView>
+
 
 </VBox>

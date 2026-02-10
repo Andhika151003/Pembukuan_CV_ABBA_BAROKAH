@@ -22,7 +22,6 @@ public class PenjualanController {
     private TableColumn<Penjualan, String> colTanggal;
     @FXML
     private TableColumn<Penjualan, BigDecimal> colTotal;
-
     @FXML
     private TextField txtNoFaktur;
     @FXML
@@ -35,6 +34,12 @@ public class PenjualanController {
     private DatePicker dpTanggal;
     @FXML
     private TextArea txtKeterangan;
+    @FXML
+    private TableColumn<Penjualan, Integer> colId;
+    @FXML
+    private TableColumn<Penjualan, String> colAlamat;
+    @FXML
+    private TableColumn<Penjualan, String> colKeterangan;
 
     private final PenjualanService service = new PenjualanService();
     private final ObservableList<Penjualan> data = FXCollections.observableArrayList();
@@ -43,6 +48,9 @@ public class PenjualanController {
 
     @FXML
     public void initialize() {
+
+        colId.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(
+                c.getValue().getId()));
 
         colNoFaktur.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(
                 c.getValue().getNoFaktur()));
@@ -53,8 +61,14 @@ public class PenjualanController {
         colTanggal.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(
                 c.getValue().getTanggal().toString()));
 
+        colAlamat.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(
+                c.getValue().getAlamatCustomer()));
+
         colTotal.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(
                 c.getValue().getTotal()));
+
+        colKeterangan.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(
+                c.getValue().getKeterangan()));
 
         tablePenjualan.setItems(data);
         loadData();

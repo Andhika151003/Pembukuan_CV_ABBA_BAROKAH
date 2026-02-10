@@ -10,6 +10,7 @@ com\pembukuan_cv_abba_barokah\Controller\PenjualanController.class
 com\pembukuan_cv_abba_barokah\Model\NeracaKeuangan.class
 com\pembukuan_cv_abba_barokah\DAO\SwakelolaDao.class
 com\pembukuan_cv_abba_barokah\Model\SetorPajak$JenisPajak.class
+com\pembukuan_cv_abba_barokah\Main.class
 com\pembukuan_cv_abba_barokah\Model\PelunasanPiutang.class
 com\pembukuan_cv_abba_barokah\Model\JurnalPembukuan.class
 com\pembukuan_cv_abba_barokah\Service\CashflowPenjualanService.class
