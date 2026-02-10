@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
 <VBox xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml"
@@ -10,65 +11,95 @@
       spacing="24"
       styleClass="content">
 
+    <!-- ================= JUDUL ================= -->
     <HBox alignment="CENTER">
         <Label text="Swakelola"
                style="-fx-font-size: 24px; -fx-font-weight: bold;" />
     </HBox>
 
-    <StackPane>
-        <VBox maxWidth="760" styleClass="card">
+    <!-- ================= FORM (SCROLLABLE) ================= -->
+    <ScrollPane fitToWidth="true"
+                prefHeight="350"
+                vbarPolicy="AS_NEEDED">
 
-            <GridPane styleClass="form-grid">
-                <columnConstraints>
-                    <ColumnConstraints prefWidth="220"/>
-                    <ColumnConstraints/>
-                </columnConstraints>
+        <StackPane>
+            <VBox maxWidth="760" styleClass="card" spacing="15">
 
-                <children>
+                <GridPane styleClass="form-grid">
+                    <columnConstraints>
+                        <ColumnConstraints prefWidth="220"/>
+                        <ColumnConstraints hgrow="ALWAYS"/>
+                    </columnConstraints>
+
                     <Label text="Tanggal"/>
                     <DatePicker fx:id="tanggalField"
                                 GridPane.columnIndex="1"/>
 
                     <Label text="Bahan 1" GridPane.rowIndex="1"/>
-                    <TextField fx:id="bahan1Field" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                    <TextField fx:id="bahan1Field"
+                               GridPane.rowIndex="1"
+                               GridPane.columnIndex="1"/>
 
                     <Label text="Bahan 2" GridPane.rowIndex="2"/>
-                    <TextField fx:id="bahan2Field" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                    <TextField fx:id="bahan2Field"
+                               GridPane.rowIndex="2"
+                               GridPane.columnIndex="1"/>
 
                     <Label text="Bahan 3" GridPane.rowIndex="3"/>
-                    <TextField fx:id="bahan3Field" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                    <TextField fx:id="bahan3Field"
+                               GridPane.rowIndex="3"
+                               GridPane.columnIndex="1"/>
 
                     <Label text="Ongkos Tukang Potong" GridPane.rowIndex="4"/>
-                    <TextField fx:id="ongkosPotongField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                    <TextField fx:id="ongkosPotongField"
+                               GridPane.rowIndex="4"
+                               GridPane.columnIndex="1"/>
 
                     <Label text="Ongkos Tukang Jahit" GridPane.rowIndex="5"/>
-                    <TextField fx:id="ongkosJahitField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                    <TextField fx:id="ongkosJahitField"
+                               GridPane.rowIndex="5"
+                               GridPane.columnIndex="1"/>
 
                     <Label text="Lain-lain" GridPane.rowIndex="6"/>
-                    <TextField fx:id="lainLainField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                    <TextField fx:id="lainLainField"
+                               GridPane.rowIndex="6"
+                               GridPane.columnIndex="1"/>
 
                     <Label text="Transportasi" GridPane.rowIndex="7"/>
-                    <TextField fx:id="transportasiField" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+                    <TextField fx:id="transportasiField"
+                               GridPane.rowIndex="7"
+                               GridPane.columnIndex="1"/>
 
                     <Label text="ID Penjualan" GridPane.rowIndex="8"/>
-                    <ComboBox fx:id="cbIdPenjualan" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+                    <ComboBox fx:id="cbIdPenjualan"
+                              GridPane.rowIndex="8"
+                              GridPane.columnIndex="1"/>
 
                     <Label text="Keterangan" GridPane.rowIndex="9"/>
-                    <TextField fx:id="keteranganField" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
-                </children>
-            </GridPane>
+                    <TextField fx:id="keteranganField"
+                               GridPane.rowIndex="9"
+                               GridPane.columnIndex="1"/>
+                </GridPane>
 
-            <HBox alignment="CENTER_RIGHT" spacing="12">
-                <Button text="Simpan" onAction="#handleSimpan"/>
-                <Button text="Update" onAction="#handleUpdate"/>
-                <Button text="Hapus" onAction="#handleDelete"
-                        styleClass="button-danger"/>
-            </HBox>
+                <HBox alignment="CENTER_RIGHT" spacing="12">
+                    <Button text="Simpan" onAction="#handleSimpan"/>
+                    <Button text="Update" onAction="#handleUpdate"/>
+                    <Button text="Hapus"
+                            onAction="#handleDelete"
+                            styleClass="button-danger"/>
+                </HBox>
 
-        </VBox>
-    </StackPane>
+            </VBox>
+        </StackPane>
 
-    <TableView fx:id="table" prefHeight="340">
+    </ScrollPane>
+
+    <!-- ================= TABLE (DIPANJANGKAN) ================= -->
+    <TableView fx:id="table"
+               VBox.vgrow="ALWAYS"
+               prefHeight="450"
+               style="-fx-cell-size: 32px;">
+
         <columns>
             <TableColumn fx:id="colTanggal" text="Tanggal" prefWidth="110"/>
             <TableColumn fx:id="colBahan1" text="Bahan 1" prefWidth="100"/>
@@ -82,8 +113,10 @@
             <TableColumn fx:id="colKeterangan" text="Keterangan" prefWidth="180"/>
             <TableColumn fx:id="colTotal" text="Total" prefWidth="140"/>
         </columns>
+
     </TableView>
 
+    <!-- ================= TOTAL ================= -->
     <HBox alignment="CENTER_RIGHT">
         <Label fx:id="lblTotal"
                style="-fx-font-size: 16px; -fx-font-weight: bold;"

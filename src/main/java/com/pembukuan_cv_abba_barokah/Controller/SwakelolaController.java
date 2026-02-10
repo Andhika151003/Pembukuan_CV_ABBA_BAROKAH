@@ -46,6 +46,8 @@ public class SwakelolaController {
     @FXML
     public void initialize() {
 
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
         refreshComboIdPenjualan();
 
         colTanggal.setCellValueFactory(c ->

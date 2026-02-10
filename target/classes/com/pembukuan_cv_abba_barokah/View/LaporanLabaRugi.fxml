@@ -2,188 +2,186 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<VBox xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.pembukuan_cv_abba_barokah.Controller.LaporanLabaRugiController"
-      spacing="25"
-      stylesheets="@Global.css"
-      styleClass="content"
-      alignment="TOP_CENTER">
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.pembukuan_cv_abba_barokah.Controller.LaporanLabaRugiController"
+            stylesheets="@Global.css"
+            styleClass="content">
 
-    <!-- ================= JUDUL ================= -->
-    <Label text="LAPORAN LABA RUGI"
-           style="-fx-font-size:22px; -fx-font-weight:bold;"
-           alignment="CENTER"/>
+    <!-- ================= CENTER (SCROLLABLE CONTENT) ================= -->
+    <center>
+        <ScrollPane fitToWidth="true" vbarPolicy="AS_NEEDED">
+            <VBox spacing="25" alignment="TOP_CENTER">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
 
-    <!-- ================= FILTER ================= -->
-    <HBox spacing="10" alignment="CENTER">
-        <Label text="Tahun"/>
-        <ComboBox fx:id="cbTahun" prefWidth="120"/>
-        <Button text="Tampilkan" onAction="#loadData"/>
-    </HBox>
+                <!-- ================= JUDUL ================= -->
+                <Label text="LAPORAN LABA RUGI"
+                       style="-fx-font-size:22px; -fx-font-weight:bold;"/>
 
-    <!-- ================= IDENTITAS ================= -->
-    <VBox spacing="4" alignment="CENTER_LEFT">
-        <Label text="Nama   : CV. ABBA BAROKAH"/>
-        <Label text="NPWP   : 92.357.426.3-612.000"/>
-        <Label text="Alamat : JL. MH. THAMRIN 3 NO.10 RT.003 RW.002 Tlogobendung, Gresik"/>
-    </VBox>
+                <!-- ================= FILTER ================= -->
+                <HBox spacing="10" alignment="CENTER">
+                    <Label text="Tahun"/>
+                    <ComboBox fx:id="cbTahun" prefWidth="120"/>
+                    <Button text="Tampilkan" onAction="#loadData"/>
+                </HBox>
 
-    <Separator/>
+                <!-- ================= IDENTITAS ================= -->
+                <VBox spacing="4" alignment="CENTER_LEFT" maxWidth="900">
+                    <Label text="Nama   : CV. ABBA BAROKAH"/>
+                    <Label text="NPWP   : 92.357.426.3-612.000"/>
+                    <Label text="Alamat : JL. MH. THAMRIN 3 NO.10 RT.003 RW.002 Tlogobendung, Gresik"/>
+                </VBox>
 
-    <!-- ================= ISI LAPORAN ================= -->
-    <GridPane alignment="CENTER" vgap="18">
+                <Separator/>
 
-        <!-- ================= DEBIT ================= -->
-        <Label text="DEBIT"
-               GridPane.rowIndex="0"
-               style="-fx-font-weight:bold;"/>
+                <!-- ================= ISI LAPORAN ================= -->
+                <GridPane vgap="18" maxWidth="900" alignment="CENTER">
 
-        <GridPane GridPane.rowIndex="1"
-                  hgap="40" vgap="8"
-                  alignment="CENTER">
+                    <!-- DEBIT -->
+                    <Label text="DEBIT" style="-fx-font-weight:bold;"/>
 
-            <columnConstraints>
-                <ColumnConstraints prefWidth="420"/>
-                <ColumnConstraints prefWidth="180" halignment="RIGHT"/>
-            </columnConstraints>
+                    <GridPane GridPane.rowIndex="1" hgap="40" vgap="8">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="ALWAYS"/>
+                            <ColumnConstraints minWidth="160" halignment="RIGHT"/>
+                        </columnConstraints>
 
-            <Label text="1.1 Total Penjualan"/>
-            <Label fx:id="lblTotalPenjualan"
-                   GridPane.columnIndex="1"/>
+                        <Label text="1.1 Total Penjualan"/>
+                        <Label fx:id="lblTotalPenjualan" GridPane.columnIndex="1"/>
 
-            <Label text="1.2 Total Retur Penjualan"
-                   GridPane.rowIndex="1"/>
-            <Label fx:id="lblReturPenjualan"
-                   GridPane.rowIndex="1"
-                   GridPane.columnIndex="1"/>
+                        <Label text="1.2 Total Retur Penjualan" GridPane.rowIndex="1"/>
+                        <Label fx:id="lblReturPenjualan"
+                               GridPane.rowIndex="1"
+                               GridPane.columnIndex="1"/>
 
-            <Label text="TOTAL PENDAPATAN"
-                   GridPane.rowIndex="2"
-                   style="-fx-font-weight:bold;"/>
-            <Label fx:id="lblTotalPendapatan"
-                   GridPane.rowIndex="2"
-                   GridPane.columnIndex="1"
-                   style="-fx-font-weight:bold;"/>
-        </GridPane>
+                        <Label text="TOTAL PENDAPATAN"
+                               GridPane.rowIndex="2"
+                               style="-fx-font-weight:bold;"/>
+                        <Label fx:id="lblTotalPendapatan"
+                               GridPane.rowIndex="2"
+                               GridPane.columnIndex="1"
+                               style="-fx-font-weight:bold;"/>
+                    </GridPane>
 
-        <Separator GridPane.rowIndex="2"/>
+                    <Separator GridPane.rowIndex="2"/>
 
-        <!-- ================= KREDIT ================= -->
-        <Label text="KREDIT"
-               GridPane.rowIndex="3"
-               style="-fx-font-weight:bold;"/>
+                    <!-- KREDIT -->
+                    <Label text="KREDIT"
+                           GridPane.rowIndex="3"
+                           style="-fx-font-weight:bold;"/>
 
-        <GridPane GridPane.rowIndex="4"
-                  hgap="40" vgap="8"
-                  alignment="CENTER">
+                    <GridPane GridPane.rowIndex="4" hgap="40" vgap="8">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="ALWAYS"/>
+                            <ColumnConstraints minWidth="160" halignment="RIGHT"/>
+                        </columnConstraints>
 
-            <columnConstraints>
-                <ColumnConstraints prefWidth="420"/>
-                <ColumnConstraints prefWidth="180" halignment="RIGHT"/>
-            </columnConstraints>
+                        <Label text="2.1 Total HPP"/>
+                        <Label fx:id="lblTotalHpp" GridPane.columnIndex="1"/>
 
-            <Label text="2.1 Total HPP"/>
-            <Label fx:id="lblTotalHpp"
-                   GridPane.columnIndex="1"/>
+                        <Label text="2.2 Total Retur Pembelian"
+                               GridPane.rowIndex="1"/>
+                        <Label fx:id="lblReturPembelian"
+                               GridPane.rowIndex="1"
+                               GridPane.columnIndex="1"/>
 
-            <Label text="2.2 Total Retur Pembelian"
-                   GridPane.rowIndex="1"/>
-            <Label fx:id="lblReturPembelian"
-                   GridPane.rowIndex="1"
-                   GridPane.columnIndex="1"/>
+                        <Label text="TOTAL PEMBELIAN"
+                               GridPane.rowIndex="2"
+                               style="-fx-font-weight:bold;"/>
+                        <Label fx:id="lblTotalPembelian"
+                               GridPane.rowIndex="2"
+                               GridPane.columnIndex="1"
+                               style="-fx-font-weight:bold;"/>
 
-            <Label text="TOTAL PEMBELIAN"
-                   GridPane.rowIndex="2"
-                   style="-fx-font-weight:bold;"/>
-            <Label fx:id="lblTotalPembelian"
-                   GridPane.rowIndex="2"
-                   GridPane.columnIndex="1"
-                   style="-fx-font-weight:bold;"/>
+                        <Label text="TOTAL LABA / RUGI"
+                               GridPane.rowIndex="3"
+                               style="-fx-font-weight:bold;"/>
+                        <Label fx:id="lblLabaRugi"
+                               GridPane.rowIndex="3"
+                               GridPane.columnIndex="1"
+                               style="-fx-font-weight:bold;"/>
+                    </GridPane>
 
-            <Label text="TOTAL LABA / RUGI"
-                   GridPane.rowIndex="3"
-                   style="-fx-font-weight:bold;"/>
-            <Label fx:id="lblLabaRugi"
-                   GridPane.rowIndex="3"
-                   GridPane.columnIndex="1"
-                   style="-fx-font-weight:bold;"/>
-        </GridPane>
+                    <Separator GridPane.rowIndex="5"/>
 
-        <Separator GridPane.rowIndex="5"/>
+                    <!-- BIAYA -->
+                    <GridPane GridPane.rowIndex="6" hgap="40" vgap="8">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="ALWAYS"/>
+                            <ColumnConstraints minWidth="160" halignment="RIGHT"/>
+                        </columnConstraints>
 
-        <!-- ================= BIAYA OPERASIONAL ================= -->
-        <GridPane GridPane.rowIndex="6"
-                  hgap="40"
-                  vgap="8"
-                  alignment="CENTER">
+                        <Label text="3.1 Total Biaya Administrasi"/>
+                        <Label fx:id="lblBiayaAdministrasi"
+                               GridPane.columnIndex="1"/>
 
-            <columnConstraints>
-                <ColumnConstraints prefWidth="420"/>
-                <ColumnConstraints prefWidth="180" halignment="RIGHT"/>
-            </columnConstraints>
+                        <Label text="3.2 Total Biaya Operasional"
+                               GridPane.rowIndex="1"/>
+                        <Label fx:id="lblBiayaOperasional"
+                               GridPane.rowIndex="1"
+                               GridPane.columnIndex="1"/>
 
-            <Label text="3.1 Total Biaya Administrasi"/>
-            <Label fx:id="lblBiayaAdministrasi"
-                   GridPane.columnIndex="1"/>
+                        <Label text="3.3 Total Biaya Pemasaran"
+                               GridPane.rowIndex="2"/>
+                        <Label fx:id="lblBiayaPemasaran"
+                               GridPane.rowIndex="2"
+                               GridPane.columnIndex="1"/>
 
-            <Label text="3.2 Total Biaya Operasional"
-                   GridPane.rowIndex="1"/>
-            <Label fx:id="lblBiayaOperasional"
-                   GridPane.rowIndex="1"
-                   GridPane.columnIndex="1"/>
+                        <Label text="3.4 Total Biaya Lain-lain"
+                               GridPane.rowIndex="3"/>
+                        <Label fx:id="lblBiayaLain"
+                               GridPane.rowIndex="3"
+                               GridPane.columnIndex="1"/>
 
-            <Label text="3.3 Total Biaya Pemasaran"
-                   GridPane.rowIndex="2"/>
-            <Label fx:id="lblBiayaPemasaran"
-                   GridPane.rowIndex="2"
-                   GridPane.columnIndex="1"/>
+                        <Label text="TOTAL BIAYA"
+                               GridPane.rowIndex="4"
+                               style="-fx-font-weight:bold;"/>
+                        <Label fx:id="lblTotalBiayaOperasional"
+                               GridPane.rowIndex="4"
+                               GridPane.columnIndex="1"
+                               style="-fx-font-weight:bold;"/>
 
-            <Label text="3.4 Total Biaya Lain-lain"
-                   GridPane.rowIndex="3"/>
-            <Label fx:id="lblBiayaLain"
-                   GridPane.rowIndex="3"
-                   GridPane.columnIndex="1"/>
+                        <Label text="TOTAL LABA BERSIH"
+                               GridPane.rowIndex="5"
+                               style="-fx-font-weight:bold;"/>
+                        <Label fx:id="lblLabaBersih"
+                               GridPane.rowIndex="5"
+                               GridPane.columnIndex="1"
+                               style="-fx-font-weight:bold;"/>
+                    </GridPane>
 
-            <Label text="TOTAL BIAYA"
-                   GridPane.rowIndex="4"
-                   style="-fx-font-weight:bold;"/>
-            <Label fx:id="lblTotalBiayaOperasional"
-                   GridPane.rowIndex="4"
-                   GridPane.columnIndex="1"
-                   style="-fx-font-weight:bold;"/>
+                </GridPane>
 
-            <Label text="TOTAL LABA BERSIH"
-                   GridPane.rowIndex="5"
-                   style="-fx-font-weight:bold;"/>
-            <Label fx:id="lblLabaBersih"
-                   GridPane.rowIndex="5"
-                   GridPane.columnIndex="1"
-                   style="-fx-font-weight:bold;"/>
-        </GridPane>
+                <Separator/>
 
-    </GridPane>
+                <!-- TANDA TANGAN -->
+                <VBox alignment="CENTER_RIGHT" spacing="5" maxWidth="900">
+                    <Label text="Gresik,......2026"/>
+                    <Label text="Direktur," style="-fx-font-weight:bold;"/>
+                    <Region prefHeight="60"/>
+                    <Label text="Bambang Sugiarto"
+                           style="-fx-font-weight:bold;"/>
+                </VBox>
 
-    <Separator/>
+            </VBox>
+        </ScrollPane>
+    </center>
 
-       <VBox alignment="CENTER_RIGHT" spacing="5">
+    <!-- ================= BOTTOM BUTTON (ALWAYS VISIBLE) ================= -->
+    <bottom>
+        <HBox alignment="CENTER">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
 
-       <Label text="Gresik,......2026"/>
+            <Button text="Simpan"
+                    onAction="#handleExportWord"
+                    style="-fx-font-weight:bold; -fx-padding:10 25 10 25;"/>
+        </HBox>
+    </bottom>
 
-       <Label text="Direktur,"
-              style="-fx-font-weight:bold;"/>
-
-       <Region prefHeight="60"/>
-
-       <Label text="Bambang Sugiarto"
-           style="-fx-font-weight:bold;"/>
-
-       </VBox>
-
-    <Separator/>
-
-    <Button text="Simpan"
-        onAction="#handleExportWord"
-        style="-fx-font-weight:bold; -fx-padding:10 25 10 25;"/>
-</VBox>
+</BorderPane>
