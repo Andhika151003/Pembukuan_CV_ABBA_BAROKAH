@@ -48,7 +48,7 @@ public class CashflowPenjualanController {
                                 "01", "02", "03", "04", "05", "06",
                                 "07", "08", "09", "10", "11", "12"));
 
-                cbTahun.setItems(FXCollections.observableArrayList("2025", "2026", "2027"));
+                cbTahun.setItems(FXCollections.observableArrayList("2026", "2027", "2028"));
 
                 cbBulan.setValue("02");
                 cbTahun.setValue("2026");

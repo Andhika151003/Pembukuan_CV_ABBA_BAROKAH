@@ -9,6 +9,7 @@ C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_AB
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Service\JurnalPembukuanService.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\DAO\UtangUsahaDao.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Controller\BiayaAdministrasiController.java
+C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Controller\SaldoBankTahunLaluController.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Controller\UserController.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Controller\PembelianInventarisController.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Model\Penjualan.java
@@ -28,6 +29,7 @@ C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_AB
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Service\PajakBelumDisetorService.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Controller\ReturPembelianController.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Controller\PajakBelumDisetorController.java
+C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Model\SaldoBankTahunLalu.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\DAO\LaporanLabaRugiDao.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\DAO\PelunasanPiutangDao.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Controller\JurnalPembukuanController.java
@@ -59,6 +61,7 @@ C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_AB
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Service\ReturPenjualanService.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\DAO\PenjualanDao.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Model\JurnalPembukuan.java
+C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\DAO\SaldoBankTahunLaluDao.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Controller\SetorPajakController.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Controller\LabaRugiController.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\DAO\ModalDao.java
@@ -71,6 +74,7 @@ C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_AB
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\DAO\PembayaranDao.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Controller\PenjualanController.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\DAO\JurnalPembukuanDao.java
+C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Service\SaldoBankTahunLaluService.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\DAO\ReturPenjualanDao.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Service\PembelianLangsungService.java
 C:\Users\HAKIM AL BAIHAQY\Documents\Project Pembukuan dan Neraca\Pembukuan_CV_ABBA_BAROKAH\src\main\java\com\pembukuan_cv_abba_barokah\Controller\BiayaPemeliharaanController.java

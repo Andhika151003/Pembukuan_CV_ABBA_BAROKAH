@@ -13,9 +13,17 @@
 
     <!-- ================= TITLE ================= -->
     <HBox alignment="CENTER">
-        <Label text="Jumlah Total 2026"
+        <Label text="Jumlah Total"
                style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
     </HBox>
+
+    <!-- ================= FILTER TAHUN ================= -->
+    <HBox alignment="CENTER" spacing="10">
+        <Label text="Pilih Tahun:"/>
+        <ComboBox fx:id="cbTahun"
+              prefWidth="120"/>
+    </HBox>
+
 
     <!-- ================= CARD ================= -->
     <StackPane VBox.vgrow="ALWAYS">

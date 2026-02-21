@@ -102,7 +102,7 @@
 
         <Label text="Aset Tidak Lancar" style="-fx-font-weight:bold;" GridPane.rowIndex="7"/>
 
-        <Label text="Pembelian Inventaris" GridPane.rowIndex="8"/>
+        <Label text="Barang Inventaris" GridPane.rowIndex="8"/>
         <Label fx:id="lblInventaris"
                GridPane.rowIndex="8"
                GridPane.columnIndex="1"

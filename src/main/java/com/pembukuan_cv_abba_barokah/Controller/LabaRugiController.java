@@ -25,6 +25,8 @@ public class LabaRugiController {
     private TableColumn<Penjualan, BigDecimal> colLaba;
     @FXML
     private TableColumn<Penjualan, BigDecimal> colPph;
+    @FXML
+    private ComboBox<Integer> cbTahun;
 
     private final PenjualanService penjualanService = new PenjualanService();
     private final LabaRugiService labaRugiService = new LabaRugiService();
@@ -36,19 +38,27 @@ public class LabaRugiController {
     @FXML
     public void initialize() {
 
-        colFaktur.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getNoFaktur()));
+        cbTahun.getItems().addAll(2026, 2027, 2028);
+        cbTahun.setValue(2026); // default
+        cbTahun.setOnAction(e -> loadData());
 
-        colPenjualan
-                .setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(c.getValue().getTotal()));
+        colFaktur.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(
+                c.getValue().getNoFaktur()));
+
+        colPenjualan.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(
+                c.getValue().getTotal()));
 
         colHpp.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(
-                labaRugiService.totalHppByPenjualan(c.getValue().getId())));
+                labaRugiService.totalHppByPenjualan(
+                        c.getValue().getId())));
 
         colLaba.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(
-                labaRugiService.labaRugi(c.getValue())));
+                labaRugiService.labaRugi(
+                        c.getValue())));
 
         colPph.setCellValueFactory(c -> new javafx.beans.property.SimpleObjectProperty<>(
-                labaRugiService.hitungPph(c.getValue())));
+                labaRugiService.hitungPph(
+                        c.getValue())));
 
         formatRupiah(colPenjualan);
         formatRupiah(colHpp);
@@ -56,11 +66,18 @@ public class LabaRugiController {
         formatRupiah(colPph);
 
         table.setItems(data);
+
         loadData();
     }
 
     private void loadData() {
-        data.setAll(penjualanService.getAll());
+
+        Integer tahun = cbTahun.getValue();
+
+        data.setAll(
+                penjualanService.getAll().stream()
+                        .filter(p -> p.getTanggal().getYear() == tahun)
+                        .toList());
     }
 
     private void formatRupiah(TableColumn<Penjualan, BigDecimal> col) {

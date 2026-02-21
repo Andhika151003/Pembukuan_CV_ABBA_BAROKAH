@@ -12,9 +12,16 @@
       styleClass="content">
 
     <HBox alignment="CENTER">
-        <Label text="Pajak yang Belum Disetor 2026"
+        <Label fx:id="lblTitle"
+               text="Pajak yang Belum Disetor"
                style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
     </HBox>
+
+    <HBox alignment="CENTER" spacing="10">
+        <Label text="Pilih Tahun:"/>
+        <ComboBox fx:id="cbTahun" prefWidth="120"/>
+    </HBox>
+
 
     <VBox maxWidth="600" styleClass="card" spacing="16">
 

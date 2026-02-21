@@ -61,6 +61,7 @@
                                 <Label text="Piutang Usaha" styleClass="menu-item" onMouseClicked="#openPiutang"/>
                                 <Label text="Pelunasan Piutang" styleClass="menu-item" onMouseClicked="#openPelunasanPiutang"/>
                                 <Label text="Modal" styleClass="menu-item" onMouseClicked="#openModal"/>
+                                <Label text="Saldo Bank Tahun Lalu" styleClass="menu-item" onMouseClicked="#openSaldo"/>
                             </VBox>
 
                             <Separator/>

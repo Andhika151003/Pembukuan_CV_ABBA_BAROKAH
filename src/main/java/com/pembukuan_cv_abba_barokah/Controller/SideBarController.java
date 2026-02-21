@@ -142,6 +142,11 @@ public class SideBarController {
     private void openLaporanLaba() {
         loadContent("/com/pembukuan_cv_abba_barokah/View/LaporanLabaRugi.fxml");
     }
+
+    @FXML
+    private void openSaldo() {
+        loadContent("/com/pembukuan_cv_abba_barokah/View/SaldoBankTahunLalu.fxml");
+    }
     
     private void loadContent(String fxml) {
         try {

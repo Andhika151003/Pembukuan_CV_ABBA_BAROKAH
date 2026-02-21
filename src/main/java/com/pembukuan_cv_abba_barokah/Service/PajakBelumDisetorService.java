@@ -13,8 +13,9 @@ public class PajakBelumDisetorService {
     * TOTAL PPH 11%
     * ===============================
     */
-   public BigDecimal totalPph11() {
+   public BigDecimal totalPph11(int tahun) {
       return penjualanService.getAll().stream()
+            .filter(p -> p.getTanggal().getYear() == tahun)
             .map(labaRugiService::hitungPph)
             .reduce(BigDecimal.ZERO, BigDecimal::add);
    }
@@ -24,23 +25,25 @@ public class PajakBelumDisetorService {
     * TOTAL SETOR PAJAK
     * ===============================
     */
-   public BigDecimal totalSetorPajak() {
+   public BigDecimal totalSetorPajak(int tahun) {
       return setorPajakService.getAll().stream()
-            .map(sp -> sp.getJumlahPajak())
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
-   }
+              .filter(sp -> sp.getTanggalSetor().getYear() == tahun)
+              .map(sp -> sp.getJumlahPajak())
+              .reduce(BigDecimal.ZERO, BigDecimal::add);
+  }  
 
    /*
     * ===============================
     * PAJAK BELUM DISETOR
     * ===============================
     */
-   public BigDecimal pajakBelumDisetor() {
+   public BigDecimal pajakBelumDisetor(int tahun) {
 
-      BigDecimal hasil = totalPph11().subtract(totalSetorPajak());
-
+      BigDecimal hasil = totalPph11(tahun)
+              .subtract(totalSetorPajak(tahun));
+  
       return hasil.compareTo(BigDecimal.ZERO) < 0
-            ? BigDecimal.ZERO
-            : hasil;
-   }
+              ? BigDecimal.ZERO
+              : hasil;
+  }  
 }

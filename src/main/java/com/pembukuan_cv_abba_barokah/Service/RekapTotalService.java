@@ -20,46 +20,46 @@ public class RekapTotalService {
      * =========================
      */
 
-    public BigDecimal totalPenjualan() {
+    public BigDecimal totalPenjualan(int tahun) {
         return penjualanService.getAll().stream()
+                .filter(p -> p.getTanggal().getYear() == tahun)
                 .map(Penjualan::getTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    public BigDecimal totalPembayaranMasuk() {
+    public BigDecimal totalPembayaranMasuk(int tahun) {
         return pembayaranService.getAll().stream()
+                .filter(p -> p.getTanggalPembayaran().getYear() == tahun)
                 .map(Pembayaran::getJumlahPembayaran)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
+    }    
 
-    public BigDecimal totalSetorPajak() {
+    public BigDecimal totalSetorPajak(int tahun) {
         return setorPajakService.getAll().stream()
+                .filter(p -> p.getTanggalSetor().getYear() == tahun)
                 .map(SetorPajak::getJumlahPajak)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
+    }    
 
-    public BigDecimal totalBiayaPemasaran() {
+    public BigDecimal totalBiayaPemasaran(int tahun) {
         return biayaPemasaranService.getAll().stream()
+                .filter(p -> p.getTanggal().getYear() == tahun)
                 .map(BiayaPemasaran::getJumlahPemasaran)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
+    }    
 
-    /*
-     * =========================
-     * HPP
-     * =========================
-     */
-
-    public BigDecimal totalPembelianLangsung() {
+    public BigDecimal totalPembelianLangsung(int tahun) {
         return pembelianLangsungService.getAll().stream()
+                .filter(p -> p.getTanggal().getYear() == tahun)
                 .map(p -> p.getHargaPerolehanLangsung()
                         .add(p.getTransportasi())
                         .add(p.getUpah()))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
+    }    
 
-    public BigDecimal totalSwakelola() {
+    public BigDecimal totalSwakelola(int tahun) {
         return swakelolaService.getAll().stream()
+                .filter(s -> s.getTanggal().getYear() == tahun)
                 .map(s -> s.getBahan1()
                         .add(s.getBahan2())
                         .add(s.getBahan3())
@@ -68,9 +68,10 @@ public class RekapTotalService {
                         .add(s.getLainLain())
                         .add(s.getTransportasi()))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
+    }    
 
-    public BigDecimal totalHPP() {
-        return totalPembelianLangsung().add(totalSwakelola());
-    }
+    public BigDecimal totalHPP(int tahun) {
+        return totalPembelianLangsung(tahun)
+                .add(totalSwakelola(tahun));
+    }    
 }

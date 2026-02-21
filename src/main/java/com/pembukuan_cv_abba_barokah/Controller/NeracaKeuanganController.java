@@ -55,7 +55,7 @@ public class NeracaKeuanganController {
 
     @FXML
     public void initialize() {
-        cbTahun.getItems().addAll("2025", "2026", "2027");
+        cbTahun.getItems().addAll("2026", "2027", "2028");
         cbTahun.setValue("2026");
         loadData();
     }

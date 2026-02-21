@@ -15,157 +15,176 @@ public class JurnalPembukuanDao {
         List<JurnalPembukuan> list = new ArrayList<>();
 
         String sql = """
-            SELECT
-                x.tanggal,
-                m.nama_menu,
-                x.keterangan,
+                    SELECT
+                        x.tanggal,
+                        m.nama_menu,
+                        x.keterangan,
 
-                CASE WHEN m.posisi = 'DEBIT' THEN x.total ELSE 0 END AS debit,
-                CASE WHEN m.posisi = 'KREDIT' THEN x.total ELSE 0 END AS kredit
+                        CASE WHEN m.posisi = 'DEBIT' THEN x.total ELSE 0 END AS debit,
+                        CASE WHEN m.posisi = 'KREDIT' THEN x.total ELSE 0 END AS kredit
 
-            FROM master_jurnal m
-            JOIN (
+                    FROM master_jurnal m
+                    JOIN (
 
-                /* ===== HPP : Pembelian Langsung ===== */
-                SELECT
-                    'Harga Pokok Penjualan' AS menu,
-                    tanggal,
-                    (harga_perolehan_langsung + transportasi + upah) AS total,
-                    keterangan
-                FROM PembelianLangsung
+                        /* ===== HPP : Pembelian Langsung ===== */
+                        SELECT
+                            'Harga Pokok Penjualan' AS menu,
+                            tanggal,
+                            (harga_perolehan_langsung + transportasi + upah) AS total,
+                            keterangan
+                        FROM PembelianLangsung
 
-                UNION ALL
+                        UNION ALL
 
-                /* ===== HPP : Swakelola ===== */
-                SELECT
-                    'Harga Pokok Penjualan',
-                    tanggal,
-                    (bahan_1 + bahan_2 + bahan_3 +
-                     ongkos_tukang_potong + ongkos_tukan_jahit +
-                     lain_lain + transportasi),
-                    keterangan
-                FROM Swakelola
+                        /* ===== HPP : Swakelola ===== */
+                        SELECT
+                            'Harga Pokok Penjualan',
+                            tanggal,
+                            (bahan_1 + bahan_2 + bahan_3 +
+                             ongkos_tukang_potong + ongkos_tukan_jahit +
+                             lain_lain + transportasi),
+                            keterangan
+                        FROM Swakelola
 
-                UNION ALL
+                        UNION ALL
 
-                /* ===== Pembayaran ===== */
-                SELECT
-                    'Pembayaran',
-                    tanggal_pembayaran,
-                    jumlah_pembayaran,
-                    keterangan
-                FROM Pembayaran
+                        /* ===== Pembayaran ===== */
+                        SELECT
+                            'Pembayaran',
+                            tanggal_pembayaran,
+                            jumlah_pembayaran,
+                            keterangan
+                        FROM Pembayaran
 
-                UNION ALL
+                        UNION ALL
 
-                /* ===== Setor Pajak ===== */
-                SELECT
-                    'Setor Pajak',
-                    tanggal_setor,
-                    jumlah_pajak,
-                    keterangan
-                FROM SetorPajak
+                        /* ===== Setor Pajak ===== */
+                        SELECT
+                            'Setor Pajak',
+                            tanggal_setor,
+                            jumlah_pajak,
+                            keterangan
+                        FROM SetorPajak
 
-                UNION ALL
+                        UNION ALL
 
-                /* ===== Biaya Administrasi ===== */
-                SELECT
-                    'Biaya Administrasi',
-                    tanggal,
-                    jumlah_administrasi,
-                    keterangan
-                FROM Administrasi
+                        /* ===== Biaya Administrasi ===== */
+                        SELECT
+                            'Biaya Administrasi',
+                            tanggal,
+                            jumlah_administrasi,
+                            keterangan
+                        FROM Administrasi
 
-                UNION ALL
+                        UNION ALL
 
-                /* ===== Biaya Pemasaran ===== */
-                SELECT
-                    'Biaya Pemasaran',
-                    tanggal,
-                    jumlah_pemasaran,
-                    deskripsi
-                FROM BiayaPemasaran
+                        /* ===== Biaya Pemasaran ===== */
+                        SELECT
+                            'Biaya Pemasaran',
+                            tanggal,
+                            jumlah_pemasaran,
+                            deskripsi
+                        FROM BiayaPemasaran
 
-                UNION ALL
+                        UNION ALL
 
-                /* ===== Pembelian Inventaris ===== */
-                SELECT
-                    'Pembelian Inventaris',
-                    tanggal_pembelian,
-                    (jumlah * harga_satuan) + ongkos_kirim,
-                    keterangan
-                FROM PembelianInventaris
+                        /* ===== Pembelian Inventaris ===== */
+                        SELECT
+                            'Pembelian Inventaris',
+                            tanggal_pembelian,
+                            (jumlah * harga_satuan) + ongkos_kirim,
+                            keterangan
+                        FROM PembelianInventaris
 
-                UNION ALL
+                        UNION ALL
 
-                /* ===== Persediaan Barang ===== */
-                SELECT
-                    'Persediaan Barang',
-                    tanggal,
-                    jumlah * harga_satuan,
-                    keterangan
-                FROM PersediaanBarang
+                        /* ===== Utang Usaha ===== */
+                        SELECT
+                            'Utang Usaha',
+                            tanggal_utang,
+                            jumlah_utang,
+                            keterangan
+                        FROM UtangUsaha
 
-                UNION ALL
+                        UNION ALL
 
-                /* ===== Utang Usaha ===== */
-                SELECT
-                    'Utang Usaha',
-                    tanggal_utang,
-                    jumlah_utang,
-                    keterangan
-                FROM UtangUsaha
+                        /* ===== Biaya Pemeliharaan ===== */
+                        SELECT
+                            'Biaya Pemeliharaan',
+                            tanggal,
+                            jumlah_biaya_pemeliharaan,
+                            keterangan
+                        FROM BiayaPemeliharaan
 
-                UNION ALL
+                        UNION ALL
 
-                /* ===== Biaya Pemeliharaan ===== */
-                SELECT
-                    'Biaya Pemeliharaan',
-                    tanggal,
-                    jumlah_biaya_pemeliharaan,
-                    keterangan
-                FROM BiayaPemeliharaan
+                        /* ===== Pelunasan Utang ===== */
+                        SELECT
+                            'Pelunasan Utang',
+                            tanggal,
+                            jumlah_pelunasan_utang,
+                            keterangan
+                        FROM PelunasanUtang
 
-                UNION ALL
+                        UNION ALL
 
-                /* ===== Pelunasan Utang ===== */
-                SELECT
-                    'Pelunasan Utang',
-                    tanggal,
-                    jumlah_pelunasan_utang,
-                    keterangan
-                FROM PelunasanUtang
+                        /* ===== Piutang Usaha ===== */
+                        SELECT
+                            'Piutang Usaha',
+                            tanggal,
+                            jumlah_piutang,
+                            keterangan
+                        FROM PiutangUsaha
 
-                UNION ALL
+                        UNION ALL
 
-                /* ===== Piutang Usaha ===== */
-                SELECT
-                    'Piutang Usaha',
-                    tanggal,
-                    jumlah_piutang,
-                    keterangan
-                FROM PiutangUsaha
+                        /* ===== Pelunasan Piutang ===== */
+                        SELECT
+                            'Pelunasan Piutang',
+                            tanggal,
+                            jumlah_pelunasan_piutang,
+                            keterangan
+                        FROM PelunasanPiutang
 
-                UNION ALL
+                        UNION ALL
 
-                /* ===== Pelunasan Piutang ===== */
-                SELECT
-                    'Pelunasan Piutang',
-                    tanggal,
-                    jumlah_pelunasan_piutang,
-                    keterangan
-                FROM PelunasanPiutang
+                        /* ===== Retur Penjualan (DEBIT) ===== */
+                        SELECT
+                            'Retur Penjualan',
+                            tanggal_retur,
+                            jumlah_retur,
+                            keterangan_retur
+                        FROM ReturPenjualan
 
-            ) x ON x.menu = m.nama_menu
+                        UNION ALL
 
-            WHERE substr(x.tanggal,1,4) = ?
-              AND substr(x.tanggal,6,2) = ?
+                        /* ===== Retur Pembelian (KREDIT) ===== */
+                        SELECT
+                            'Retur Pembelian',
+                            tanggal_retur,
+                            jumlah_retur,
+                            keterangan_retur
+                        FROM ReturPembelian
 
-            ORDER BY x.tanggal
-        """;
+                        /* ===== Saldo Bank Tahun Lalu ===== */
+                        UNION ALL
+                        SELECT
+                            'Saldo Bank Tahun Lalu',
+                            Tanggal,
+                            Total_Saldo,
+                            Keterangan
+                        FROM SaldoBankTahunLalu
+
+                    ) x ON x.menu = m.nama_menu
+
+                    WHERE substr(x.tanggal,1,4) = ?
+                      AND substr(x.tanggal,6,2) = ?
+
+                    ORDER BY x.tanggal
+                """;
 
         try (Connection c = DatabaseConnection.connection();
-             PreparedStatement ps = c.prepareStatement(sql)) {
+                PreparedStatement ps = c.prepareStatement(sql)) {
 
             ps.setString(1, tahun);
             ps.setString(2, bulan);
